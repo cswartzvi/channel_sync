@@ -1,0 +1,8 @@
+local: ./test-channel
+cloud: https://repo.anaconda.com/pkgs/main/
+subdirs:
+  - noarch
+  - win-64
+python_versions:
+  - 3.7
+patch_dir: ./test-patches
