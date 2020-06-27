@@ -1,28 +1,29 @@
-""" Anaconda package filters.
+""" Anaconda repository filters.
 
-Filter parameters are based on the Anaconda package version specifications. See the following:
+Filter parameters are based on the Anaconda package specifications. See the following:
 https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications).
-
 """
 from __future__ import annotations
 import collections
-import itertools
-from typing import (
-    Dict,
-    Iterable,
-    Iterator,
-    List,
-    Mapping
-)
+from typing import Dict, Iterable, List
 
 from conda.models.match_spec import MatchSpec
 
-from isoconda.models import RepoData, PackageRecord
+from isoconda.repo import RepoData, PackageRecord
 
 PYTHON = 'python'
 
 
 def include_packages(repodata: RepoData, strings: Iterable[str]) -> RepoData:
+    """Filters out all non-matching packages from an Anaconda repository.
+
+    Args:
+        repodata: An Anaconda repository object.
+        strings: An iterable of Anaconda package specification strings.
+
+    Returns:
+        Filtered anaconda repository.
+    """
     if not strings:
         return repodata
 
@@ -36,6 +37,15 @@ def include_packages(repodata: RepoData, strings: Iterable[str]) -> RepoData:
 
 
 def exclude_packages(repodata: RepoData, strings: Iterable[str]) -> RepoData:
+    """Filters out all matching packages from an Anaconda repository.
+
+    Args:
+        repodata: An Anaconda repository object.
+        strings: An iterable of Anaconda package specification strings.
+
+    Returns:
+        Filtered anaconda repository.
+    """
     specs = get_specs(strings)
     groups: Dict[str, Iterable[PackageRecord]] = dict(repodata.items())  # all packages
 
@@ -53,6 +63,18 @@ def exclude_packages(repodata: RepoData, strings: Iterable[str]) -> RepoData:
 
 
 def restrict_python(repodata: RepoData, versions: Iterable[float]) -> RepoData:
+    """Filters an Anaconda repository based on python versions.
+
+    Individual python interperter packages are filtered along with packages with
+    python interperter dependencies.
+
+    Args:
+        repodata: An Anaconda repository object.
+        versions: An iterable of python versions (as floats).
+
+    Returns:
+        Filtered anaconda repository.
+    """
     if not versions:
         return repodata
 
@@ -66,7 +88,7 @@ def restrict_python(repodata: RepoData, versions: Iterable[float]) -> RepoData:
 
     # Python dependencies
     groups: Dict[str, List[PackageRecord]] = collections.defaultdict(list)
-    for package in repodata.packages():
+    for package in repodata.values():
         passed = True
         for depend in get_specs(package.depends):
             if depend.name == PYTHON:
@@ -74,7 +96,7 @@ def restrict_python(repodata: RepoData, versions: Iterable[float]) -> RepoData:
                 # therefore is_name_only_spec must come first in the expression and
                 # make use of short-circuit evaluation.
                 passed = (depend.is_name_only_spec or
-                         any(depend.version.match(version) for version in versions))
+                          any(depend.version.match(version) for version in versions))
                 break
         if passed:
             groups[package.name].append(package)
@@ -86,6 +108,7 @@ def restrict_python(repodata: RepoData, versions: Iterable[float]) -> RepoData:
 
 
 def get_specs(strings: Iterable[str]) -> List[MatchSpec]:
+    """Converts Anaconda specification strings into match specification objects."""
     return [MatchSpec(string) for string in strings]
 
 
@@ -102,8 +125,7 @@ def match_spec(name: str, version: str, spec: str) -> bool:
     """
     matcher = MatchSpec(spec)
     if matcher.name == name:
-        if (matcher.is_name_only_spec or
-            matcher.version.match(version)):
+        if (matcher.is_name_only_spec or matcher.version.match(version)):
             return True
     return False
 

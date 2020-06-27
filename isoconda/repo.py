@@ -1,23 +1,16 @@
+"""Contains the models fro the representation of Anaconda repositories."""
 from __future__ import annotations
 import collections
 import copy
-import itertools
-import weakref
 from typing import (
     Any,
-    Callable,
     Dict,
     Iterable,
     Iterator,
     List,
     Mapping,
-    MutableSet,
-    Optional,
-    Set,
     Tuple
 )
-
-from conda.exports import MatchSpec
 
 from isoconda.errors import InvalidRepo
 
@@ -32,14 +25,14 @@ class PackageRecord:
     with a small number of records fields and propagates all other fields when saving.
     """
 
-    def __init__(self, fn: str, data: Dict[str, Any]):
+    def __init__(self, filename: str, data: Dict[str, Any]):
         """Initialize object instance from record data.
 
         Args:
-            fn: Package filename (on disk or as a download)
+            filename: Package filename (on disk or as a download)
             data: Dictionary representation of record fields.
         """
-        self.fn = fn
+        self._filename = filename
         self._data: Dict[str, Any] = copy.deepcopy(data)
         self._pkey = (self.subdir, self.name, self.version,
                       self.build_number, self.build)
@@ -47,26 +40,37 @@ class PackageRecord:
 
     @property
     def build(self) -> str:
+        """Package build identifier."""
         return self._data['build']
 
     @property
     def build_number(self) -> int:
+        """Incremental number for new builds of the same build identifier."""
         return self._data['build_number']
 
     @property
+    def filename(self) -> str:
+        """The package filename, contains name, build and build number."""
+        return self._filename
+
+    @property
     def depends(self) -> Iterable[str]:
+        """An interable package dependencies as package specification strings."""
         return self._data['depends']
 
     @property
     def name(self) -> str:
+        """The package name."""
         return self._data['name']
 
     @property
     def subdir(self) -> str:
+        """Repository sub-directory (platfrom architecture)."""
         return self._data['subdir']
 
     @property
     def version(self) -> str:
+        """The package version."""
         return self._data['version']
 
     def __eq__(self, other):
@@ -76,7 +80,7 @@ class PackageRecord:
         return self._hash
 
     def __repr__(self):
-        return f'{type(self).__name__}({self.fn!r}, {self._data!r})'
+        return f'{type(self).__name__}({self.filename!r}, {self._data!r})'
 
 
 class RepoData:
@@ -128,7 +132,7 @@ class RepoData:
 
     @property
     def subdir(self) -> str:
-        """Returns name of repository sub-directory (platfrom architecture)."""
+        """Repository sub-directory (platfrom architecture)."""
         return self._subdir
 
     def get(self, key, default=None) -> Iterator[PackageRecord]:
@@ -145,11 +149,11 @@ class RepoData:
         for name, package in self._package_groups.items():
             yield (name, iter(package))
 
-    def types(self) -> Iterator[str]:
-        """Yields all existing package type (nam)."""
+    def keys(self) -> Iterator[str]:
+        """Yields all existing package type (name)."""
         return iter(self)
 
-    def packages(self) -> Iterator[PackageRecord]:
+    def values(self) -> Iterator[PackageRecord]:
         """Yields all existing package records in a flatten iterator."""
         for packages in self._package_groups.values():
             yield from packages
@@ -169,7 +173,3 @@ class RepoData:
     def __len__(self) -> int:
         """Returns the number of package types (names)."""
         return len(self._package_groups.keys())
-
-
-
-
