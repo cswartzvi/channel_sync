@@ -6,10 +6,8 @@ from typing import (
     Any,
     Dict,
     Iterable,
-    Iterator,
     List,
     Mapping,
-    Tuple
 )
 
 from isoconda.errors import InvalidRepo
@@ -83,8 +81,8 @@ class PackageRecord:
         return f'{type(self).__name__}({self.filename!r}, {self._data!r})'
 
 
-class RepoData:
-    """Represents an Anaconda repository index (repodata.json).
+class RepoData(Mapping[str, Iterable[PackageRecord]]):
+    """Abstract mapping represents an Anaconda repository index (repodata.json).
 
     The Anaconda repository index contains records for each packages in a platfrom
     specific sub-directory.
@@ -135,7 +133,7 @@ class RepoData:
         """Repository sub-directory (platfrom architecture)."""
         return self._subdir
 
-    def get(self, key, default=None) -> Iterator[PackageRecord]:
+    def get(self, key, default=None):
         """Yields all records of a given package type (name).
 
         Args:
@@ -144,32 +142,32 @@ class RepoData:
         """
         yield from self._package_groups.get(key, default)
 
-    def items(self) -> Iterator[Tuple[str, Iterator[PackageRecord]]]:
+    def items(self):
         """Yields a tuple of package type (name) and record."""
         for name, package in self._package_groups.items():
             yield (name, iter(package))
 
-    def keys(self) -> Iterator[str]:
+    def keys(self):
         """Yields all existing package type (name)."""
         return iter(self)
 
-    def values(self) -> Iterator[PackageRecord]:
+    def values(self):
         """Yields all existing package records in a flatten iterator."""
         for packages in self._package_groups.values():
             yield from packages
 
-    def __contains__(self, key) -> bool:
+    def __contains__(self, key):
         """Checks for membership of a generic package type."""
         return key in self._package_groups.keys()
 
-    def __getitem__(self, key) -> Iterator[PackageRecord]:
+    def __getitem__(self, key):
         """Yields all records of given package type (name)."""
         return iter(self._package_groups[key])
 
-    def __iter__(self) -> Iterator[str]:
+    def __iter__(self):
         """Yields all package types (names)."""
         yield from self._package_groups.keys()
 
-    def __len__(self) -> int:
+    def __len__(self):
         """Returns the number of package types (names)."""
         return len(self._package_groups.keys())
