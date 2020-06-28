@@ -5,6 +5,7 @@ https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html
 """
 from __future__ import annotations
 import collections
+import itertools
 from typing import Dict, Iterable, List
 
 from conda.models.match_spec import MatchSpec
@@ -88,13 +89,13 @@ def restrict_python(repodata: RepoData, versions: Iterable[float]) -> RepoData:
 
     # Python dependencies
     groups: Dict[str, List[PackageRecord]] = collections.defaultdict(list)
-    for package in repodata.values():
+    for package in itertools.chain.from_iterable(repodata.values()):
         passed = True
         for depend in get_specs(package.depends):
             if depend.name == PYTHON:
-                # Note: depend.version is not defined if is_name_only_spec is False,
-                # therefore is_name_only_spec must come first in the expression and
-                # make use of short-circuit evaluation.
+                # Note: MatchSpec.version is not defined if is_name_only_spec is
+                # False, therefore is_name_only_spec must come first in the expression
+                # and make use of short-circuit evaluation.
                 passed = (depend.is_name_only_spec or
                           any(depend.version.match(version) for version in versions))
                 break
