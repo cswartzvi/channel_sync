@@ -3,7 +3,6 @@ from __future__ import annotations
 import collections
 import copy
 import itertools
-import reprlib
 import weakref
 from typing import (
     Any,
@@ -12,7 +11,8 @@ from typing import (
     Iterator,
     List,
     Mapping,
-    MutableSet
+    MutableSet,
+    Optional
 )
 
 from isoconda.errors import InvalidRepo
@@ -63,6 +63,11 @@ class PackageRecord:
         return self._data['depends']
 
     @property
+    def is_conda(self) -> bool:
+        """Returns True if the package is in the conda format."""
+        return self._conda
+
+    @property
     def name(self) -> str:
         """The name of the package type (generic; different than filename)."""
         return self._data['name']
@@ -78,18 +83,14 @@ class PackageRecord:
         return self._data['subdir']
 
     @property
-    def timestamp(self) -> int:
-        """The timestap of the package."""
-        return self._data['timestamp']
+    def timestamp(self) -> Optional[int]:
+        """The timestamp of the package."""
+        return self._data.get('timestamp', None)
 
     @property
     def version(self) -> str:
         """The package version."""
         return self._data['version']
-
-    def is_conda(self) -> bool:
-        """Returns True if the package is in the conda format."""
-        return self._conda
 
     def dump(self) -> Dict[str, Any]:
         """Converts data into a dictionary representation."""
@@ -166,11 +167,11 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
 
         packages: Dict[str, Any] = {}
         conda_packages: Dict[str, Any] = {}
-        for package in itertools.chain.from_iterable(self.values()):
-            if package.is_conda():
+        for package in itertools.chain.from_iterable(self._package_groups.values()):
+            if package.is_conda:
                 conda_packages[package.filename] = package.dump()
             else:
-               packages[package.filename] = package.dump()
+                packages[package.filename] = package.dump()
 
         data['packages'] = packages
         data['packages.conda'] = conda_packages
@@ -180,26 +181,27 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
         return data
 
     def merge(self, other: RepoData) -> RepoData:
+        """Merges current repository with another repository."""
         if self.subdir != other.subdir:
             subdirs = ','.join([self.subdir, other.subdir])
             raise ValueError(f"Merged subdirs must match: {subdirs})")
 
         package_groups: Dict[str, List[PackageRecord]] = {}
-        keys = set(self.keys()).union(other.keys())
-        for key in keys:
-            packages = set(self.get(key, [])) | set(other.get(key, []))
+        keys = set(self._package_groups.keys()) | set(other.keys())
+        for key in sorted(keys):
+            packages = set(self._package_groups.get(key, [])) | set(other.get(key, []))
             package_groups[key] = sorted(packages, key=lambda pkg: pkg.filename)
 
         return RepoData(self.subdir, package_groups)
-
 
     def __contains__(self, key) -> bool:
         return key in self._package_groups.keys()
 
     def __eq__(self, other):
         if isinstance(other, type(self)):
-            return ((self.subdir==other.subdir) and
-                    (self._package_groups==other._package_groups))
+            return ((self.subdir == other.subdir) and
+                    (self._package_groups == other._package_groups))
+        return False
 
     def __getitem__(self, key) -> Iterable[PackageRecord]:
         return iter(self._package_groups[key])

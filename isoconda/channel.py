@@ -1,7 +1,7 @@
+"""Contains the models fro the representation of Anaconda channels."""
 from __future__ import annotations
-import collections
 import copy
-from typing import Any, Dict, Iterable, Iterator, List, Mapping
+from typing import Any, Dict, Iterable, Iterator, List, Mapping, Optional
 
 from isoconda.errors import InvalidChannel
 from isoconda.repo import PackageRecord
@@ -28,8 +28,6 @@ class ChannelGroupInfo:
         self._data: Dict[str, Any] = copy.deepcopy(data)
         self._pkey = self._name
         self._hash = hash(self._pkey)
-        self._timestamp = self._data.pop('timestamp', -1)  # Not mandatory
-        self._version = self._data.pop('version', '')  # Not mandatory
 
     @property
     def name(self) -> str:
@@ -37,27 +35,29 @@ class ChannelGroupInfo:
         return self._name
 
     @property
-    def timestamp(self) -> int:
+    def timestamp(self) -> Optional[int]:
         """The timestap of the latest package in the group."""
-        return self._timestamp
+        return self._data.get('timestamp', None)
 
     @property
     def version(self) -> str:
         """The version of the latest package in the group."""
-        return self._version
+        return self._data['version']
 
     def dump(self) -> Dict[str, Any]:
         """Converts data into a dictionary representation."""
-        data = copy.deepcopy(self._data)
-        if self._timestamp > -1:
-            data['timestamp'] = self._timestamp
-        if self._version:
-            data['version'] = self._version
-        return data
+        return copy.deepcopy(self._data)
 
-    def update_latest(self, package: PackageRecord):
-        self._timestamp = package.timestamp
-        self._version = package.version
+    def update_latest(self, package: PackageRecord) -> None:
+        """Update group info with the lastest package information."""
+        if package.name != self.name:
+            raise ValueError(f'Channel group does not match package: {package.name}')
+        timestamp = package.timestamp
+        if timestamp is None:
+            self._data.pop('timestamp', None)
+        else:
+            self._data['timestamp'] = timestamp
+        self._data['version'] = package.version
 
     def __eq__(self, other):
         return self._pkey == other._pkey
@@ -86,7 +86,7 @@ class ChannelData(Mapping[str, ChannelGroupInfo]):
             groups: ``ChannelGroupInfo`` grouped by package type (name).
         """
         self._subdirs: List[str] = list(subdirs)
-        self._groups: Dict[str, ChannelGroupInfo] = {k: v for k, v in groups.items()}
+        self._groups: Dict[str, ChannelGroupInfo] = dict(groups)
 
     @classmethod
     def from_data(cls, channeldata: Dict[str, Any]) -> ChannelData:
@@ -104,8 +104,8 @@ class ChannelData(Mapping[str, ChannelGroupInfo]):
         groups: Dict[str, ChannelGroupInfo] = {}
 
         for name, data in channeldata['packages'].items():
-                info = ChannelGroupInfo(name, data)
-                groups[info.name] = info
+            info = ChannelGroupInfo(name, data)
+            groups[info.name] = info
 
         return cls(subdirs, groups)
 
@@ -117,21 +117,23 @@ class ChannelData(Mapping[str, ChannelGroupInfo]):
         data['subdirs'] = sorted(self.subdirs)
         return data
 
-    # def merge(self, other: RepoData) -> RepoData:
-    #     if self.subdir != other.subdir:
-    #         subdirs = ','.join([self.subdir, other.subdir])
-    #         raise ValueError(f"Merged subdirs must match: {subdirs})")
+    def merge(self, other: ChannelData) -> ChannelData:
+        """Merges current channels with another repository."""
+        subdirs = sorted(set(self.subdirs) | set(other.subdirs))
 
-    #     package_groups: Dict[str, List[PackageRecord]] = {}
-    #     keys = set(self.keys()).union(other.keys())
-    #     for key in keys:
-    #         packages = set(self.get(key, [])) | set(other.get(key, []))
-    #         package_groups[key] = sorted(packages, key=lambda pkg: pkg.filename)
+        groups: Dict[str, ChannelGroupInfo] = {}
+        keys = set(self._groups.keys()) | set(other.keys())
+        for key in sorted(keys):
+            if key in self._groups:
+                groups[key] = self._groups[key]
+            else:
+                groups[key] = other[key]
 
-    #     return RepoData(self.subdir, package_groups)
+        return ChannelData(subdirs, groups)
 
     @property
     def subdirs(self) -> List[str]:
+        """Repository sub-directories (platfrom architecture)."""
         return self._subdirs.copy()
 
     def __contains__(self, key) -> bool:
