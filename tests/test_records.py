@@ -1,5 +1,5 @@
 
-from isoconda.repo import PackageRecord
+from isoconda.models.repo import PackageRecord
 
 NAME_CONDA = 'numpy-1.9.3-py37hd5b3723_7.conda'
 NAME_TARBALL = 'numpy-1.9.3-py37hd5b3723_7.tar.bz2'

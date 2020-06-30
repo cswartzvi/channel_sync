@@ -1,5 +1,5 @@
 
-from isoconda.channel import ChannelGroupInfo
+from isoconda.models.channel import ChannelGroupInfo
 
 NAME = 'numpy'
 GROUP_DATA = {

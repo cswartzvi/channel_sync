@@ -16,7 +16,7 @@ from typing import (
 )
 
 import isoconda.errors as errors
-import isoconda.utils as utils
+import isoconda.models.utils as utils
 
 PYTHON = 'python'
 

@@ -4,7 +4,7 @@ import copy
 from typing import Any, Dict, Iterable, Iterator, List, Mapping, Optional
 
 from isoconda.errors import InvalidChannel
-from isoconda.repo import PackageRecord
+from isoconda.models.repo import PackageRecord
 
 
 class ChannelGroupInfo:
