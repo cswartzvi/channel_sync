@@ -15,7 +15,10 @@ from typing import (
     Optional
 )
 
-from isoconda.errors import InvalidRepo
+import isoconda.errors as errors
+import isoconda.utils as utils
+
+PYTHON = 'python'
 
 
 class PackageRecord:
@@ -136,7 +139,7 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
         # The simplest check of the repodata.json schema version
         repodata_version = repodata['repodata_version']
         if repodata_version != cls.VERSION:
-            raise InvalidRepo(f'Unknown repodata version: {repodata_version}')
+            raise errors.InvalidRepo(f'Unknown repodata version: {repodata_version}')
 
         subdir = repodata['info']['subdir']
         package_groups: Dict[str, List[PackageRecord]] = collections.defaultdict(list)
@@ -179,6 +182,87 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
         data['repodata_version'] = self.VERSION
 
         return data
+
+    def filter_matches(self, strings: Iterable[str]) -> RepoData:
+        """Filters out all matching packages from an Anaconda repository.
+
+        Args:
+            repodata: An Anaconda repository object.
+            strings: An iterable of Anaconda package specification strings.
+
+        Returns:
+            Filtered anaconda repository.
+        """
+        specs = utils.create_specs(strings)
+        groups: Dict[str, Iterable[PackageRecord]] = dict(self.items())  # all packages
+
+        for spec in specs:
+            packages: List[PackageRecord] = []
+            for package in groups.get(spec.name, []):
+                if not utils.match_spec(package.name, package.version, spec):
+                    packages.append(package)
+            if packages:
+                groups[spec.name] = packages
+            else:
+                groups.pop(spec.name, '')
+
+        return RepoData(self.subdir, groups)
+
+    def filter_mismatches(self, strings: Iterable[str]) -> RepoData:
+        """Filters out all non-matching packages from an Anaconda repository.
+
+        Args:
+            repodata: An Anaconda repository object.
+            strings: An iterable of Anaconda package specification strings.
+
+        Returns:
+            Filtered anaconda repository.
+        """
+        if not strings:
+            return self
+
+        groups: Dict[str, List[PackageRecord]] = collections.defaultdict(list)
+
+        for spec in utils.create_specs(strings):
+            for package in self.get(spec.name, []):
+                if utils.match_spec(package.name, package.version, spec):
+                    groups[spec.name].append(package)
+        return type(self)(self.subdir, groups)
+
+    def filter_python(self, versions: Iterable[float]) -> RepoData:
+        """Filters an Anaconda repository based on python versions.
+
+        Individual python interperter packages are filtered along with packages with
+        python interperter dependencies.
+
+        Args:
+            repodata: An Anaconda repository object.
+            versions: An iterable of python versions (as floats).
+
+        Returns:
+            Filtered anaconda repository.
+        """
+
+        if not versions:
+            return self
+
+        groups: Dict[str, List[PackageRecord]] = collections.defaultdict(list)
+        specs = utils.create_specs(f'{PYTHON} {version:0.1f}*' for version in versions)
+        version_strings = [str(version) for version in versions]
+
+        for package in itertools.chain.from_iterable(self.values()):
+            include = True
+            if package.name == PYTHON:  # Python interpreters
+                include = utils.match_specs(package.name, package.version, specs)
+            else:  # Python dependencies
+                for depend in utils.create_specs(package.depends):
+                    if depend.name == PYTHON:
+                        include = utils.match_versions(version_strings, depend)
+                        break
+            if include:
+                groups[package.name].append(package)
+
+        return type(self)(self.subdir, groups)
 
     def merge(self, other: RepoData) -> RepoData:
         """Merges current repository with another repository."""
