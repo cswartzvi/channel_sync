@@ -103,7 +103,7 @@ class PackageRecord:
         return self._hash
 
     def __repr__(self):
-        return f'{type(self).__name__}({self.filename!r}, {self._data!r})'
+        return f'{type(self).__name__}(filename={self.filename!r}, data={self._data!r})'
 
 
 class RepoData(Mapping[str, Iterable[PackageRecord]]):
@@ -213,4 +213,4 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
         return len(self._package_groups.keys())
 
     def __repr__(self) -> str:
-        return f'{type(self).__name__}({self.subdir!r}, ...)'
+        return f'{type(self).__name__}(subdir={self.subdir!r}, package_groups=...)'

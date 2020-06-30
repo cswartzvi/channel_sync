@@ -66,7 +66,7 @@ class ChannelGroupInfo:
         return self._hash
 
     def __repr__(self):
-        return f'{type(self).__name__}({self.name!r}, {self._data!r})'
+        return f'{type(self).__name__}(name={self.name!r}, data={self._data!r})'
 
 
 class ChannelData(Mapping[str, ChannelGroupInfo]):
@@ -149,4 +149,4 @@ class ChannelData(Mapping[str, ChannelGroupInfo]):
         return len(self._groups.keys())
 
     def __repr__(self) -> str:
-        return f"{type(self).__name__}({self.subdirs:!r}, ...)"
+        return f"{type(self).__name__}(subdirs={self.subdirs:!r}, groups=...)"
