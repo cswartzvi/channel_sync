@@ -83,8 +83,3 @@ def match_versions(versions: Iterable[str], spec: MatchSpec) -> bool:
         bool: True if at least one of the version specifications matches the given version.
     """
     return any(match_version(version, spec) for version in versions)
-
-
-def urljoin(*parts):
-    """Concatenate url parts."""
-    return '/'.join([part.strip('/') for part in parts])

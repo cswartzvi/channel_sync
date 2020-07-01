@@ -15,7 +15,7 @@ from typing import (
 )
 
 import isoconda.errors as errors
-import isoconda.models.utils as utils
+import isoconda.matching as matching
 
 PYTHON = 'python'
 
@@ -211,13 +211,13 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
         Returns:
             Filtered anaconda repository.
         """
-        specs = utils.create_specs(strings)
+        specs = matching.create_specs(strings)
         groups: Dict[str, Iterable[PackageRecord]] = dict(self.items())  # all packages
 
         for spec in specs:
             packages: List[PackageRecord] = []
             for package in groups.get(spec.name, []):
-                if not utils.match_spec(package.name, package.version, spec):
+                if not matching.match_spec(package.name, package.version, spec):
                     packages.append(package)
             if packages:
                 groups[spec.name] = packages
@@ -241,9 +241,9 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
 
         groups: Dict[str, List[PackageRecord]] = collections.defaultdict(list)
 
-        for spec in utils.create_specs(strings):
+        for spec in matching.create_specs(strings):
             for package in self.get(spec.name, []):
-                if utils.match_spec(package.name, package.version, spec):
+                if matching.match_spec(package.name, package.version, spec):
                     groups[spec.name].append(package)
         return type(self)(self.subdir, groups)
 
@@ -265,17 +265,17 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
             return self
 
         groups: Dict[str, List[PackageRecord]] = collections.defaultdict(list)
-        specs = utils.create_specs(f'{PYTHON} {version:0.1f}*' for version in versions)
+        specs = matching.create_specs(f'{PYTHON} {version:0.1f}*' for version in versions)
         version_strings = [str(version) for version in versions]
 
         for package in itertools.chain.from_iterable(self.values()):
             include = True
             if package.name == PYTHON:  # Python interpreters
-                include = utils.match_specs(package.name, package.version, specs)
+                include = matching.match_specs(package.name, package.version, specs)
             else:  # Python dependencies
-                for depend in utils.create_specs(package.depends):
+                for depend in matching.create_specs(package.depends):
                     if depend.name == PYTHON:
-                        include = utils.match_versions(version_strings, depend)
+                        include = matching.match_versions(version_strings, depend)
                         break
             if include:
                 groups[package.name].append(package)
@@ -289,9 +289,9 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
             raise ValueError(f"Merged subdirs must match: {subdirs})")
 
         package_groups: Dict[str, List[PackageRecord]] = {}
-        keys = set(self._package_groups.keys()) | set(other.keys())
+        keys = set(self.keys()) | set(other.keys())
         for key in sorted(keys):
-            packages = set(self._package_groups.get(key, [])) | set(other.get(key, []))
+            packages = set(self.get(key, [])) | set(other.get(key, []))
             package_groups[key] = sorted(packages, key=lambda pkg: pkg.filename)
 
         return RepoData(self.subdir, package_groups)
