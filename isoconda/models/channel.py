@@ -1,10 +1,11 @@
 """Contains the models fro the representation of Anaconda channels."""
 from __future__ import annotations
 import copy
-from typing import Any, Dict, Iterable, Iterator, List, Mapping, Optional
+from typing import Any, Dict, Iterable, Iterator, List, Mapping, Optional, Set
 
 from isoconda.errors import InvalidChannel
-from isoconda.models.repo import PackageRecord
+from isoconda.models.repo import PackageRecord, RepoData
+import isoconda.models.utils as utils
 
 
 class ChannelGroupInfo:
@@ -48,16 +49,21 @@ class ChannelGroupInfo:
         """Converts data into a dictionary representation."""
         return copy.deepcopy(self._data)
 
-    def update_latest(self, package: PackageRecord) -> None:
-        """Update group info with the lastest package information."""
-        if package.name != self.name:
-            raise ValueError(f'Channel group does not match package: {package.name}')
-        timestamp = package.timestamp
-        if timestamp is None:
-            self._data.pop('timestamp', None)
+    def update_latest(self, version: str, timestamp: Optional[int] = None) -> ChannelGroupInfo:
+        """Create a new object with updated version and timestamp information."""
+        data = copy.deepcopy(self._data)
+        if timestamp is None or timestamp == 0:
+            data.pop('timestamp', None)
         else:
-            self._data['timestamp'] = timestamp
-        self._data['version'] = package.version
+            data['timestamp'] = timestamp
+        data['version'] = version
+        return type(self)(self.name, data)
+
+    def update_subdirs(self, subdirs: Iterable[str]) -> ChannelGroupInfo:
+        """Create a new object with updated sub-directory information."""
+        data = copy.deepcopy(self._data)
+        data['subdirs'] = list(subdirs)
+        return type(self)(self.name, data)
 
     def __eq__(self, other):
         return self._pkey == other._pkey
@@ -131,6 +137,32 @@ class ChannelData(Mapping[str, ChannelGroupInfo]):
 
         return ChannelData(subdirs, groups)
 
+    def rescale(self, repos: Iterable[RepoData]) -> ChannelData:
+        """Rescales the current groups in the channel based on given repositories.
+
+        Args:
+            repos: An iterable of Anaconda repositories.
+
+        Returns:
+            Rescal Anaconda channel.
+        """
+        channel_subdirs: Set[str] = set()
+        groups: Dict[str, ChannelGroupInfo] = {}
+        for name, info in self.items():
+            packages: List[PackageRecord] = []
+            for repo in repos:
+                if name in repo:
+                    packages.extend(repo[name])
+                    channel_subdirs.add(repo.subdir)
+            if packages:
+                # Update the subdirs and the most recent version / timestamp combination
+                subdirs = sorted({package.subdir for package in packages})
+                order, timestamp = max((utils.create_order(package.version), package.timestamp)
+                                       for package in packages)
+                modified_info = info.update_subdirs(subdirs).update_latest(str(order), timestamp)
+                groups[name] = modified_info
+        return type(self)(channel_subdirs, groups)
+
     @property
     def subdirs(self) -> List[str]:
         """Repository sub-directories (platfrom architecture)."""
@@ -149,4 +181,4 @@ class ChannelData(Mapping[str, ChannelGroupInfo]):
         return len(self._groups.keys())
 
     def __repr__(self) -> str:
-        return f"{type(self).__name__}(subdirs={self.subdirs:!r}, groups=...)"
+        return f"{type(self).__name__}(subdirs=[{','.join(self.subdirs)!r}], groups=...)"

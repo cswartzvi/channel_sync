@@ -4,14 +4,19 @@ from typing import Iterable, List
 from conda.exports import MatchSpec, VersionOrder
 
 
+def create_spec(string: str) -> MatchSpec:
+    """Converts Anaconda specification string into match specification object."""
+    return MatchSpec(string)
+
+
 def create_specs(strings: Iterable[str]) -> List[MatchSpec]:
     """Converts Anaconda specification strings into match specification objects."""
-    return [MatchSpec(string) for string in strings]
+    return [create_spec(string) for string in strings]
 
 
-def create_orders(versions: Iterable[str]) -> List[VersionOrder]:
-    """Converts Anaconda version strings into version order objects."""
-    return [VersionOrder(version) for version in versions]
+def create_order(version: str) -> VersionOrder:
+    """Converts Anaconda version string into version order object."""
+    return VersionOrder(version)
 
 
 def match_spec(name: str, version: str, spec: str) -> bool:

@@ -11,8 +11,7 @@ from typing import (
     Iterator,
     List,
     Mapping,
-    MutableSet,
-    Optional
+    MutableSet
 )
 
 import isoconda.errors as errors
@@ -86,9 +85,9 @@ class PackageRecord:
         return self._data['subdir']
 
     @property
-    def timestamp(self) -> Optional[int]:
-        """The timestamp of the package."""
-        return self._data.get('timestamp', None)
+    def timestamp(self) -> int:
+        """The timestamp of the package. Defaults to zero rather than None."""
+        return self._data.get('timestamp', 0)
 
     @property
     def version(self) -> str:
@@ -162,6 +161,25 @@ class RepoData(Mapping[str, Iterable[PackageRecord]]):
     def subdir(self) -> str:
         """Repository sub-directory (platfrom architecture)."""
         return self._subdir
+
+    def difference(self, other: RepoData) -> RepoData:
+        """Takes the difference of the this repository with another.
+
+        Args:
+            repodata: Second Anaconda repository object.
+
+        Returns:
+            Filtered anaconda repository.
+        """
+        groups: Dict[str, Iterable[PackageRecord]] = dict(self.items())  # all packages
+        for name, packages in self.items():
+            if name in other:
+                groups[name] = sorted(set(packages) - set(other[name]),
+                                      key=lambda p: p.filename)
+            else:
+                groups[name] = list(packages)
+
+        return RepoData(self.subdir, groups)
 
     def dump(self) -> Dict[str, Any]:
         """Converts data into a dictionary representation."""
