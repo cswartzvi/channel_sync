@@ -49,7 +49,7 @@ def update(config: str):
         for repo in repos:
             packages = list(itertools.chain.from_iterable(repo.values()))
             destination = pathlib.Path(patch) / repo.subdir
-            processing.download_packages(url, repo.subdir, packages, destination)
+            processing.download_packages(url, packages, destination)
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 """Common errors for the isoconda package."""
 
 
-class InvalidConfigFile(Exception):
-    """Invalid isoconda configuration file."""
+class InvalidPackage(Exception):
+    """Invalid Anaconda package."""
 
 
 class InvalidRepo(Exception):
