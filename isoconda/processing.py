@@ -15,19 +15,22 @@ def download_package(channel: str, package: PackageRecord, destination: pathlib.
     url = _urljoin(channel, package.subdir, package.filename)
     destination.mkdir(parents=True, exist_ok=True)
     filepath = destination / package.filename
+    if filepath.exists():
+        # TODO: Verify packages with sha256
+        return
     with session.get(url, stream=True) as response:
         with open(filepath, 'wb') as download:
             for data in response.iter_content(BLOCK_SIZE):
                 download.write(data)
 
-    # TODO: Verify packages with sha
+    # TODO: Verify packages with sha256
 
 
-def download_packages(channel: str, packages: Iterable[PackageRecord],
+def download_packages(channel: str, subdir: str, packages: Iterable[PackageRecord],
                       destination: Union[str, pathlib.Path]):
     destination = pathlib.Path(destination)
     with requests.Session() as session:
-        for package in tqdm(list(packages), ascii=True, desc=channel):
+        for package in tqdm(list(packages), ascii=True, desc=f"{channel} [{subdir}]"):
             download_package(channel, package, destination, session)
 
 
