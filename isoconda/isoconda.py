@@ -14,7 +14,7 @@ import isoconda.processing as processing
 @click.command()
 @click.argument('config')
 def update(config: str):
-    """Generate a patch for a isolated Anaconda environment."""
+    """Generate a patch for an isolated Anaconda environment."""
 
     # Note: currently unknown configuration keys are ignored, but allowed.
     data = yaml.load(open(config, 'rt'), Loader=yaml.CLoader)
