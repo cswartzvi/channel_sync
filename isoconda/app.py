@@ -14,23 +14,31 @@ def update(config: str):
     # Note: currently unknown configuration keys are ignored, but allowed.
     data = yaml.load(open(config, 'rt'), Loader=yaml.CLoader)
     subdirs = data.get('subdirs')
-    local = data.get('local', '')
+    local = data.get('local', None)
     versions = data.get('python_versions', [])
     patches = data.get('patches')
+    print(f"Sub-directories:{subdirs}")
+    print(f"Python version:{versions}")
+    print(f"Reference Directory: {local}")
 
     local_repos: List[RepoData] = []
-    if local:
+    if local is not None:
         local_repos = list(processing.fetch_local_repos(local, subdirs))
 
     now = datetime.datetime.now()
     patch = pathlib.Path(patches) / f'patch_{now.strftime("%Y%m%d_%H%M%S")}'
     patch.mkdir(parents=True, exist_ok=False)
+    print(f"Patch file: {patch.absolute()}")
 
     channel_repos: Dict[str, List[RepoData]] = collections.defaultdict(list)
     for channeldata in data['channels']:
         url = channeldata.get('url')
         include = channeldata.get('include', [])
         exclude = channeldata.get('exclude', [])
+
+        print(f"\nReading channel {url}")
+        print(f"Include: {'Yes' if include else 'No'}")
+        print(f"Exclude: {'Yes' if exclude else 'No'}")
 
         # Selected repositories need to be filtered prior to examining differences.
         original = processing.fetch_online_repos(url, subdirs)
@@ -46,6 +54,7 @@ def update(config: str):
 
     # Packages should be downloaded in groups of channels and repos.
     for channel, repos in channel_repos.items():
+        print(f"\nDownloading from {channel}")
         for repo in repos:
             packages = list(itertools.chain.from_iterable(repo.values()))
             destination = pathlib.Path(patch) / repo.subdir

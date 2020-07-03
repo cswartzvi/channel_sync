@@ -55,8 +55,8 @@ def download_packages(channel: str, packages: Iterable[PackageRecord],
     """
     destination = pathlib.Path(destination)
     subdir = destination.name
-    desc = f"{channel} [{subdir}]"
-    bar_format = f'{{desc:<{len(desc)+3}}}{{percentage:3.0f}}%|{{bar:75}}{{r_bar}}'
+    desc = f"{subdir}:"
+    bar_format = '{desc:<12}{percentage:3.0f}%|{bar:75}{r_bar}'
     with requests.Session() as session:
         for package in tqdm.tqdm(list(packages), ascii=True, bar_format=bar_format, desc=desc):
             download_package(channel, package, destination, session)
