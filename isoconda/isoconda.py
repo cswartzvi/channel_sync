@@ -5,11 +5,16 @@ import pathlib
 import yaml
 from typing import Dict, List
 
+import click
+
 from isoconda.models import RepoData
 import isoconda.processing as processing
 
 
+@click.command()
+@click.argument('config')
 def update(config: str):
+    """Generate a patch for a isolated Anaconda environment."""
 
     # Note: currently unknown configuration keys are ignored, but allowed.
     data = yaml.load(open(config, 'rt'), Loader=yaml.CLoader)
@@ -61,5 +66,5 @@ def update(config: str):
             processing.download_packages(channel, packages, destination)
 
 
-if __name__ == "__main__":
-    update('./config.yml')
+if __name__ == '__main__':
+    update()
