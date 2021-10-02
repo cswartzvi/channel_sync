@@ -1,8 +1,0 @@
-subdirs: [noarch, win-64]
-local:
-python_versions: [3.7]
-patches: ./patches
-channels:
-  - url: https://repo.anaconda.com/pkgs/main
-    include: []
-    exclude: []
