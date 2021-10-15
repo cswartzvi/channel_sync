@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from collections import defaultdict
-from typing import Dict, Set
 from urllib.parse import urljoin
 
 import requests
 
+from isoconda._typing import Grouping
 from isoconda.models import PackageRecord
 
 
-def fetch_packages(url: str) -> Dict[str, Set[PackageRecord]]:
+def fetch_packages(url: str) -> Grouping[PackageRecord]:
     """Fetches package records from an anaconda repository url.
 
     Args:

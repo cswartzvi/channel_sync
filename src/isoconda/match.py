@@ -92,7 +92,7 @@ class MatchSpec(metaclass=CachedInstances):
        second part must be the exact version.
 
     Note: Conda parses the version by splitting it into parts separated by |. If the part
-    begins with <, >, =, or !, it is parsed as a relational operator. Otherwise, it is parsed
+    begins with <, >, =, or !=, it is parsed as a relational operator. Otherwise, it is parsed
     as a version, possibly containing the "*" operator.
 
     See the Anaconda package match specifications for more details:
@@ -132,7 +132,7 @@ class MatchSpec(metaclass=CachedInstances):
     def from_spec_string(cls, spec: str):
         split = [item.strip() for item in spec.split()]
         length = len(split)
-        name = split[0]
+        name = split[0].strip()
         version = split[1] if length == 2 else ""
         build = split[2] if length == 3 else ""
         if length > 3:
@@ -151,9 +151,21 @@ class MatchSpec(metaclass=CachedInstances):
         return self._name
 
     @property
+    def spec_string(self) -> str:
+        """The specification string."""
+        if self.build:
+            return f"{self.name} {self.version} {self.build}"
+        return f"{self.name} {self.version}"
+
+    @property
     def version(self) -> str:
         """The package version."""
         return self._version
+
+    @property
+    def _key(self):
+        """Primary key for match specification."""
+        return (self.name, self.version, self.build)
 
     def match(self, name: str, version: str, build: str) -> bool:
         if name != self.name:
@@ -194,6 +206,14 @@ class MatchSpec(metaclass=CachedInstances):
     def _validate_version(self, version: str):
         if self.VALID_VERSION.search(version) is None:
             raise ValueError(f"invalid version character(s) {version}")
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, self.__class__):
+            return False
+        return self._key == other._key
+
+    def __hash__(self) -> int:
+        return hash(self._key)
 
     def __repr__(self):
         name = self.__class__.__name__
