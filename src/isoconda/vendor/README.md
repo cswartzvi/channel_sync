@@ -1,0 +1,3 @@
+## Vendoring
+
+Current versions of the `conda`  package are not available on PyPI (last update is from April 2017). Considering that we only need a _very_ small portion of the overall package we have chosen to vendor only the `models/version.py` file along with some minimal compatibility and import scaffolding. Please note that in the future we may need to switch to a more robust vendoring strategy.
