@@ -1,7 +1,0 @@
--r ./requirements.in
-pytest
-mypy
-flake8
-black
-pre-commit
-types-requests

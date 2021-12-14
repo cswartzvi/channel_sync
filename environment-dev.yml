@@ -1,0 +1,15 @@
+name: isoconda
+channels:
+  - conda-forge
+dependencies:
+  - flake8
+  - types-requests
+  - black
+  - requests
+  - mypy
+  - python=3.8
+  - conda-lock
+  - pytest
+  - networkx
+  - pre-commit
+  - conda

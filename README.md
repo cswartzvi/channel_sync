@@ -7,4 +7,3 @@ Allows users to create and maintain custom Anaconda channels that are deployable
 
 ## Installation
 Coming Soon. This project is currently a work in progress.
-

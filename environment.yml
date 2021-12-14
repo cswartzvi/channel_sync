@@ -1,0 +1,8 @@
+name: isoconda
+channels:
+  - conda-forge
+dependencies:
+  - requests
+  - python=3.8
+  - networkx
+  - conda

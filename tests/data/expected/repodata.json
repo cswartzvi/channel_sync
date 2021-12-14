@@ -1,0 +1,125 @@
+{
+    "info": {
+        "subdir": "win-64"
+    },
+    "packages": {
+        "blas-1.0-mkl.tar.bz2": {
+            "build": "mkl",
+            "build_number": 0,
+            "depends": [],
+            "license": "",
+            "md5": "",
+            "name": "blas",
+            "sha256": "",
+            "size": 6,
+            "subdir": "win-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "mkl-service-2.3.0-py38b001_0.tar.bz2": {
+            "build": "py38b001_0",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9.0a0"
+            ],
+            "license": "BSD 3-Clause",
+            "md5": "",
+            "name": "mkl-service",
+            "sha256": "",
+            "size": 100,
+            "subdir": "win-64",
+            "timestamp": 1624857769335,
+            "version": "2.3.0"
+        },
+        "mkl-service-2.4.0-py38b001_0.tar.bz2": {
+            "build": "py38b001_0",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9.0a0"
+            ],
+            "license": "BSD 3-Clause",
+            "md5": "",
+            "name": "mkl-service",
+            "sha256": "",
+            "size": 100,
+            "subdir": "win-64",
+            "timestamp": 1624857769335,
+            "version": "2.4.0"
+        },
+        "numpy-1.20-py38b001_0.tar.bz2": {
+            "build": "py38b001_0",
+            "build_number": 0,
+            "depends": [
+                "blas 1.0 mkl",
+                "python >=3.8,<3.9.0a0",
+                "mkl-service >=2.3.0,<3.0a0"
+            ],
+            "license": "BSD 3-Clause",
+            "md5": "",
+            "name": "numpy",
+            "sha256": "",
+            "size": 100,
+            "subdir": "win-64",
+            "timestamp": 1624857769335,
+            "version": "1.20"
+        },
+        "numpy-1.21-py38b001_0.tar.bz2": {
+            "build": "py38b001_0",
+            "build_number": 0,
+            "depends": [
+                "blas 1.0 mkl",
+                "python >=3.8,<3.9.0a0",
+                "mkl-service >=2.3.0,<3.0a0"
+            ],
+            "license": "BSD 3-Clause",
+            "md5": "",
+            "name": "numpy",
+            "sha256": "",
+            "size": 100,
+            "subdir": "win-64",
+            "timestamp": 1624857769335,
+            "version": "1.21"
+        },
+        "python-3.8.0-b001_0.tar.bz2": {
+            "build": "b001_0",
+            "build_number": 0,
+            "depends": [
+                "sqlite >=3.33.0,<4.0a0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "python",
+            "sha256": "",
+            "size": 100,
+            "subdir": "win-64",
+            "timestamp": 1624857769335,
+            "version": "3.8.0"
+        },
+        "sqlite-3.33.0-b001_0.tar.bz2": {
+            "build": "b001_0",
+            "build_number": 0,
+            "depends": [],
+            "license": "Public-Domain",
+            "md5": "",
+            "name": "sqlite",
+            "sha256": "",
+            "size": 100,
+            "subdir": "win-64",
+            "timestamp": 1624857769335,
+            "version": "3.33.0"
+        },
+        "sqlite-3.36.0-b001_0.tar.bz2": {
+            "build": "b001_0",
+            "build_number": 0,
+            "depends": [],
+            "license": "Public-Domain",
+            "md5": "",
+            "name": "sqlite",
+            "sha256": "",
+            "size": 100,
+            "subdir": "win-64",
+            "timestamp": 1624857769335,
+            "version": "3.36.0"
+        }
+    }
+}

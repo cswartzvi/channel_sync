@@ -1,0 +1,4 @@
+target = "src/isoconda/_vendor"
+packages = [
+    "git+https://github.com/conda/conda.git@4.10.3"
+]
