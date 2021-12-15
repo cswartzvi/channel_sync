@@ -113,19 +113,20 @@ def _prune_unsatisfied(
 ):
     """Updates candidates by pruning unsatisfied specifications recursively."""
     for pred_record in list(graph.predecessors(spec)):
-        # if pred_record not in graph.nodes:
-        #     continue  # already removed
+        if pred_record not in graph.nodes:
+            continue  # already removed
         candidates.remove(pred_record)
         graph.remove_edge(pred_record, spec)
         _prune_orphaned(pred_record, candidates, graph)
         for pred_spec in list(graph.predecessors(pred_record)):
-            # if pred_spec not in graph.nodes:
-            #     continue  # already removed
+            if pred_spec not in graph.nodes:
+                continue  # already removed
             graph.remove_edge(pred_spec, pred_record)
             if graph.out_degree(pred_spec) == 0:
                 _prune_unsatisfied(pred_spec, candidates, graph)
         graph.remove_node(pred_record)
-    graph.remove_node(spec)
+    if spec in graph.nodes:
+        graph.remove_node(spec)
 
 
 def _prune_orphaned(
@@ -134,16 +135,19 @@ def _prune_orphaned(
     """Updates candidates by identifying and removing orphaned package records and
     dependencies."""
     for child_spec in list(graph.successors(record)):
-        if child_spec in graph.nodes:
+        if child_spec not in graph.nodes:
             continue  # already removed
         graph.remove_edge(record, child_spec)
         if graph.in_degree(child_spec) > 0:
             continue  # not orphaned, dependencies of another package
         for child_record in list(graph.successors(child_spec)):
+            if child_record not in graph.nodes:
+                continue
             graph.remove_edge(child_spec, child_record)
             if graph.in_degree(child_record) > 0:
                 continue  # not orphaned, satisfies another specification
             _prune_orphaned(child_record, candidates, graph)
             candidates.remove(child_record)
             graph.remove_node(child_record)
-        graph.remove_node(child_record)
+        if child_spec in graph.nodes:
+            graph.remove_node(child_spec)
