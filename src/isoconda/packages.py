@@ -50,16 +50,16 @@ def find_candidates(
     unprocessed_specs: Set[MatchSpec] = set(specs)
 
     while unprocessed_specs:
-        temp_specs: Set[MatchSpec] = set()
+        processing_specs: Set[MatchSpec] = set()
         for spec in unprocessed_specs:
             for record in match_records(spec, records, constraints):
                 candidates.add(record)
                 graph.add_edge(spec, record)
                 for dependency in get_dependencies(record):
-                    temp_specs.add(dependency)
+                    processing_specs.add(dependency)
                     graph.add_edge(record, dependency)
-        unprocessed_specs = temp_specs.difference(processed_specs)
-        processed_specs.update(temp_specs)
+        unprocessed_specs = processing_specs.difference(processed_specs)
+        processed_specs.update(processing_specs)
 
     return candidates, graph
 
