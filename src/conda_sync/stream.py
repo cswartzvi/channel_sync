@@ -4,7 +4,7 @@ T = TypeVar("T")
 
 
 class UniqueStream(Iterator[T]):
-    """A real-time, mutable, stream of items.
+    """A stream of items that is mutable during iteration.
 
     Args:
         items: Initial items in the stream.
