@@ -14,7 +14,7 @@ repos:
   - id: mypy
     name: mypy
     entry: python -m mypy
-    args: [src]
+    args: []
     language: conda
     types: [python]
     additional_dependencies:
