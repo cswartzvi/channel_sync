@@ -5,8 +5,6 @@ from typing import Iterable, Iterator, Set, Union
 from conda.api import SubdirData
 from conda.exports import PackageRecord
 
-# from conda_build.api import update_index
-
 
 class ChannelData:
     """High-level management and usage of an anaconda channel.
