@@ -1,0 +1,1359 @@
+{
+    "info": {
+        "subdir": "linux-64"
+    },
+    "packages": {
+        "pip-1.0-b001_0.tar.bz2": {
+            "build": "b001_0",
+            "build_number": 0,
+            "depends": [ ],
+            "license": "MIT",
+            "md5": "",
+            "name": "pip",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "python-3.7.0-b001_0.tar.bz2": {
+            "build": "b001_0",
+            "build_number": 0,
+            "depends": [
+                "standalone-library >=1.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "python",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "3.7.0"
+        },
+        "python-3.8.0-b001_0.tar.bz2": {
+            "build": "b001_0",
+            "build_number": 0,
+            "depends": [
+                "standalone-library >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "python",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "3.8.0"
+        },
+        "python-3.9.0-b001_0.tar.bz2": {
+            "build": "b001_0",
+            "build_number": 0,
+            "depends": [
+                "standalone-library >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "python",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "3.9.0"
+        },
+        "standalone-library-0.9_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [ ],
+            "license": "MIT",
+            "md5": "",
+            "name": "standalone-library",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "0.9"
+        },
+        "standalone-library-1.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [ ],
+            "license": "MIT",
+            "md5": "",
+            "name": "standalone-library",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "standalone-library-2.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [ ],
+            "license": "MIT",
+            "md5": "",
+            "name": "standalone-library",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package1-1.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package1",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package1-2.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package1",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package2-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package2",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package2-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package2",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package2-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package2",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package2-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package2",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package2-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package2",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package2-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package2",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package3-1.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package3",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package3-1.0_1.tar.bz2": {
+            "build": "",
+            "build_number": 1,
+            "depends": [
+                "python"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package3",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package3-2.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package3",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package3-2.0_1.tar.bz2": {
+            "build": "",
+            "build_number": 1,
+            "depends": [
+                "python"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package3",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package4-1.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python",
+                "standalone-library >=1.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package4",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package4-2.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python",
+                "standalone-library >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package4",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package5-1.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python",
+                "package1 >=1.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package5",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package5-2.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python",
+                "package1 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package5",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package6-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package1 >=1.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package6",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package6-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package1 >=1.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package6",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package6-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package1 >=1.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package6",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package6-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package1 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package6",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package6-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package1 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package6",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package6-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package1 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package6",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package7-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package2 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package7",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package7-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package2 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package7",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package7-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package2 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package7",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package7-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package2 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package7",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package7-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package2 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package7",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package7-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package2 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package7",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package8-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package3 >=1.0,<=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package8",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package8-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package3 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package8",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package8-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package3 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package8",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package8-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package3 >=1.0,<=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package8",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package8-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package3 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package8",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package8-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package3 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package8",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package9a-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package9b >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9a",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package9a-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package9b >=1.0,2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9a",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package9a-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package9b >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9a",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package9a-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package9b >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9a",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package9a-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package9b >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9a",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package9a-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package9b >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9a",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package9b-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package9a >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9b",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package9b-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package9a >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9b",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package9b-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package9a >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9b",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package9b-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package9a >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9b",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package9b-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package9a >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9b",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package9b-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package9a >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package9b",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package10-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package6 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package10",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package10-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package6 >=1.0,2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package10",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package10-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package6 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package10",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package10-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package6 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package10",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package10-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package6 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package10",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package10-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package6 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package10",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package11-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package7 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package11",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package11-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package7 >=1.0,2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package11",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package11-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package7 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package11",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package11-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package7 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package11",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package11-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package7 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package11",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package11-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package7 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package11",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package12-1.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python",
+                "package1 >=1.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package12",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package12-2.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python",
+                "package1 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package12",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package12-99.0_0.tar.bz2": {
+            "build": "",
+            "build_number": 0,
+            "depends": [
+                "python",
+                "package1 >=99.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package12",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "99.0"
+        },
+        "package13-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package12 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package13-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package12 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package13-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package12 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package13-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package12 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package13-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package12 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package13-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package12 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package13-99.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package12 >=99.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "99.0"
+        },
+        "package13-99.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package12 >=99.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "99.0"
+        },
+        "package13-99.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package12 >=99.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "99.0"
+        },
+        "package14-1.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package12 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package14",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package14-1.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package12 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package14",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package14-1.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package12 >=1.0,<2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package14",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "1.0"
+        },
+        "package14-2.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package12 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package14",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package14-2.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package12 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package14",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package14-2.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package12 >=2.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package14",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "2.0"
+        },
+        "package14-99.0_py37_0.tar.bz2": {
+            "build": "py37",
+            "build_number": 0,
+            "depends": [
+                "python >=3.7,<3.8",
+                "package2 >=99.0",
+                "package12 >=99.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package13",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "99.0"
+        },
+        "package14-99.0_py38_0.tar.bz2": {
+            "build": "py38",
+            "build_number": 0,
+            "depends": [
+                "python >=3.8,<3.9",
+                "package2 >=99.0",
+                "package12 >=99.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package14",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "99.0"
+        },
+        "package14-99.0_py39_0.tar.bz2": {
+            "build": "py39",
+            "build_number": 0,
+            "depends": [
+                "python >=3.9,<3.10",
+                "package2 >=99.0",
+                "package12 >=99.0"
+            ],
+            "license": "MIT",
+            "md5": "",
+            "name": "package14",
+            "sha256": "",
+            "size": 100,
+            "subdir": "linux-64",
+            "timestamp": 1624857769335,
+            "version": "99.0"
+        }
+    }
+}

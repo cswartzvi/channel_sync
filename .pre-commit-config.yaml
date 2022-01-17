@@ -23,6 +23,7 @@ repos:
       - mypy
       - click
       - types-requests
+      - pytest
 
   - id: flake8
     name: flake8
