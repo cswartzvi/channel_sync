@@ -13,6 +13,7 @@ class ChannelData:
         channel: The target anaconda channel url or identifier, e.g.:
             * "https://repo.anaconda.com/pkgs/main/linux-64"
             * "conda-forge/linux-64"
+            * "file:///path/to/local/channel"
         platforms: The selected platforms within the anaconda channel.
     """
 
