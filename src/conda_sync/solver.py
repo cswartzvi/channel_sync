@@ -2,9 +2,9 @@ from typing import Iterable, Iterator, Set, Tuple, Union
 
 import networkx as nx
 
-from isoconda.grouping import Grouping, group_by
-from isoconda.stream import UniqueStream
-from isoconda.wrapper import ChannelData, PackageRecord
+from conda_sync.grouping import Grouping, group_by
+from conda_sync.stream import UniqueStream
+from conda_sync.wrapper import ChannelData, PackageRecord
 
 
 class PackageSolver:
