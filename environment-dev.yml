@@ -5,11 +5,9 @@ dependencies:
   - flake8
   - types-requests
   - black
-  - requests
   - mypy
-  - python=3.8
   - conda-lock
   - pytest
-  - networkx
+  - pytest-cov
   - pre-commit
-  - conda
+  - isort

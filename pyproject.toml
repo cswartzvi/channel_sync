@@ -1,38 +1,35 @@
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.isort]
+profile = "black"
 
-[tool.poetry]
-name = "isoconda"
-version = "0.1.0"
-description = "Create and maintain isolated Anaconda channels."
-authors = ["Charles Swartz"]
-license = "MIT"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-requests = "^2.26.0"
-PyYAML = "^6.0"
-"ruamel.yaml" = "^0.17.16"
-loguru = "^0.5.3"
-networkx = "^2.6.3"
+[tool.mypy]
+mypy_path = "src"
+ignore_missing_imports = false
+check_untyped_defs = true
 
-[tool.poetry.dev-dependencies]
-mypy = "^0.910"
-flake8 = "^4.0.1"
-black = "^21.9b0"
-pre-commit = "^2.15.0"
-vendorize = "^0.2.2"
-types-requests = "^2.25.11"
-pytest = "^6.2.5"
-conda-lock = "^0.13.2"
+[[tool.mypy.overrides]]
+module = "conda.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "networkx.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "ruamel.*"
+ignore_missing_imports = true
+
 
 [tool.pytest.ini_options]
-testpaths = [
-    "tests",
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "-ra",
 ]
-filterwarnings = "ignore::DeprecationWarning:conda.*"
+testpaths = "tests"
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "serial",
+    "slow: integration tests with long execution time"
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:conda.*"
 ]

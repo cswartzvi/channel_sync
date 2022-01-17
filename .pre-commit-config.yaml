@@ -1,0 +1,41 @@
+repos:
+
+- repo: local
+  hooks:
+  - id: black
+    name: black
+    entry: python -m black
+    args: [--quiet]
+    language: conda
+    types: [python]
+    additional_dependencies:
+      - black
+
+  - id: mypy
+    name: mypy
+    entry: python -m mypy
+    args: []
+    language: conda
+    types: [python]
+    additional_dependencies:
+      - -c
+      - conda-forge
+      - mypy
+      - click
+      - types-requests
+
+  - id: flake8
+    name: flake8
+    entry: python -m flake8
+    language: conda
+    types: [python]
+    additional_dependencies:
+      - flake8
+
+  - id: isort
+    name: isort
+    entry: python -m isort src
+    language: conda
+    types: [python]
+    additional_dependencies:
+      - isort

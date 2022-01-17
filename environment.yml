@@ -6,3 +6,10 @@ dependencies:
   - python=3.8
   - networkx
   - conda
+  - flake8
+  - types-requests
+  - black
+  - mypy
+  - pytest
+  - pytest-cov
+  - pre-commit
