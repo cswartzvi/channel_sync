@@ -1,6 +1,6 @@
-"""Contains wrappers around the `conda` and `conda_build` public APIs."""
+"""Adapters and centralized access point for the `conda` public APIs."""
 
-from typing import Iterable, Iterator, Set, Union
+from typing import Iterable, Iterator, Union
 
 from conda.api import SubdirData
 from conda.exports import PackageRecord
@@ -29,7 +29,7 @@ class ChannelData:
         for subdir in self._subdirs:
             yield from subdir.iter_records()
 
-    def query(self, specs: Union[str, Iterable[str]]) -> Set[PackageRecord]:
+    def query(self, specs: Union[str, Iterable[str]]) -> Iterator[PackageRecord]:
         """Run a package record query against the anaconda channel.
 
         Args:
@@ -41,11 +41,9 @@ class ChannelData:
         """
         if isinstance(specs, str):
             specs = [specs]
-        result = set()
         for spec in specs:
             for subdir in self._subdirs:
-                result.update(subdir.query(spec))
-        return result
+                yield from subdir.query(spec)
 
     def reload(self) -> None:
         """Reload cached repodata.json files for subdirs."""

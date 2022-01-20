@@ -1,6 +1,13 @@
-from typing import Iterable, Iterator, TypeVar
+"""Utilities for iteration and grouping."""
+
+from collections import defaultdict
+from typing import Callable, Iterable, Iterator, Mapping, TypeVar
 
 T = TypeVar("T")
+TKey = TypeVar("TKey")
+TValue = TypeVar("TValue")
+
+Grouping = Mapping[TKey, Iterable[TValue]]
 
 
 class UniqueStream(Iterator[T]):
@@ -34,3 +41,22 @@ class UniqueStream(Iterator[T]):
         except IndexError:
             raise StopIteration
         return item
+
+
+def groupby(
+    items: Iterable[TValue], func: Callable[[TValue], TKey]
+) -> Grouping[TKey, TValue]:
+    """Groups items by the results of the specified function.
+
+    Args:
+        items: An iterable of items to be group.
+        func: Key-producing function.
+
+    Returns:
+        Items grouped by the results of the specified function.
+    """
+    grouping = defaultdict(set)
+    for item in items:
+        key = func(item)
+        grouping[key].add(item)
+    return grouping

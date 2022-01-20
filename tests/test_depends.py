@@ -4,8 +4,8 @@ from typing import List, Set
 
 import pytest
 
-from conda_sync.solver import PackageSolver
-from conda_sync.wrapper import ChannelData, PackageRecord
+from conda_sync.depends import DependencyScout
+from conda_sync.external import ChannelData, PackageRecord
 
 TEST_PLATFORMS = ["linux-64", "noarch"]
 
@@ -80,7 +80,14 @@ def test_explore_tmp_path_factory(datadir, tmp_path_factory, test_name):
 
     remove_contents(channel)
     shutil.copytree(datadir / "all", channel, dirs_exist_ok=True)
-    solver = PackageSolver(channel.resolve().as_uri(), platforms=TEST_PLATFORMS)
+    solver = DependencyScout(channel.resolve().as_uri(), platforms=TEST_PLATFORMS)
     solver.reload()  # required because channel is cached
-    actual, _ = solver.solve(specs)
+    iterable, _ = solver.search(specs)
+    actual = set(iterable)
     assert expected == actual
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize("packages", [("python >=3.8,<3.9.0a0", "numpy >=1.20")])
+def test_packages_are_installable(tmp_path_factory, packages):
+    print(packages)

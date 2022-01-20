@@ -1,3 +1,3 @@
-from conda_sync.cli import cli
+from conda_sync.cli import app
 
-cli()
+app(prog_name="conda-sync")

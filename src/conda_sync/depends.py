@@ -1,19 +1,25 @@
-from typing import Iterable, Iterator, Set, Tuple, Union
+from typing import Iterable, Iterator, Tuple, Union
 
 import networkx as nx
 
-from conda_sync.grouping import Grouping, group_by
-from conda_sync.stream import UniqueStream
-from conda_sync.wrapper import ChannelData, PackageRecord
+from conda_sync.external import ChannelData, PackageRecord
+from conda_sync.utils import Grouping, UniqueStream, groupby
 
 
-class PackageSolver:
-    """Anaconda package record solver.
+class DependencyScout:
+    """Anaconda package dependency finder.
+
+    Note: This is not a package solver that attempts to find a singular
+    path through a dependency graph. Instead, the purpose of this class
+    is to recursively find *all* packages, within a channel, that satisfy
+    the dependencies of a package. In terms of the dependency graph this
+    is equivalent to finding all the successor nodes of a dependency that
+    are themselves satisfied by at least one package.
 
     Args:
-        channel: The canonical name, URL, or URI of the anaconda channel.
-        platforms: The platforms to include in the solution. Does not
-            automatically include the noarch platform.
+        channel: The canonical name, URL, or URI of an anaconda channel.
+        platforms: The platforms to include in the solution. Note: Does not
+            automatically include the "noarch" platform.
     """
 
     _INCLUDE = "include"
@@ -21,10 +27,20 @@ class PackageSolver:
     def __init__(self, channel: str, platforms: Union[str, Iterable[str]]) -> None:
         self._channel_data = ChannelData(channel, platforms)
 
-    def solve(self, specs: Iterable[str]) -> Tuple[Set[PackageRecord], nx.DiGraph]:
-        constraints = group_by(self._channel_data.query(specs), lambda pkg: pkg.name)
+    def search(
+        self, specs: Iterable[str]
+    ) -> Tuple[Iterator[PackageRecord], nx.DiGraph]:
+        """Searches for package dependencies for given anaconda match specifications.
+
+        Args:
+            specs: An iterable of anaconda match specifications.
+
+        Returns:
+            A tuple of a package record iterator and the annotated dependency graph.
+        """
+        constraints = groupby(self._channel_data.query(specs), lambda pkg: pkg.name)
         graph = self._construct_dependency_graph(specs, constraints)
-        records = set(self._extract_records(graph))
+        records = self._extract_records(graph)
         return records, graph
 
     def _construct_dependency_graph(
