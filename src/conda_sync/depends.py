@@ -12,9 +12,9 @@ class DependencyScout:
     Note: This is not a package solver that attempts to find a singular
     path through a dependency graph. Instead, the purpose of this class
     is to recursively find *all* packages, within a channel, that satisfy
-    the dependencies of a package. In terms of the dependency graph this
-    is equivalent to finding all the successor nodes of a dependency that
-    are themselves satisfied by at least one package.
+    the dependencies of a given package. In terms of the dependency graph
+    this is equivalent to finding all the successor nodes of a dependency
+    that are themselves satisfied by at least one package.
 
     Args:
         channel: The canonical name, URL, or URI of an anaconda channel.
