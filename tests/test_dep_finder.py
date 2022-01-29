@@ -4,8 +4,8 @@ from typing import List, Set
 
 import pytest
 
-from conda_sync.depends import DependencyScout
-from conda_sync.external import ChannelData, PackageRecord
+from conda_local.dep_finder import DependencyFinder
+from conda_local.external import ChannelData, PackageRecord
 
 TEST_PLATFORMS = ["linux-64", "noarch"]
 
@@ -80,7 +80,7 @@ def test_explore_tmp_path_factory(datadir, tmp_path_factory, test_name):
 
     remove_contents(channel)
     shutil.copytree(datadir / "all", channel, dirs_exist_ok=True)
-    solver = DependencyScout(channel.resolve().as_uri(), platforms=TEST_PLATFORMS)
+    solver = DependencyFinder(channel.resolve().as_uri(), platforms=TEST_PLATFORMS)
     solver.reload()  # required because channel is cached
     iterable, _ = solver.search(specs)
     actual = set(iterable)

@@ -1,9 +1,9 @@
 """Adapters and centralized access point for the `conda` public APIs."""
 
-from typing import Iterable, Iterator, Union
+from typing import Iterable, Iterator, Tuple, Union
 
 from conda.api import SubdirData
-from conda.exports import PackageRecord
+from conda.exports import PackageRecord as PackageRecord
 
 
 class ChannelData:
@@ -17,7 +17,9 @@ class ChannelData:
         platforms: The selected platforms within the anaconda channel.
     """
 
-    def __init__(self, channel: str, platforms: Union[str, Iterable[str]]) -> None:
+    def __init__(
+        self, channels: Union[str, Iterable[str]], subdirs: Union[str, Iterable[str]]
+    ) -> None:
         if not channel.endswith("/"):
             channel += "/"
         if isinstance(platforms, str):
@@ -49,3 +51,21 @@ class ChannelData:
         """Reload cached repodata.json files for subdirs."""
         for subdir in self._subdirs:
             subdir.reload()
+
+
+def no_channel_hash(record: PackageRecord) -> Tuple[str, ...]:
+    """Returns an alternative package record hash that does NOT depend on channel.
+
+    Args:
+        record: A anaconda package.
+
+    Returns:
+        A tuple of subdir, name, version, build_number, build.
+    """
+    return (
+        record.subdir,
+        record.name,
+        record.version,
+        record.build_number,
+        record.build,
+    )

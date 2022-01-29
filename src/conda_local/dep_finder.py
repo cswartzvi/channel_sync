@@ -1,12 +1,12 @@
-from typing import Iterable, Iterator, Tuple, Union
+from typing import Iterable, Iterator, Union
 
 import networkx as nx
 
-from conda_sync.external import ChannelData, PackageRecord
-from conda_sync.utils import Grouping, UniqueStream, groupby
+from conda_local.external import ChannelData, PackageRecord
+from conda_local.utils import Grouping, UniqueStream, groupby
 
 
-class DependencyScout:
+class DependencyFinder:
     """Anaconda package dependency finder.
 
     Note: This is not a package solver that attempts to find a singular
@@ -27,9 +27,7 @@ class DependencyScout:
     def __init__(self, channel: str, platforms: Union[str, Iterable[str]]) -> None:
         self._channel_data = ChannelData(channel, platforms)
 
-    def search(
-        self, specs: Iterable[str]
-    ) -> Tuple[Iterator[PackageRecord], nx.DiGraph]:
+    def search(self, specs: Iterable[str]) -> Iterator[PackageRecord]:
         """Searches for package dependencies for given anaconda match specifications.
 
         Args:
@@ -41,7 +39,7 @@ class DependencyScout:
         constraints = groupby(self._channel_data.query(specs), lambda pkg: pkg.name)
         graph = self._construct_dependency_graph(specs, constraints)
         records = self._extract_records(graph)
-        return records, graph
+        yield from records
 
     def _construct_dependency_graph(
         self, specs: Iterable[str], constraints: Grouping[str, PackageRecord]
