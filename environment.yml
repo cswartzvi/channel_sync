@@ -1,15 +1,8 @@
-name: isoconda
 channels:
   - conda-forge
 dependencies:
-  - requests
+  # production
   - python=3.8
   - networkx
   - conda
-  - flake8
-  - types-requests
-  - black
-  - mypy
-  - pytest
-  - pytest-cov
-  - pre-commit
+  - conda-build
