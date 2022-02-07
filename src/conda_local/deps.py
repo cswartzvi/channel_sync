@@ -1,9 +1,12 @@
-from typing import Iterable, Iterator, Union
+import logging
+from typing import Iterable, Iterator, Tuple
 
 import networkx as nx
 
-from conda_local.external import ChannelData, PackageRecord
+from conda_local.adapters import ChannelData, PackageRecord
 from conda_local.utils import Grouping, UniqueStream, groupby
+
+logging.Logger(__name__)
 
 
 class DependencyFinder:
@@ -11,10 +14,10 @@ class DependencyFinder:
 
     Note: This is not a package solver that attempts to find a singular
     path through a dependency graph. Instead, the purpose of this class
-    is to recursively find *all* packages, within a channel, that satisfy
-    the dependencies of a given package. In terms of the dependency graph
-    this is equivalent to finding all the successor nodes of a dependency
-    that are themselves satisfied by at least one package.
+    is to recursively find *all* satisfied packages, within a channel,
+    that satisfy the dependencies of a given package. In terms of the
+    dependency graph this is equivalent to finding all the successor nodes
+    of a dependency that are themselves satisfied by at least one package.
 
     Args:
         channel: The canonical name, URL, or URI of an anaconda channel.
@@ -24,14 +27,16 @@ class DependencyFinder:
 
     _INCLUDE = "include"
 
-    def __init__(self, channel: str, platforms: Union[str, Iterable[str]]) -> None:
-        self._channel_data = ChannelData(channel, platforms)
+    def __init__(self, channels: Iterable[str], subdirs: Iterable[str]) -> None:
+        self._channel_data = ChannelData(channels, subdirs)
 
-    def search(self, specs: Iterable[str]) -> Iterator[PackageRecord]:
+    def search(
+        self, specs: Iterable[str]
+    ) -> Tuple[Iterator[PackageRecord], nx.DiGraph]:
         """Searches for package dependencies for given anaconda match specifications.
 
         Args:
-            specs: An iterable of anaconda match specifications.
+            specs: The anaconda match specifications used in the dependency search.
 
         Returns:
             A tuple of a package record iterator and the annotated dependency graph.
@@ -39,7 +44,7 @@ class DependencyFinder:
         constraints = groupby(self._channel_data.query(specs), lambda pkg: pkg.name)
         graph = self._construct_dependency_graph(specs, constraints)
         records = self._extract_records(graph)
-        yield from records
+        return records, graph
 
     def _construct_dependency_graph(
         self, specs: Iterable[str], constraints: Grouping[str, PackageRecord]
@@ -52,7 +57,7 @@ class DependencyFinder:
                 the construction of the dependency graph.
 
         Returns:
-            A directed graph of recursively alternating match specification strings
+            A directed graph of recursively alternating match specification objects
             (root node) and package record objects. Additionally, each node has an
             attribute "include" that indicates whether or not a node is included in
             the final solution.
@@ -61,8 +66,9 @@ class DependencyFinder:
         spec_stream = UniqueStream(specs)
 
         for spec in spec_stream:
+            logging.info("Processing spec: %s", spec)
             graph.add_node(spec, **{self._INCLUDE: True})
-            for record in self._channel_data.query(spec):
+            for record in self._channel_data.query([spec]):  # must be list
                 if self._is_constrainted(record, constraints):
                     continue
                 graph.add_node(record, **{self._INCLUDE: True})
