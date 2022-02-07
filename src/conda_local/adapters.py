@@ -6,10 +6,10 @@ from pathlib import Path
 from typing import Iterable, Iterator, List
 
 from conda.api import SubdirData
-from conda.exports import _download, PackageRecord as _PackageRecord  # noqa
 from conda.exceptions import UnavailableInvalidChannel  # noqa
+from conda.exports import PackageRecord as _PackageRecord  # noqa
+from conda.exports import _download
 from conda_build.api import update_index  # noqa
-
 
 LOGGER = logging.Logger(__name__)
 

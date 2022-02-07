@@ -53,9 +53,7 @@ from conda_local.cli import app
     help="Determins if download packages should be verified.",
 )
 @click.option(
-    "--patch-folder",
-    default="",
-    help="Override location for patch directory",
+    "--patch-folder", default="", help="Override location for patch directory",
 )
 def sync(specs, channels, subdirs, target, patch, noarch, index, verify, patch_folder):
     if noarch:

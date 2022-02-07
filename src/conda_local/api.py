@@ -6,14 +6,14 @@ from typing import Iterable, Iterator, List, Optional, Set, Tuple, TypeVar, Unio
 
 from tqdm import tqdm
 
-from conda_local.deps import DependencyFinder
 from conda_local.adapters import (
     ChannelData,
-    download_package,
     PackageRecord,
     UnavailableInvalidChannel,
+    download_package,
     update_index,
 )
+from conda_local.deps import DependencyFinder
 
 T = TypeVar("T", covariant=True)
 OneOrMoreStrings = Union[str, Iterable[str]]

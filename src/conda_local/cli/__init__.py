@@ -2,7 +2,6 @@ import logging
 
 import click
 
-
 LOGGER = logging.Logger(__name__)
 
 

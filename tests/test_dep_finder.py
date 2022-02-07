@@ -4,8 +4,8 @@ from typing import List, Set
 
 import pytest
 
-from conda_local.deps import DependencyFinder
 from conda_local.adapters import ChannelData, PackageRecord
+from conda_local.deps import DependencyFinder
 
 TEST_PLATFORMS = ["linux-64", "noarch"]
 
