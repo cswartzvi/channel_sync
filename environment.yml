@@ -1,5 +1,8 @@
+channels:
+  - conda-forge
 dependencies:
-  - python =3.8
+  # production
+  - python=3.8
   - networkx
   - conda
   - conda-build
