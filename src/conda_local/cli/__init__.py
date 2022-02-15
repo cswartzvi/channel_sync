@@ -15,4 +15,4 @@ def app(verbose):
         LOGGER.setLevel(logging.DEBUG)
 
 
-from conda_local.cli import cmd_diff, cmd_merge, cmd_sync, cmd_verify  # noqa
+from conda_local.cli import cmd_merge, cmd_sync  # noqa

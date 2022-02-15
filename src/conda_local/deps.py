@@ -6,7 +6,7 @@ import networkx as nx
 from conda_local.adapters import ChannelData, PackageRecord
 from conda_local.utils import Grouping, UniqueStream, groupby
 
-logging.Logger(__name__)
+LOGGER = logging.Logger(__name__)
 
 
 class DependencyFinder:

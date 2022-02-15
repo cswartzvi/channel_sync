@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 import click
@@ -59,4 +60,26 @@ def sync(specs, channels, subdirs, target, patch, noarch, index, verify, patch_f
     if noarch:
         if "noarch" not in subdirs:
             subdirs += ("noarch",)
-    api.sync(channels, target, subdirs, specs, index, verify, patch, patch_folder)
+
+    if patch:
+        if patch_folder:
+            patch_folder = Path(patch_folder)
+        else:
+            now = datetime.datetime.now()
+            patch_folder = Path(f"patch_{now.strftime('%Y%m%d_%H%M%S')}")
+
+    api.sync(
+        channels,
+        target,
+        subdirs,
+        specs,
+        index=index,
+        verify=verify,
+        patch=patch_folder,
+        progress=True,
+    )
+
+    if patch:
+        click.echo(f"Patch created: {patch_folder.resolve()}")
+    else:
+        click.echo("Synchronization complete!")

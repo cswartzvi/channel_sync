@@ -1,11 +1,12 @@
 """High-level api functions for conda-local."""
 
-import datetime
+import shutil
 from pathlib import Path
 from typing import Iterable, Iterator, List, Optional, Set, Tuple, TypeVar, Union, cast
 
 from tqdm import tqdm
 
+from conda_local._typing import OneOrMorePackageRecords, OneOrMoreStrings, PathOrString
 from conda_local.adapters import (
     ChannelData,
     PackageRecord,
@@ -14,11 +15,10 @@ from conda_local.adapters import (
     update_index,
 )
 from conda_local.deps import DependencyFinder
+from conda_local.patch import read_patch_summary, write_patch_summary
+from conda_local.spinner import Spinner
 
 T = TypeVar("T", covariant=True)
-OneOrMoreStrings = Union[str, Iterable[str]]
-OneOrMorePackageRecords = Union[PackageRecord, Iterable[PackageRecord]]
-PathOrString = Union[str, Path]
 
 
 def diff(
@@ -61,6 +61,7 @@ def diff(
 def download_packages(
     records: OneOrMorePackageRecords,
     destination: Path,
+    *,
     verify: bool = True,
     progress: bool = True,
 ) -> None:
@@ -95,14 +96,49 @@ def iterate(
     yield from channel_data.iter_records()
 
 
-def merge():
-    pass
+def merge(
+    local: PathOrString,
+    patch: PathOrString,
+    *,
+    index: bool = True,
+    progress: bool = False,
+):
+    """Merges a patch produced by conda_local with a local anaconda channel.
+
+    Args:
+        local: The location of the local anaconda channel.
+        patch: The location of the conda_local patch directory.
+        index: Determines if the local channel index should be updated.
+
+    """
+    patch = Path(patch)
+    local = Path(local)
+    summary = read_patch_summary(patch / "patch_summary.json")
+    disable = not progress
+
+    for added in tqdm(
+        summary.added, desc="Adding packages", disable=disable, leave=False
+    ):
+        source = patch / added
+        destination = local / added
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(source, destination)
+
+    for removed in tqdm(
+        summary.removed, desc="Removing packages", disable=disable, leave=False,
+    ):
+        path = local / removed
+        path.unlink(missing_ok=True)
+
+    if index:
+        update_index(local, progress=progress)
 
 
 def query(
     channels: OneOrMoreStrings,
     subdirs: OneOrMoreStrings,
     specs: OneOrMoreStrings,
+    *,
     graph_file: Optional[PathOrString] = None,
 ) -> Iterable[PackageRecord]:
     """Executes a query of anaconda match specifications against anaconda channels.
@@ -131,11 +167,11 @@ def sync(
     local: PathOrString,
     subdirs: OneOrMoreStrings,
     specs: OneOrMoreStrings,
+    *,
     index: bool = True,
     verify: bool = True,
-    patch: bool = False,
-    patch_folder: PathOrString = "",
-    progress: bool = True,
+    patch: PathOrString = "",
+    progress: bool = False,
 ) -> None:
     """Syncs a local anaconda channel with upstream anaconda channels.
 
@@ -146,33 +182,28 @@ def sync(
         specs: One or more anaconda match specification strings
         index: Determines if the local channel index should be updated.
         verify: Determines if downloaded packages should be verified.
-        patch: Determines if packages should be downloaded to a separate patch
-            directory (see also conda_local.api.merge).
-        patch_folder: The override path of the patch directory.
+        patch: The location of the patch folder.
         progress: Determines if a progress bar should be shown.
     """
     local = Path(local)
-    if progress:
-        print("Reading channels...")
-    added_records, removed_records = diff(channels, local, subdirs, specs)
+
+    with Spinner("Reading upstream channel", enabled=progress):
+        added_records, removed_records = diff(channels, local, subdirs, specs)
+
+    destination = local if not patch else Path(patch)
+    destination.mkdir(parents=True, exist_ok=True)
 
     if patch:
-        if patch_folder:
-            local = Path(patch_folder)
-        else:
-            now = datetime.datetime.now()
-            local = Path(f"patch_{now.strftime('%Y%m%d_%H%M%S')}")
+        patch_summary = destination / "patch_summary.json"
+        write_patch_summary(patch_summary, added_records, removed_records)
 
-    local.mkdir(parents=True, exist_ok=True)
-    download_packages(added_records, local, verify=verify, progress=progress)
+    download_packages(added_records, destination, verify=verify, progress=progress)
+
     for removed_record in removed_records:
         (local / removed_record.local_path).unlink(missing_ok=True)
-    if index:
+
+    if index and not patch:
         update_index(local, progress=progress)
-
-
-def verify():
-    pass
 
 
 def _ensure_list(items: Union[T, Iterable[T]]) -> List[T]:

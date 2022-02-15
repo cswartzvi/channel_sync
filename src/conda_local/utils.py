@@ -3,24 +3,24 @@
 from collections import defaultdict
 from typing import Callable, Iterable, Iterator, Mapping, TypeVar
 
-T = TypeVar("T")
-TKey = TypeVar("TKey")
-TValue = TypeVar("TValue")
+_T = TypeVar("_T")
+_TKey = TypeVar("_TKey")
+_TValue = TypeVar("_TValue")
 
-Grouping = Mapping[TKey, Iterable[TValue]]
+Grouping = Mapping[_TKey, Iterable[_TValue]]
 
 
-class UniqueStream(Iterator[T]):
+class UniqueStream(Iterator[_T]):
     """A stream of items that is mutable during iteration.
 
     Args:
         items: Initial items in the stream.
     """
 
-    def __init__(self, items: Iterable[T]):
+    def __init__(self, items: Iterable[_T]):
         self._data = list(items)
 
-    def add(self, item: T):
+    def add(self, item: _T):
         """Adds an item to the item stream.
 
         Args:
@@ -30,11 +30,11 @@ class UniqueStream(Iterator[T]):
             return
         self._data.append(item)
 
-    def __iter__(self) -> Iterator[T]:
+    def __iter__(self) -> Iterator[_T]:
         self._index = 0
         return self
 
-    def __next__(self) -> T:
+    def __next__(self) -> _T:
         try:
             item = self._data[self._index]
             self._index += 1
@@ -44,8 +44,8 @@ class UniqueStream(Iterator[T]):
 
 
 def groupby(
-    items: Iterable[TValue], func: Callable[[TValue], TKey]
-) -> Grouping[TKey, TValue]:
+    items: Iterable[_TValue], func: Callable[[_TValue], _TKey]
+) -> Grouping[_TKey, _TValue]:
     """Groups items by the results of the specified function.
 
     Args:
