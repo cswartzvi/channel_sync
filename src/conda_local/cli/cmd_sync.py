@@ -82,4 +82,4 @@ def sync(specs, channels, subdirs, target, patch, noarch, index, verify, patch_f
     if patch:
         click.echo(f"Patch created: {patch_folder.resolve()}")
     else:
-        click.echo("Synchronization complete!")
+        click.echo("Synchronization: done")

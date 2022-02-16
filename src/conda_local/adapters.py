@@ -1,13 +1,15 @@
-"""Adapters for the `conda` and `conda_build` public APIs."""
+"""Adapters for the `conda` and `conda_build` public (and not so public) APIs."""
 
 import hashlib
 import logging
 from pathlib import Path
 from typing import Iterable, Iterator, List
 
+# NOTE: import marked as 'noqa' are currently pass throughs.
 from conda.api import SubdirData
+from conda.common.io import Spinner  # noqa
 from conda.exceptions import UnavailableInvalidChannel  # noqa
-from conda.exports import PackageRecord as _PackageRecord  # noqa
+from conda.exports import PackageRecord as _PackageRecord
 from conda.exports import _download
 from conda_build.api import update_index  # noqa
 

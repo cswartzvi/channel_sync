@@ -10,13 +10,15 @@ from conda_local._typing import OneOrMorePackageRecords, OneOrMoreStrings, PathO
 from conda_local.adapters import (
     ChannelData,
     PackageRecord,
+    Spinner,
     UnavailableInvalidChannel,
     download_package,
     update_index,
 )
 from conda_local.deps import DependencyFinder
 from conda_local.patch import read_patch_summary, write_patch_summary
-from conda_local.spinner import Spinner
+
+# from conda_local.spinner import Spinner
 
 T = TypeVar("T", covariant=True)
 
@@ -76,9 +78,11 @@ def download_packages(
     """
     records = sorted(_ensure_list(records), key=lambda rec: rec.fn)
     for record in tqdm(
-        records, desc="Downloading Packages", disable=not progress, leave=False
+        records, desc="Downloading packages", disable=not progress, leave=False
     ):
         download_package(record, destination, verify)
+    if progress:
+        print("Downloading packages:", "done")
 
 
 def iterate(
@@ -123,15 +127,22 @@ def merge(
         destination = local / added
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(source, destination)
+    if progress:
+        print("Adding packages:", "done")
 
     for removed in tqdm(
         summary.removed, desc="Removing packages", disable=disable, leave=False,
     ):
         path = local / removed
         path.unlink(missing_ok=True)
+    if progress:
+        print("Adding packages:", "done")
 
     if index:
         update_index(local, progress=progress)
+
+        if progress:
+            print("Updating index:", "done")
 
 
 def query(
@@ -187,7 +198,7 @@ def sync(
     """
     local = Path(local)
 
-    with Spinner("Reading upstream channel", enabled=progress):
+    with Spinner("Reading upstream channels", enabled=progress):
         added_records, removed_records = diff(channels, local, subdirs, specs)
 
     destination = local if not patch else Path(patch)
@@ -199,11 +210,16 @@ def sync(
 
     download_packages(added_records, destination, verify=verify, progress=progress)
 
-    for removed_record in removed_records:
+    for removed_record in tqdm(
+        removed_records, desc="Removing packages", disable=not progress, leave=False
+    ):
         (local / removed_record.local_path).unlink(missing_ok=True)
 
     if index and not patch:
         update_index(local, progress=progress)
+
+        if progress:
+            print("Updating index:", "done")
 
 
 def _ensure_list(items: Union[T, Iterable[T]]) -> List[T]:

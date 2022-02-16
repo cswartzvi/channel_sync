@@ -1,3 +1,5 @@
+"""Contains common type hints for conda-local."""
+
 from pathlib import Path
 from typing import Iterable, Union
 

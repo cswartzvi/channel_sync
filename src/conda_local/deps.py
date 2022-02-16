@@ -66,11 +66,12 @@ class DependencyFinder:
         spec_stream = UniqueStream(specs)
 
         for spec in spec_stream:
-            logging.info("Processing spec: %s", spec)
+            LOGGER.info("Processing spec: %s", spec)
             graph.add_node(spec, **{self._INCLUDE: True})
             for record in self._channel_data.query([spec]):  # must be list
                 if self._is_constrainted(record, constraints):
                     continue
+                LOGGER.debug("Processing spec: %s", spec)
                 graph.add_node(record, **{self._INCLUDE: True})
                 graph.add_edge(spec, record)
 
