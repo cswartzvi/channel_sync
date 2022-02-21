@@ -56,7 +56,12 @@ from conda_local.cli import app
 @click.option(
     "--patch-folder", default="", help="Override location for patch directory",
 )
-def sync(specs, channels, subdirs, target, patch, noarch, index, verify, patch_folder):
+@click.option(
+    "--silent", is_flag=True, help="Do not show progress",
+)
+def sync(
+    specs, channels, subdirs, target, patch, noarch, index, verify, patch_folder, silent
+):
     if noarch:
         if "noarch" not in subdirs:
             subdirs += ("noarch",)
@@ -76,7 +81,7 @@ def sync(specs, channels, subdirs, target, patch, noarch, index, verify, patch_f
         index=index,
         verify=verify,
         patch=patch_folder,
-        progress=True,
+        progress=not silent,
     )
 
     if patch:

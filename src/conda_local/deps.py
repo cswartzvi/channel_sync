@@ -146,6 +146,7 @@ class DependencyFinder:
             constrained).
         """
         if record.name in constraints.keys():
+            # FIXME: needs to be a MatchSpec
             if record not in constraints[record.name]:
                 return True
         return False

@@ -158,7 +158,7 @@ def query(
         channels: One or more upstream anaconda channels.
         subdirs: One or more anaconda subdirs (platforms).
         specs: One or more anaconda match specification strings.
-        graph_file: Optional save location of the qyery dependency graph.
+        graph_file: Optional save location of the query dependency graph.
 
     Returns:
         A iterable of resulting package records from the executed query.

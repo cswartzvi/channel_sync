@@ -5,10 +5,11 @@ import logging
 from pathlib import Path
 from typing import Iterable, Iterator, List
 
-# NOTE: import marked as 'noqa' are currently pass throughs.
+# NOTE: import marked as 'noqa' are currently pass throughs
 from conda.api import SubdirData
 from conda.common.io import Spinner  # noqa
 from conda.exceptions import UnavailableInvalidChannel  # noqa
+from conda.exports import MatchSpec as _MatchSpec  # noqa
 from conda.exports import PackageRecord as _PackageRecord
 from conda.exports import _download
 from conda_build.api import update_index  # noqa
@@ -55,11 +56,6 @@ class PackageRecord:
     @property
     def fn(self) -> str:
         return self._internal.fn
-
-    @property
-    def local_path(self) -> Path:
-        """Returns the relative path of this package in a local anaconda channel."""
-        return Path(self.subdir) / self.fn
 
     @property
     def name(self) -> str:
@@ -165,7 +161,7 @@ def download_package(
     """
     sha256_hash = record.sha256 if verify else None
     size = record.size if verify else None
-    path = destination / record.local_path
+    path = destination / record.subdir / record.fn
     if path.exists():
         if verify:
             if verify_file(path, record):

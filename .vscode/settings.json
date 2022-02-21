@@ -5,8 +5,7 @@
         "deps",
         "isoconda",
         "repodata",
-        "subdirs",
-        "strs"
+        "subdirs"
     ],
     "python.analysis.extraPaths": [
         "${workspaceFolder}/src"
