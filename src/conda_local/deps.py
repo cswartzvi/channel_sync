@@ -3,8 +3,13 @@ from typing import Iterable, Iterator, Tuple
 
 import networkx as nx
 
-from conda_local.adapters import ChannelData, PackageRecord
-from conda_local.utils import Grouping, UniqueStream, groupby
+from conda_local.external import (
+    MatchSpec,
+    PackageRecord,
+    create_spec_lookup,
+    query_channels,
+)
+from conda_local.utils import Grouping, UniqueStream
 
 LOGGER = logging.Logger(__name__)
 
@@ -25,10 +30,11 @@ class DependencyFinder:
             automatically include the "noarch" platform.
     """
 
-    _INCLUDE = "include"
+    _tag = "include"
 
     def __init__(self, channels: Iterable[str], subdirs: Iterable[str]) -> None:
-        self._channel_data = ChannelData(channels, subdirs)
+        self._channels = list(channels)
+        self._subdirs = list(subdirs)
 
     def search(
         self, specs: Iterable[str]
@@ -41,20 +47,20 @@ class DependencyFinder:
         Returns:
             A tuple of a package record iterator and the annotated dependency graph.
         """
-        constraints = groupby(self._channel_data.query(specs), lambda pkg: pkg.name)
+        constraints = create_spec_lookup(specs)
         graph = self._construct_dependency_graph(specs, constraints)
         records = self._extract_records(graph)
         return records, graph
 
     def _construct_dependency_graph(
-        self, specs: Iterable[str], constraints: Grouping[str, PackageRecord]
+        self, specs: Iterable[str], constraints: Grouping[str, MatchSpec]
     ) -> nx.DiGraph:
         """Constrcuts a dependency graph for the current calculation.
 
         Args:
             specs: An iterable of match specifications used to construct the graph.
-            constraints: Package records, grouped by package name, that constrain
-                the construction of the dependency graph.
+            constraints: The match specifications for package constraints grouped
+                by package name.
 
         Returns:
             A directed graph of recursively alternating match specification objects
@@ -67,17 +73,17 @@ class DependencyFinder:
 
         for spec in spec_stream:
             LOGGER.info("Processing spec: %s", spec)
-            graph.add_node(spec, **{self._INCLUDE: True})
-            for record in self._channel_data.query([spec]):  # must be list
+            graph.add_node(spec, **{self._tag: True})
+            for record in query_channels(self._channels, self._subdirs, [spec]):
                 if self._is_constrainted(record, constraints):
                     continue
                 LOGGER.debug("Processing spec: %s", spec)
-                graph.add_node(record, **{self._INCLUDE: True})
+                graph.add_node(record, **{self._tag: True})
                 graph.add_edge(spec, record)
 
                 for depends_spec in record.depends:
                     spec_stream.add(depends_spec)
-                    graph.add_node(depends_spec, **{self._INCLUDE: True})
+                    graph.add_node(depends_spec, **{self._tag: True})
                     graph.add_edge(record, depends_spec)
 
         for node in graph.nodes:
@@ -94,7 +100,7 @@ class DependencyFinder:
             graph: A dependency graph consisting of match specifications
                 and package records.
         """
-        if not graph.nodes[spec][self._INCLUDE]:
+        if not graph.nodes[spec][self._tag]:
             return  # already excluded
 
         # A spec is considered unsatisfied if all of it's successors
@@ -102,13 +108,13 @@ class DependencyFinder:
         successors = list(graph.successors(spec))
         if successors:
             for children in successors:
-                if graph.nodes[children][self._INCLUDE]:
+                if graph.nodes[children][self._tag]:
                     return
-        graph.nodes[spec][self._INCLUDE] = False
+        graph.nodes[spec][self._tag] = False
 
         # All dependent (parent) records of an unsatisfied spec are excluded
         for parent in graph.predecessors(spec):
-            graph.nodes[parent][self._INCLUDE] = False
+            graph.nodes[parent][self._tag] = False
 
             # Excluded records may create orphaned (sibling) specs
             for sibling in graph.successors(parent):
@@ -127,11 +133,11 @@ class DependencyFinder:
                 and package records.
         """
         for node in graph.nodes:
-            if isinstance(node, PackageRecord) and graph.nodes[node][self._INCLUDE]:
+            if isinstance(node, PackageRecord) and graph.nodes[node][self._tag]:
                 yield node
 
     def _is_constrainted(
-        self, record: PackageRecord, constraints: Grouping[str, PackageRecord]
+        self, record: PackageRecord, constraints: Grouping[str, MatchSpec]
     ) -> bool:
         """Determines if a package record is constrained.
 
@@ -147,8 +153,7 @@ class DependencyFinder:
         """
         if record.name in constraints.keys():
             # FIXME: needs to be a MatchSpec
-            if record not in constraints[record.name]:
-                return True
+            return not all(const.match(record) for const in constraints[record.name])
         return False
 
     def _exclude_orphaned_nodes(self, spec: str, graph: nx.DiGraph) -> None:
@@ -159,35 +164,31 @@ class DependencyFinder:
             graph: A dependency graph consisting of match specifications
                 and package records.
         """
-        if not graph.nodes[spec][self._INCLUDE]:
+        if not graph.nodes[spec][self._tag]:
             return  # already excluded
 
         # A spec is only orphaned if none of it's predecessor (parent)
         # package record are included.
         for parent in graph.predecessors(spec):
-            if graph.nodes[parent][self._INCLUDE]:
+            if graph.nodes[parent][self._tag]:
                 return  # not orphaned, dependency for another package
-        graph.nodes[spec][self._INCLUDE] = False
+        graph.nodes[spec][self._tag] = False
 
         # A spec successor (child) is only considered orphaned if
         # it is not a successor of another spec.
         for children in graph.successors(spec):
-            if not graph.nodes[children][self._INCLUDE]:
+            if not graph.nodes[children][self._tag]:
                 continue
 
             orphaned_children = True
             for sibling in graph.predecessors(children):
                 if sibling == spec:
                     continue  # skip self
-                if graph.nodes[sibling][self._INCLUDE]:
+                if graph.nodes[sibling][self._tag]:
                     orphaned_children = False
                     break
 
             if orphaned_children:
-                graph.nodes[children][self._INCLUDE] = False
+                graph.nodes[children][self._tag] = False
                 for grandchildren in graph.successors(children):
                     self._exclude_orphaned_nodes(grandchildren, graph)
-
-    def reload(self):
-        """Reloads the associated channel."""
-        self._channel_data.reload()

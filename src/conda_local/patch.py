@@ -8,7 +8,7 @@ from typing import Iterable, List
 
 from conda_local import CondaLocalException
 from conda_local._typing import PathOrString
-from conda_local.adapters import PackageRecord
+from conda_local.external import PackageRecord
 
 
 class InvalidPatchSummary(CondaLocalException):

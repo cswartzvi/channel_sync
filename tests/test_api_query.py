@@ -4,6 +4,7 @@ from typing import List
 import pytest
 
 from conda_local import api
+from conda_local.external import compare_records
 
 
 def fetch_local_specs(channel) -> List[str]:
@@ -51,16 +52,12 @@ def test_query_of_packages(datadir, subdirs, name):
     specs = fetch_local_specs(channel)
     expected = api.iterate(str(channel), subdirs)
     actual = api.query(str(datadir / "all"), subdirs, specs)
-    assert set(expected) == set(actual)
+    added, removed = compare_records(actual, expected)
+    assert not added
+    assert not removed
 
 
 def test_contradiction_query(datadir, subdirs):
     channel = datadir / "all"
     result = set(api.query(str(channel), subdirs, ["python <3.8.0", "python >3.8.0"]))
     assert len(result) == 0
-
-
-@pytest.mark.slow
-@pytest.mark.parametrize("packages", [("python >=3.8,<3.9.0a0", "numpy >=1.20")])
-def test_packages_are_installable(tmp_path_factory, packages):
-    print(packages)
