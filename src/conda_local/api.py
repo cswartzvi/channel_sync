@@ -6,7 +6,7 @@ from typing import Iterable, Iterator, List, Optional, Set, Tuple, TypeVar, Unio
 
 from tqdm import tqdm
 
-from conda_local._typing import OneOrMorePackageRecords, OneOrMoreStrings, PathOrString
+from conda_local._typing import OneOrMoreStrings, PathOrString
 from conda_local.deps import DependencyFinder
 from conda_local.external import (
     PackageRecord,
@@ -14,10 +14,12 @@ from conda_local.external import (
     UnavailableInvalidChannel,
     compare_records,
     download_package,
+    download_patch,
+    get_current_subdirs,
     iter_channels,
     update_index,
 )
-from conda_local.patch import read_patch_summary, write_patch_summary
+from conda_local.patch import read_patch_summary
 
 # from conda_local.spinner import Spinner
 
@@ -27,8 +29,8 @@ T = TypeVar("T", covariant=True)
 def diff(
     local: PathOrString,
     upstream: OneOrMoreStrings,
-    subdirs: OneOrMoreStrings,
     specs: OneOrMoreStrings,
+    subdirs: Optional[OneOrMoreStrings] = None,
 ) -> Tuple[Set[PackageRecord], Set[PackageRecord]]:
     """Computes the difference between local and upstream anaconda channels.
 
@@ -42,10 +44,9 @@ def diff(
         A tuple of packages that should be added to the local anaconda channel,
         and packages that should be removed from the local anaconda channel.
     """
-    upstream = _ensure_list(upstream)
     local = Path(local)
     upstream = _ensure_list(upstream)
-    subdirs = _ensure_list(subdirs)
+    subdirs = _ensure_subdirs(subdirs)
     specs = _ensure_list(specs)
 
     try:
@@ -54,39 +55,14 @@ def diff(
         # TODO: check condition of local directory
         local_records = iter([])
 
-    upstream_records = query(upstream, subdirs, specs)
+    upstream_records = query(upstream, specs, subdirs=subdirs)
     removed, added = compare_records(local_records, upstream_records)
 
     return added, removed
 
 
-def download(
-    records: OneOrMorePackageRecords,
-    destination: Path,
-    *,
-    verify: bool = True,
-    progress: bool = True,
-) -> None:
-    """Downloads packages specified from package records.
-
-    Args:
-        records: The package records of the packages to be downloaded.
-        destination: The directory where the file will be downloaded.
-            Additional subdirs will be created within the destination directory.
-        verify: Determines if downloaded packages should be verified.
-        progress: Determines if a progress bar should be shown.
-    """
-    records = sorted(_ensure_list(records), key=lambda rec: rec.fn)
-    for record in tqdm(
-        records, desc="Downloading packages", disable=not progress, leave=False
-    ):
-        download_package(record, destination, verify)
-    if progress:
-        print("Downloading packages:", "done")
-
-
 def iterate(
-    channels: OneOrMoreStrings, subdirs: OneOrMoreStrings
+    channels: OneOrMoreStrings, subdirs: Optional[OneOrMoreStrings] = None,
 ) -> Iterator[PackageRecord]:
     """Yields all the package records in a specified channels and subdirs.
 
@@ -95,7 +71,7 @@ def iterate(
         subdirs: One or more anaconda subdirs (platforms).
     """
     channels = _ensure_list(channels)
-    subdirs = _ensure_list(subdirs)
+    subdirs = _ensure_subdirs(subdirs)
     records = iter_channels(channels, subdirs)
     yield from records
 
@@ -139,7 +115,7 @@ def merge(
         print("Adding packages:", "done")
 
     if index:
-        update_index(local, progress=progress)
+        update_index(local, progress=progress, subdirs=[])
 
         if progress:
             print("Updating index:", "done")
@@ -147,9 +123,9 @@ def merge(
 
 def query(
     channels: OneOrMoreStrings,
-    subdirs: OneOrMoreStrings,
     specs: OneOrMoreStrings,
     *,
+    subdirs: Optional[OneOrMoreStrings] = None,
     graph_file: Optional[PathOrString] = None,
 ) -> Iterable[PackageRecord]:
     """Executes a query of anaconda match specifications against anaconda channels.
@@ -164,7 +140,7 @@ def query(
         A iterable of resulting package records from the executed query.
     """
     channels = _ensure_list(channels)
-    subdirs = _ensure_list(subdirs)
+    subdirs = _ensure_subdirs(subdirs)
     specs = _ensure_list(specs)
     finder = DependencyFinder(channels, subdirs)
     records, graph = finder.search(specs)
@@ -176,9 +152,9 @@ def query(
 def sync(
     channels: OneOrMoreStrings,
     local: PathOrString,
-    subdirs: OneOrMoreStrings,
     specs: OneOrMoreStrings,
     *,
+    subdirs: Optional[OneOrMoreStrings] = None,
     index: bool = True,
     verify: bool = True,
     patch: PathOrString = "",
@@ -196,27 +172,34 @@ def sync(
         patch: The location of the patch folder.
         progress: Determines if a progress bar should be shown.
     """
+    channels = _ensure_list(channels)
     local = _ensure_local_channel(local)
-
-    with Spinner("Reading upstream channels", enabled=progress):
-        added_records, removed_records = diff(local, channels, subdirs, specs)
+    subdirs = _ensure_subdirs(subdirs)
+    print(subdirs)
 
     destination = local if not patch else Path(patch)
     destination.mkdir(parents=True, exist_ok=True)
 
-    if patch:
-        patch_summary = destination / "patch_summary.json"
-        write_patch_summary(patch_summary, added_records, removed_records)
+    with Spinner("Reading upstream channels", enabled=progress):
+        added_records, _ = diff(local, channels, subdirs, specs)
 
-    download(added_records, destination, verify=verify, progress=progress)
-
-    for record in tqdm(
-        removed_records, desc="Removing packages", disable=not progress, leave=False
+    for subdir in tqdm(
+        subdirs, desc="Downloading patches", disable=not progress, leave=False
     ):
-        (local / record.subdir / record.fn).unlink(missing_ok=True)
+        download_patch(channels, destination, subdir)
+    if progress:
+        print("Downloading patches:", "done")
+
+    records = sorted(added_records, key=lambda rec: rec.fn)
+    for record in tqdm(
+        records, desc="Downloading packages", disable=not progress, leave=False
+    ):
+        download_package(record, destination, verify)
+    if progress:
+        print("Downloading packages:", "done")
 
     if index and not patch:
-        update_index(local, progress=progress)
+        update_index(local, progress=progress, subdirs=subdirs)
 
         if progress:
             print("Updating index:", "done")
@@ -237,3 +220,9 @@ def _ensure_local_channel(path: PathOrString) -> Path:
     noarch_repo.parent.mkdir(exist_ok=True, parents=True)
     noarch_repo.touch(exist_ok=True)
     return path
+
+
+def _ensure_subdirs(subdirs: Optional[OneOrMoreStrings]) -> List[str]:
+    if subdirs is None:
+        return get_current_subdirs()
+    return _ensure_list(subdirs)

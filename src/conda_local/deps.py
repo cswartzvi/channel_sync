@@ -17,12 +17,12 @@ LOGGER = logging.Logger(__name__)
 class DependencyFinder:
     """Anaconda package dependency finder.
 
-    Note: This is not a package solver that attempts to find a singular
-    path through a dependency graph. Instead, the purpose of this class
-    is to recursively find *all* satisfied packages, within a channel,
-    that satisfy the dependencies of a given package. In terms of the
-    dependency graph this is equivalent to finding all the successor nodes
-    of a dependency that are themselves satisfied by at least one package.
+    Note: This is not a package solver that attempts to find a singular path
+    through a dependency graph. Instead, the purpose of this class is to
+    recursively find *all* package records, within a channel, that satisfy
+    the dependencies of a given package. In terms of the dependency graph
+    this is equivalent to finding all the successor nodes of a dependency
+    that are themselves satisfied by at least one package.
 
     Args:
         channel: The canonical name, URL, or URI of an anaconda channel.
@@ -103,25 +103,25 @@ class DependencyFinder:
         if not graph.nodes[spec][self._tag]:
             return  # already excluded
 
-        # A spec is considered unsatisfied if all of it's successors
-        # (children) are excluded.
-        successors = list(graph.successors(spec))
-        if successors:
-            for children in successors:
-                if graph.nodes[children][self._tag]:
-                    return
+        # A spec is considered satisfied if at least one child is included.
+        children = list(graph.successors(spec))
+        if children:
+            for child in children:
+                if graph.nodes[child][self._tag]:
+                    return  # satisfied by a child, stop search
+
         graph.nodes[spec][self._tag] = False
 
-        # All dependent (parent) records of an unsatisfied spec are excluded
+        # All parent records of an unsatisfied spec are excluded
         for parent in graph.predecessors(spec):
             graph.nodes[parent][self._tag] = False
 
-            # Excluded records may create orphaned (sibling) specs
+            # Excluded records may create orphaned sibling specs
             for sibling in graph.successors(parent):
                 if sibling != spec:
                     self._exclude_orphaned_nodes(sibling, graph)
 
-            # Excluded records may create unsatisfied (grandparent) spec
+            # Excluded records may create unsatisfied grandparent spec
             for grandparent in graph.predecessors(parent):
                 self._exclude_unsatisfied_nodes(grandparent, graph)
 
@@ -152,7 +152,6 @@ class DependencyFinder:
             constrained).
         """
         if record.name in constraints.keys():
-            # FIXME: needs to be a MatchSpec
             return not all(const.match(record) for const in constraints[record.name])
         return False
 
@@ -167,14 +166,14 @@ class DependencyFinder:
         if not graph.nodes[spec][self._tag]:
             return  # already excluded
 
-        # A spec is only orphaned if none of it's predecessor (parent)
-        # package record are included.
+        # A spec is orphaned if none of it's parent records are included.
         for parent in graph.predecessors(spec):
             if graph.nodes[parent][self._tag]:
-                return  # not orphaned, dependency for another package
+                return  # not orphaned, stop search
+
         graph.nodes[spec][self._tag] = False
 
-        # A spec successor (child) is only considered orphaned if
+        # A spec successor child is only considered orphaned if
         # it is not a successor of another spec.
         for children in graph.successors(spec):
             if not graph.nodes[children][self._tag]:

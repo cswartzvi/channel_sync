@@ -3,25 +3,43 @@ public) APIs."""
 
 import hashlib
 import logging
+import tarfile
+import tempfile
+import urllib.parse
+from importlib.resources import path
 from pathlib import Path
-from typing import Iterable, Iterator, Set, Tuple
+from typing import Iterable, Iterator, List, Set, Tuple
 
-# NOTE: pass throughs to the api should be marked as 'noqa'
-from conda.api import SubdirData
+import conda.api
+import conda.base.context
+import conda.exports
+import conda.models.channel
+import conda_build.api
+import requests
+
+# Passthrough imports
 from conda.common.io import Spinner  # noqa
 from conda.exceptions import UnavailableInvalidChannel  # noqa
-from conda.exports import MatchSpec  # noqa
-from conda.exports import PackageRecord, _download  # noqa
-from conda_build.api import update_index  # noqa
+from conda.exports import MatchSpec, PackageRecord
 
 from conda_local.utils import Grouping, groupby
 
 LOGGER = logging.Logger(__name__)
+PATCH_INSTRUCTIONS = "patch_instructions.json"
 
 
 def compare_records(
     left: Iterable[PackageRecord], right: Iterable[PackageRecord]
 ) -> Tuple[Set[PackageRecord], Set[PackageRecord]]:
+    def no_channel_key(record):
+        return (
+            record.subdir,
+            record.name,
+            record.version,
+            record.build,
+            record.build_number,
+        )
+
     left_group = groupby(left, no_channel_key)
     right_group = groupby(right, no_channel_key)
     only_in_left = {
@@ -55,6 +73,7 @@ def download_package(
     sha256_hash = record.sha256 if verify else None
     size = record.size if verify else None
     path = destination / record.subdir / record.fn
+
     if path.exists():
         if verify:
             if verify_file(path, record):
@@ -65,8 +84,27 @@ def download_package(
             )
         else:
             return  # skip file
+
     path.parent.mkdir(parents=True, exist_ok=True)
-    _download(record.url, path, sha256=sha256_hash, size=size)
+    conda.exports._download(record.url, path, sha256=sha256_hash, size=size)
+
+
+def download_patch(channels: Iterable[str], destination: Path, subdir: str) -> None:
+    destination.mkdir(parents=True, exist_ok=True)
+
+    base_url = conda.models.channel.all_channel_urls(channels, subdirs=[subdir])[0]
+    url = urllib.parse.urljoin(base_url + "/", PATCH_INSTRUCTIONS)
+
+    response = requests.get(url)
+    response.raise_for_status()
+
+    patch = destination / subdir / PATCH_INSTRUCTIONS
+    patch.parent.mkdir(parents=True, exist_ok=True)
+    patch.write_bytes(response.content)
+
+
+def get_current_subdirs() -> List[str]:
+    return list(conda.base.context.context.subdirs)
 
 
 def iter_channels(
@@ -84,18 +122,8 @@ def iter_channels(
     yield from query_channels(channels, subdirs, ["*"])
 
 
-def no_channel_key(record: PackageRecord) -> Tuple:
-    return (
-        record.subdir,
-        record.name,
-        record.version,
-        record.build,
-        record.build_number,
-    )
-
-
 def query_channels(
-    channels: Iterable[str], subdirs: Iterable[str], specs: Iterable[str]
+    channels: Iterable[str], subdirs: Iterable[str], specs: Iterable[str],
 ) -> Iterator[PackageRecord]:
     """Runs a package record query against the specified anaconda channels.
 
@@ -104,9 +132,10 @@ def query_channels(
             * "https://repo.anaconda.com/pkgs/main"
             * "conda-forge"
             * "file:///path/to/local/channel"
-        subdirs: The platform sub-directories within the anaconda channel.
         specs: The package match specifications used within the query. Read more:
             https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/pkg-specs.html#package-match-specifications  # noqa
+        subdirs: The platform sub-directories within the anaconda channel. If
+            None defaults to the standard subdirs for the current platform.
 
     Yields:
         Package records resulting from the package record query.
@@ -114,19 +143,29 @@ def query_channels(
     yield from (
         result
         for spec in specs
-        for result in SubdirData.query_all(spec, channels=channels, subdirs=subdirs)
+        for result in conda.api.SubdirData.query_all(
+            spec, channels=channels, subdirs=subdirs
+        )
     )
 
 
-def reload_channels(
-    channels: Iterable[str], subdirs: Iterable[str], specs: Iterable[str]
-) -> None:
-    """Reload cached repodata.json files for subdirs."""
-    for channel in channels:
-        for subdir in subdirs:
-            if not channel.endswith("/"):
-                channel += "/"
-            SubdirData(channel + subdir).reload()
+def update_index(
+    target: Path, subdirs: Iterable[str], progress: bool = False,
+):
+    patches = [Path(subdir) / PATCH_INSTRUCTIONS for subdir in subdirs]
+
+    patch_generator = None
+    if patches:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = PackageRecord(tmpdir)
+            patch_generator = tmppath / "patch_generator.tar.bz2"
+            with tarfile.open(patch_generator, "w:bz2") as tar:
+                for patch in patches:
+                    tar.add(target / patch, arcname=patch)
+
+    conda_build.api.update_index(
+        path, patch_generator=patch_generator, progress=progress
+    )
 
 
 def verify_file(path: Path, record: PackageRecord) -> bool:

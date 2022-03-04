@@ -76,8 +76,8 @@ def sync(
     api.sync(
         channels,
         target,
-        subdirs,
         specs,
+        subdirs=subdirs,
         index=index,
         verify=verify,
         patch=patch_folder,
