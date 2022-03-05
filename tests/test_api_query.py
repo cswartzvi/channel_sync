@@ -51,7 +51,7 @@ def test_query_of_packages(datadir, subdirs, name):
     channel = datadir / name
     specs = fetch_local_specs(channel)
     expected = api.iterate(str(channel), subdirs)
-    actual = api.query(str(datadir / "all"), subdirs, specs)
+    actual = api.query(str(datadir / "all"), specs, subdirs=subdirs)
     added, removed = compare_records(actual, expected)
     assert not added
     assert not removed
@@ -59,5 +59,7 @@ def test_query_of_packages(datadir, subdirs, name):
 
 def test_contradiction_query(datadir, subdirs):
     channel = datadir / "all"
-    result = set(api.query(str(channel), subdirs, ["python <3.8.0", "python >3.8.0"]))
+    result = set(
+        api.query(str(channel), ["python <3.8.0", "python >3.8.0"], subdirs=subdirs)
+    )
     assert len(result) == 0

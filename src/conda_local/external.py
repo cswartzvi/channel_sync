@@ -6,7 +6,6 @@ import logging
 import tarfile
 import tempfile
 import urllib.parse
-from importlib.resources import path
 from pathlib import Path
 from typing import Iterable, Iterator, List, Set, Tuple
 
@@ -154,18 +153,19 @@ def update_index(
 ):
     patches = [Path(subdir) / PATCH_INSTRUCTIONS for subdir in subdirs]
 
-    patch_generator = None
-    if patches:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            tmppath = PackageRecord(tmpdir)
-            patch_generator = tmppath / "patch_generator.tar.bz2"
-            with tarfile.open(patch_generator, "w:bz2") as tar:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        patch_generator = None
+        if patches:
+            tmppath = Path(tmpdir)
+            tarball = tmppath / "patch_generator.tar.bz2"
+            with tarfile.open(tarball, "w:bz2") as tar:
                 for patch in patches:
                     tar.add(target / patch, arcname=patch)
+            patch_generator = str(tarball.resolve())  # must be string (or None)
 
-    conda_build.api.update_index(
-        path, patch_generator=patch_generator, progress=progress
-    )
+        conda_build.api.update_index(
+            target, patch_generator=patch_generator, progress=progress
+        )
 
 
 def verify_file(path: Path, record: PackageRecord) -> bool:

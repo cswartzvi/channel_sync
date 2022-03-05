@@ -175,13 +175,12 @@ def sync(
     channels = _ensure_list(channels)
     local = _ensure_local_channel(local)
     subdirs = _ensure_subdirs(subdirs)
-    print(subdirs)
 
     destination = local if not patch else Path(patch)
     destination.mkdir(parents=True, exist_ok=True)
 
     with Spinner("Reading upstream channels", enabled=progress):
-        added_records, _ = diff(local, channels, subdirs, specs)
+        added_records, _ = diff(local, channels, specs, subdirs)
 
     for subdir in tqdm(
         subdirs, desc="Downloading patches", disable=not progress, leave=False
