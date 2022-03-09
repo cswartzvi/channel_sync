@@ -17,49 +17,23 @@ def fetch_local_specs(channel) -> List[str]:
 @pytest.mark.parametrize(
     "name",
     [
-        "python",
-        "package1",
-        "package2_all",
-        "package2_select",
-        "package3_all",
-        "package3_select",
-        "package4_all",
-        "package4_select",
-        "package5_all",
-        "package5_select",
-        "package6_all",
-        "package6_select",
-        "package7_all",
-        "package7_select",
-        "package8_all",
-        "package8_select",
-        "package9_all",
-        "package9_select",
-        "package10_all",
-        "package10_select",
-        "package11_all",
-        "package11_select",
-        "package12_all",
-        "package12_select",
-        "package13_all",
-        "package13_select",
-        "package14_all",
-        "package14_select",
+        "test01",
+        "test02",
+        "test03",
+        "test04",
+        "test05",
+        "test06",
+        "test07",
+        "test08",
+        "test09",
+        "test10",
     ],
 )
 def test_query_of_packages(datadir, subdirs, name):
-    channel = datadir / name
-    specs = fetch_local_specs(channel)
-    expected = api.iterate(str(channel), subdirs)
-    actual = api.query(str(datadir / "all"), specs, subdirs=subdirs)
+    base = datadir / name
+    specs = fetch_local_specs(base)
+    expected = api.iterate(str(base / "expected"), subdirs=subdirs)
+    actual = api.query(str(base / "all"), specs, subdirs=subdirs)
     added, removed = compare_records(actual, expected)
     assert not added
     assert not removed
-
-
-def test_contradiction_query(datadir, subdirs):
-    channel = datadir / "all"
-    result = set(
-        api.query(str(channel), ["python <3.8.0", "python >3.8.0"], subdirs=subdirs)
-    )
-    assert len(result) == 0
