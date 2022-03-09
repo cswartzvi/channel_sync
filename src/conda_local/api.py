@@ -35,10 +35,14 @@ def diff(
     """Computes the difference between local and upstream anaconda channels.
 
     Args:
-        channels: One of more upstream anaconda channels.
-        local: The location of the local anaconda channel.
-        subdirs: One or more anaconda subdirs (platforms).
-        specs: One or more anaconda match specification strings
+        channels:
+            One of more upstream anaconda channels.
+        local:
+            The location of the local anaconda channel.
+        subdirs:
+            One or more anaconda subdirs.
+        specs:
+            One or more anaconda match specification strings
 
     Returns:
         A tuple of packages that should be added to the local anaconda channel,
@@ -50,7 +54,7 @@ def diff(
     specs = _ensure_list(specs)
 
     try:
-        local_records = iterate(local.resolve().as_uri(), subdirs)
+        local_records = iterate(local.resolve().as_uri(), subdirs=subdirs)
     except UnavailableInvalidChannel:
         # TODO: check condition of local directory
         local_records = iter([])
@@ -62,7 +66,7 @@ def diff(
 
 
 def iterate(
-    channels: OneOrMoreStrings, subdirs: Optional[OneOrMoreStrings] = None,
+    channels: OneOrMoreStrings, *, subdirs: Optional[OneOrMoreStrings] = None,
 ) -> Iterator[PackageRecord]:
     """Yields all the package records in a specified channels and subdirs.
 
@@ -205,7 +209,7 @@ def sync(
 
 
 def _ensure_list(items: Union[T, Iterable[T]]) -> List[T]:
-    """Ensures that a specified variable is list of elements."""
+    """Ensures that an input parameter is list of elements."""
     if not isinstance(items, Iterable):
         return cast(List[T], [items])
     if isinstance(items, str):
@@ -214,6 +218,7 @@ def _ensure_list(items: Union[T, Iterable[T]]) -> List[T]:
 
 
 def _ensure_local_channel(path: PathOrString) -> Path:
+    """Ensures that a local path is a valid anaconda channel."""
     path = Path(path)
     noarch_repo = path / "noarch" / "repodata.json"
     noarch_repo.parent.mkdir(exist_ok=True, parents=True)
@@ -222,6 +227,7 @@ def _ensure_local_channel(path: PathOrString) -> Path:
 
 
 def _ensure_subdirs(subdirs: Optional[OneOrMoreStrings]) -> List[str]:
+    """Ensures that an input parameter is list of subdirs."""
     if subdirs is None:
         return get_current_subdirs()
     return _ensure_list(subdirs)
