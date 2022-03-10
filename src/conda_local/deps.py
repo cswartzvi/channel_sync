@@ -99,26 +99,21 @@ class DependencyFinder:
             graph: A dependency graph consisting of match specifications
                 and package records.
         """
-        if not graph.is_included(spec):
-            return  # already excluded
+        # A spec is considered satisfied if it has at least one child record
+        if any(True for _ in graph.successors(spec)):
+            return  # spec is satisfied
 
-        # A spec is considered satisfied if at least one child record is marked
-        # as included.
-        if any(graph.is_included(child) for child in graph.successors(spec)):
-            return  # satisfied by a child, stop search
+        graph.mark_exclude(spec)  # spec is unsatisfied
 
-        graph.mark_exclude(spec)
-
-        # All parent records of an unsatisfied specs are excluded
         for parent in graph.predecessors(spec):
+            # All parent records of an unsatisfied specs are excluded
             graph.mark_exclude(parent)
 
             # Excluded parent records may create orphaned sibling specs
             for sibling in graph.successors(parent):
-                if sibling != spec:
-                    self._exclude_orphaned_nodes(sibling, graph)
+                self._exclude_orphaned_nodes(sibling, graph)
 
-            # Excluded records may create unsatisfied grandparent spec
+            # Excluded parent records may create unsatisfied grandparent specs
             for grandparent in graph.predecessors(parent):
                 self._exclude_unsatisfied_nodes(grandparent, graph)
 
@@ -129,9 +124,7 @@ class DependencyFinder:
             graph: A dependency graph consisting of match specifications
                 and package records.
         """
-        for record in graph.records:
-            if graph.is_included(record):
-                yield record
+        yield from graph.records
 
     def _is_constrainted(
         self, record: PackageRecord, constraints: Grouping[str, MatchSpec]
@@ -160,33 +153,17 @@ class DependencyFinder:
             graph: A dependency graph consisting of match specifications
                 and package records.
         """
-        if not graph.is_included(spec):
-            return  # already excluded
-
-        # A spec is orphaned if no parent records are included.
-        for parent in graph.predecessors(spec):
-            if graph.is_included(parent):
-                return  # not orphaned, stop search
+        # A spec is not considered orphaned if it has parent records
+        if any(True for _ in graph.predecessors(spec)):
+            return  # spec is not orphaned
 
         graph.mark_exclude(spec)
 
-        # A spec successor child is only considered orphaned if
-        # it is not a successor of another spec.
-        for children in graph.successors(spec):
-            if not graph.is_included(children):
-                continue
-
-            orphaned_children = True
-            for sibling in graph.predecessors(children):
-                if sibling == spec:
-                    continue  # skip self
-                if graph.is_included(sibling):
-                    orphaned_children = False
-                    break
-
-            if orphaned_children:
-                graph.mark_exclude(children)
-                for grandchildren in graph.successors(children):
+        # Child records are considered orphaned if they have no other parent specs
+        for child in graph.successors(spec):
+            if all(False for _ in graph.predecessors(child)):
+                graph.mark_exclude(child)
+                for grandchildren in graph.successors(child):
                     self._exclude_orphaned_nodes(grandchildren, graph)
 
 
@@ -199,13 +176,15 @@ class _DependencyGraph:
 
     @property
     def specs(self) -> Iterator[str]:
-        yield from (node for node in self._graph.nodes if isinstance(node, str))
+        for node in self._graph.nodes:
+            if isinstance(node, str) and self.is_included(node):
+                yield node
 
     @property
     def records(self) -> Iterator[PackageRecord]:
-        yield from (
-            node for node in self._graph.nodes if isinstance(node, PackageRecord)
-        )
+        for node in self._graph.nodes:
+            if isinstance(node, PackageRecord) and self.is_included(node):
+                yield node
 
     def add_spec(self, spec: str) -> None:
         if spec not in self._graph.nodes:
@@ -214,15 +193,15 @@ class _DependencyGraph:
     def _add_record(self, record: PackageRecord) -> None:
         self._graph.add_node(record, **{self._attribute: True})
 
-    def add_candidate(self, spec: str, record: PackageRecord) -> None:
+    def add_candidate(self, spec: str, candidate: PackageRecord) -> None:
         self.add_spec(spec)
-        self._add_record(record)
-        self._graph.add_edge(spec, record)
+        self._add_record(candidate)
+        self._graph.add_edge(spec, candidate)
 
-    def add_dependency(self, record: PackageRecord, spec: str) -> None:
+    def add_dependency(self, record: PackageRecord, dependency: str) -> None:
         self._add_record(record)
-        self.add_spec(spec)
-        self._graph.add_edge(record, spec)
+        self.add_spec(dependency)
+        self._graph.add_edge(record, dependency)
 
     def is_included(self, node: DependencyNode) -> bool:
         return self._graph.nodes[node][self._attribute]
@@ -241,7 +220,9 @@ class _DependencyGraph:
     def predecessors(
         self, node: DependencyNode
     ) -> Union[Iterator[str], Iterator[PackageRecord]]:
-        yield from self._graph.predecessors(node)
+        for pred in self._graph.predecessors(node):
+            if self.is_included(pred):
+                yield pred
 
     @overload
     def successors(self, node: str) -> Iterator[PackageRecord]:
@@ -254,7 +235,9 @@ class _DependencyGraph:
     def successors(
         self, node: Union[str, PackageRecord]
     ) -> Union[Iterator[str], Iterator[PackageRecord]]:
-        yield from self._graph.successors(node)
+        for suc in self._graph.successors(node):
+            if self.is_included(suc):
+                yield suc
 
     def unsatisfied_specs(self) -> Iterator[str]:
         yield from (spec for spec in self.specs if self._graph.out_degree(spec) == 0)

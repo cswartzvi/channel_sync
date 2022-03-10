@@ -88,7 +88,9 @@ def download_package(
     conda.exports._download(record.url, path, sha256=sha256_hash, size=size)
 
 
-def download_patch(channels: Iterable[str], destination: Path, subdir: str) -> None:
+def download_patch_instructions(
+    channels: Iterable[str], destination: Path, subdir: str
+) -> None:
     destination.mkdir(parents=True, exist_ok=True)
 
     base_url = conda.models.channel.all_channel_urls(channels, subdirs=[subdir])[0]

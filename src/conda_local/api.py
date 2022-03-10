@@ -14,12 +14,11 @@ from conda_local.external import (
     UnavailableInvalidChannel,
     compare_records,
     download_package,
-    download_patch,
+    download_patch_instructions,
     get_current_subdirs,
     iter_channels,
     update_index,
 )
-from conda_local.patch import read_patch_summary
 
 # from conda_local.spinner import Spinner
 
@@ -97,26 +96,11 @@ def merge(
     """
     patch = Path(patch)
     local = Path(local)
-    summary = read_patch_summary(patch / "patch_summary.json")
-    disable = not progress
 
-    for added in tqdm(
-        summary.added, desc="Adding packages", disable=disable, leave=False
-    ):
-        source = patch / added
-        destination = local / added
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy(source, destination)
-    if progress:
-        print("Adding packages:", "done")
-
-    for removed in tqdm(
-        summary.removed, desc="Removing packages", disable=disable, leave=False,
-    ):
-        path = local / removed
-        path.unlink(missing_ok=True)
-    if progress:
-        print("Adding packages:", "done")
+    with Spinner("Copying patch", enabled=progress):
+        for file in patch.glob("**/*"):
+            if file.is_file():
+                shutil.copy(file, local / file.relative_to(patch))
 
     if index:
         update_index(local, progress=progress, subdirs=[])
@@ -187,11 +171,14 @@ def sync(
         added_records, _ = diff(local, channels, specs, subdirs)
 
     for subdir in tqdm(
-        subdirs, desc="Downloading patches", disable=not progress, leave=False
+        subdirs,
+        desc="Downloading patch instructions",
+        disable=not progress,
+        leave=False,
     ):
-        download_patch(channels, destination, subdir)
+        download_patch_instructions(channels, destination, subdir)
     if progress:
-        print("Downloading patches:", "done")
+        print("Downloading patches instructions:", "done")
 
     records = sorted(added_records, key=lambda rec: rec.fn)
     for record in tqdm(
