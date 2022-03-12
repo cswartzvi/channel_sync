@@ -2,12 +2,13 @@
 public) APIs."""
 
 import hashlib
+import json
 import logging
 import tarfile
 import tempfile
 import urllib.parse
 from pathlib import Path
-from typing import Iterable, Iterator, List, Set, Tuple
+from typing import Iterable, Iterator, List, Optional, Sequence, Set, Tuple
 
 import conda.api
 import conda.base.context
@@ -89,19 +90,29 @@ def download_package(
 
 
 def download_patch_instructions(
-    channels: Iterable[str], destination: Path, subdir: str
+    channels: Iterable[str],
+    destination: Path,
+    subdir: str,
+    packages_to_remove: Optional[Sequence[PackageRecord]] = None,
 ) -> None:
-    destination.mkdir(parents=True, exist_ok=True)
 
     base_url = conda.models.channel.all_channel_urls(channels, subdirs=[subdir])[0]
     url = urllib.parse.urljoin(base_url + "/", PATCH_INSTRUCTIONS)
-
     response = requests.get(url)
     response.raise_for_status()
 
-    patch = destination / subdir / PATCH_INSTRUCTIONS
-    patch.parent.mkdir(parents=True, exist_ok=True)
-    patch.write_bytes(response.content)
+    destination.mkdir(parents=True, exist_ok=True)
+    instructions = destination / subdir / PATCH_INSTRUCTIONS
+    instructions.parent.mkdir(parents=True, exist_ok=True)
+    instructions.write_bytes(response.content)
+
+    if packages_to_remove:
+        with instructions.open("r+") as file:
+            data = json.load(file)
+            for package in packages_to_remove:
+                data["remove"].append(package.fn)
+            file.seek(0)
+            json.dump(data, file)
 
 
 def get_current_subdirs() -> List[str]:

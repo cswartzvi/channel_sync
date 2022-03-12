@@ -1,6 +1,7 @@
 """High-level api functions for conda-local."""
 
 import shutil
+import sys
 from pathlib import Path
 from typing import Iterable, Iterator, List, Optional, Set, Tuple, TypeVar, Union, cast
 
@@ -96,17 +97,17 @@ def merge(
     """
     patch = Path(patch)
     local = Path(local)
+    f = sys.stdout if progress else None
 
     with Spinner("Copying patch", enabled=progress):
         for file in patch.glob("**/*"):
             if file.is_file():
                 shutil.copy(file, local / file.relative_to(patch))
+    print("Copying patch:", "done", file=f)
 
     if index:
         update_index(local, progress=progress, subdirs=[])
-
-        if progress:
-            print("Updating index:", "done")
+        print("Updating index:", "done", file=f)
 
 
 def query(
@@ -163,6 +164,7 @@ def sync(
     channels = _ensure_list(channels)
     local = _ensure_local_channel(local)
     subdirs = _ensure_subdirs(subdirs)
+    f = sys.stdout if progress else None
 
     destination = local if not patch else Path(patch)
     destination.mkdir(parents=True, exist_ok=True)
@@ -177,22 +179,18 @@ def sync(
         leave=False,
     ):
         download_patch_instructions(channels, destination, subdir)
-    if progress:
-        print("Downloading patches instructions:", "done")
+    print("Downloading patches instructions:", "done", file=f)
 
     records = sorted(added_records, key=lambda rec: rec.fn)
     for record in tqdm(
         records, desc="Downloading packages", disable=not progress, leave=False
     ):
         download_package(record, destination, verify)
-    if progress:
-        print("Downloading packages:", "done")
+    print("Downloading packages:", "done", file=f)
 
     if index and not patch:
         update_index(local, progress=progress, subdirs=subdirs)
-
-        if progress:
-            print("Updating index:", "done")
+        print("Updating index:", "done", file=f)
 
 
 def _ensure_list(items: Union[T, Iterable[T]]) -> List[T]:
