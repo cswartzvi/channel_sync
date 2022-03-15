@@ -1,5 +1,5 @@
 import logging
-from typing import Final, Iterable, Iterator, Tuple, Union, overload
+from typing import Final, Iterable, Iterator, Tuple, TypeVar, Union, overload
 
 import networkx as nx
 
@@ -7,14 +7,14 @@ from conda_local.external import (
     MatchSpec,
     PackageRecord,
     create_spec_lookup,
-    query_channels,
+    query_channel,
 )
-from conda_local.utils import Grouping, UniqueStream
+from conda_local.grouping import Grouping
 
 LOGGER = logging.Logger(__name__)
 
-
-DependencyNode = Union[str, PackageRecord]
+_DependencyNode = Union[str, PackageRecord]
+_T = TypeVar("_T")
 
 
 class DependencyFinder:
@@ -33,8 +33,8 @@ class DependencyFinder:
             automatically include the "noarch" platform.
     """
 
-    def __init__(self, channels: Iterable[str], subdirs: Iterable[str]) -> None:
-        self._channels = list(channels)
+    def __init__(self, channel: str, subdirs: Iterable[str]) -> None:
+        self._channel = channel
         self._subdirs = list(subdirs)
 
     def search(
@@ -70,12 +70,12 @@ class DependencyFinder:
             the final solution.
         """
         graph = _DependencyGraph()
-        spec_stream = UniqueStream(specs)
+        spec_stream = _UpdateStream(specs)
 
         for spec in spec_stream:
             LOGGER.info("Processing spec: %s", spec)
             graph.add_spec(spec)
-            for record in query_channels(self._channels, self._subdirs, [spec]):
+            for record in query_channel(self._channel, [spec], self._subdirs):
                 if self._is_constrainted(record, constraints):
                     LOGGER.debug("Constrained record: %s", record)
                     continue
@@ -168,6 +168,7 @@ class DependencyFinder:
 
 
 class _DependencyGraph:
+    """A ``networkx.DiGraph`` wrapper for dealing with str / PackageRecords nodes."""
 
     _attribute: Final[str] = "include"
 
@@ -203,10 +204,10 @@ class _DependencyGraph:
         self.add_spec(dependency)
         self._graph.add_edge(record, dependency)
 
-    def is_included(self, node: DependencyNode) -> bool:
+    def is_included(self, node: _DependencyNode) -> bool:
         return self._graph.nodes[node][self._attribute]
 
-    def mark_exclude(self, node: DependencyNode):
+    def mark_exclude(self, node: _DependencyNode):
         self._graph.nodes[node][self._attribute] = False
 
     @overload
@@ -218,7 +219,7 @@ class _DependencyGraph:
         ...
 
     def predecessors(
-        self, node: DependencyNode
+        self, node: _DependencyNode
     ) -> Union[Iterator[str], Iterator[PackageRecord]]:
         for pred in self._graph.predecessors(node):
             if self.is_included(pred):
@@ -241,3 +242,31 @@ class _DependencyGraph:
 
     def unsatisfied_specs(self) -> Iterator[str]:
         yield from (spec for spec in self.specs if self._graph.out_degree(spec) == 0)
+
+
+class _UpdateStream(Iterator[_T]):
+    """A stream of unique items that is appendable during iteration.
+
+    Args:
+        items: Initial items in the stream.
+    """
+
+    def __init__(self, items: Iterable[_T]):
+        self._data = list(items)
+
+    def add(self, item: _T) -> None:
+        if item in self._data:
+            return  # already exists
+        self._data.append(item)
+
+    def __iter__(self) -> Iterator[_T]:
+        self._index = 0
+        return self
+
+    def __next__(self) -> _T:
+        try:
+            item = self._data[self._index]
+            self._index += 1
+        except IndexError:
+            raise StopIteration
+        return item

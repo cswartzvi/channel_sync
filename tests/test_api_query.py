@@ -32,8 +32,8 @@ def fetch_local_specs(channel) -> List[str]:
 def test_query_of_packages(datadir, subdirs, name):
     base = datadir / name
     specs = fetch_local_specs(base)
-    expected = api.iterate(str(base / "expected"), subdirs=subdirs)
-    actual = api.query(str(base / "all"), specs, subdirs=subdirs)
+    expected = api.iterate((base / "expected").as_uri(), subdirs=subdirs)
+    actual = api.query((base / "all").as_uri(), specs, subdirs=subdirs)
     added, removed = compare_records(actual, expected)
     assert not added
     assert not removed

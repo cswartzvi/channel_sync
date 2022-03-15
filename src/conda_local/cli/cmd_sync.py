@@ -8,30 +8,18 @@ from conda_local.cli import app
 
 
 @app.command()
-@click.argument("specs", nargs=-1, type=str)
-@click.option(
-    "-c",
-    "--channel",
-    "channels",
-    multiple=True,
-    required=True,
-    type=str,
-    help="Upstream anaconda channel canonical names or URI.",
+@click.argument(
+    "local", nargs=1, type=click.Path(exists=False, file_okay=False, path_type=Path),
 )
+@click.argument("upstream", nargs=1, type=str)
+@click.argument("specs", nargs=-1, type=str)
 @click.option(
     "-s",
     "--subdir",
     "subdirs",
     type=str,
     multiple=True,
-    help="Upstream subdirs (platforms) to sync (noarch included by default).",
-)
-@click.option(
-    "-t",
-    "--target",
-    required=True,
-    type=click.Path(exists=False, file_okay=False, path_type=Path),
-    help="Local anaconda channel to be synced.",
+    help="Platforms sub-directories to sync (defaults to current platform).",
 )
 @click.option(
     "--patch/--no-patch",
@@ -39,32 +27,12 @@ from conda_local.cli import app
     help="Determines if packages should be downloaded to a separate directory.",
 )
 @click.option(
-    "--noarch/--no-noarch",
-    default=True,
-    help="Determines if the 'noarch' subdir should be included.",
-)
-@click.option(
-    "--index/--no-index",
-    default=True,
-    help="Determines if the index of the download packages should be updated.",
-)
-@click.option(
-    "--verify/--no-verify",
-    default=True,
-    help="Determins if download packages should be verified.",
-)
-@click.option(
     "--patch-folder", default="", help="Override location for patch directory",
 )
 @click.option(
-    "--silent", is_flag=True, help="Do not show progress",
+    "--silent", is_flag=True, default=False, help="Do not show progress",
 )
-def sync(
-    specs, channels, subdirs, target, patch, noarch, index, verify, patch_folder, silent
-):
-    if noarch:
-        if "noarch" not in subdirs:
-            subdirs += ("noarch",)
+def sync(local, upstream, specs, subdirs, patch, patch_folder, silent):
 
     if patch:
         if patch_folder:
@@ -74,17 +42,15 @@ def sync(
             patch_folder = Path(f"patch_{now.strftime('%Y%m%d_%H%M%S')}")
 
     api.sync(
-        channels,
-        target,
-        specs,
+        local=local,
+        upstream=upstream,
+        specs=specs,
         subdirs=subdirs,
-        index=index,
-        verify=verify,
         patch=patch_folder,
-        progress=not silent,
+        silent=silent,
     )
 
     if patch:
         click.echo(f"Patch created: {patch_folder.resolve()}")
     else:
-        click.echo("Synchronization: done")
+        click.echo("Sync complete")

@@ -13,6 +13,9 @@ from conda_local.cli import app
 @click.argument(
     "patch", nargs=1, type=click.Path(exists=False, file_okay=False, path_type=Path)
 )
-def merge(target, patch):
-    api.merge(target, patch, progress=True)
-    click.echo("Merge complete!")
+@click.option(
+    "--silent", is_flag=True, help="Do not show progress",
+)
+def merge(target, patch, silent):
+    api.merge(target, patch, silent=silent)
+    click.echo("Merge complete")

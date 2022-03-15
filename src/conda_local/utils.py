@@ -1,62 +1,74 @@
-"""Utilities for iteration and grouping."""
+"""A general collection of utility functions."""
 
-from collections import defaultdict
-from typing import Callable, Iterable, Iterator, Mapping, TypeVar
+from contextlib import contextmanager
+from typing import Iterable, Iterator, List, Optional, Sequence, TypeVar, Union, cast
 
-_T = TypeVar("_T")
-_TKey = TypeVar("_TKey")
-_TValue = TypeVar("_TValue")
+from tqdm import tqdm
 
-Grouping = Mapping[_TKey, Iterable[_TValue]]
+T = TypeVar("T", covariant=True)
 
 
-class UniqueStream(Iterator[_T]):
-    """A stream of items that is mutable during iteration.
-
-    Args:
-        items: Initial items in the stream.
-    """
-
-    def __init__(self, items: Iterable[_T]):
-        self._data = list(items)
-
-    def add(self, item: _T):
-        """Adds an item to the item stream.
-
-        Args:
-            item: Item to be added to the stream.
-        """
-        if item in self._data:
-            return
-        self._data.append(item)
-
-    def __iter__(self) -> Iterator[_T]:
-        self._index = 0
-        return self
-
-    def __next__(self) -> _T:
-        try:
-            item = self._data[self._index]
-            self._index += 1
-        except IndexError:
-            raise StopIteration
-        return item
+def ensure_list(items: Union[T, Iterable[T]]) -> List[T]:
+    """Ensures that an input parameter is list of elements."""
+    results: List[T]
+    if not isinstance(items, Iterable):
+        results = [items]
+    elif isinstance(items, str):
+        results = cast(List[T], [items])
+    else:
+        results = list(items)
+    return results
 
 
-def groupby(
-    items: Iterable[_TValue], func: Callable[[_TValue], _TKey]
-) -> Grouping[_TKey, _TValue]:
-    """Groups items by the results of the specified function.
+def print_task_complete(text: str, silent: bool = False) -> None:
+    if not silent:
+        print(f"{text}: done")
+
+
+def progressbar(
+    items: Sequence[T],
+    desc: str = "",
+    disable: Optional[bool] = None,
+    leave: Optional[bool] = True,
+    **kwargs,
+) -> Iterator[T]:
+    """Returns a type annotated iterator wrapper around ``tqdm.tqdm``.
 
     Args:
-        items: An iterable of items to be group.
-        func: Key-producing function.
+        items:
+            An iterable of items to be decorated with a progressbar.
+        desc:
+            The description used in the prefix of the progressbar.
+        disable:
+            A flag indicating whether to disable the entire progressbar wrapper
+            If set to None, disable on non-TTY
+        leave:
+            If True keeps all traces of the progressbar upon termination of iteration.
+            If None, will leave only if position is 0.
+        kwargs:
+            The remaining ``tqdm.tqdm`` parameters:
 
-    Returns:
-        Items grouped by the results of the specified function.
+    Yields:
+         An items from the original iterable decorated with a progressbar.
     """
-    grouping = defaultdict(set)
-    for item in items:
-        key = func(item)
-        grouping[key].add(item)
-    return grouping
+    with tqdm(
+        total=len(items), desc=desc, disable=disable, leave=leave, **kwargs
+    ) as bar:
+        disabled = bar.disable
+        for item in items:
+            yield item
+            bar.update()
+    print_task_complete(desc, silent=disabled)
+
+
+@contextmanager
+def task(desc: str, disable: bool = False):
+    print(f"{desc}:")
+    yield None
+
+    # HACK: Eww, please fix me
+    CURSOR_UP_ONE = "\x1b[1A"
+    ERASE_LINE = "\x1b[2K"
+    print(CURSOR_UP_ONE + ERASE_LINE, end="")
+
+    print_task_complete(desc, silent=disable)

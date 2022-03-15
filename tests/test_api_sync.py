@@ -22,7 +22,7 @@ def check_record_is_installable(record, channel):
 @pytest.mark.slow
 @pytest.mark.parametrize("specs", [("python =3.8.12")])
 def test_sync_installable_packages(tmp_path, subdirs, specs):
-    api.sync("conda-forge", tmp_path, subdirs=subdirs, specs=specs, progress=True)
+    api.sync(tmp_path, "conda-forge", specs=specs, subdirs=subdirs, silent=False)
     records = api.iterate(tmp_path.resolve().as_uri(), subdirs=subdirs)
 
     failed_installs = []
