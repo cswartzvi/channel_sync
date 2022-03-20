@@ -1,13 +1,12 @@
-import datetime
+import json
 from pathlib import Path
 
 import click
 
 from conda_local import api
-from conda_local.cli import app
 
 
-@app.command()
+@click.command()
 @click.argument(
     "local", nargs=1, type=click.Path(exists=False, file_okay=False, path_type=Path),
 )
@@ -19,38 +18,32 @@ from conda_local.cli import app
     "subdirs",
     type=str,
     multiple=True,
-    help="Platforms sub-directories to sync (defaults to current platform).",
-)
-@click.option(
-    "--patch/--no-patch",
-    default=False,
-    help="Determines if packages should be downloaded to a separate directory.",
-)
-@click.option(
-    "--patch-folder", default="", help="Override location for patch directory",
+    help="Platforms sub-directories (defaults to current platform).",
 )
 @click.option(
     "--silent", is_flag=True, default=False, help="Do not show progress",
 )
-def sync(local, upstream, specs, subdirs, patch, patch_folder, silent):
+@click.option(
+    "--keep", is_flag=True, default=False, help="Only add packages, do not remove",
+)
+@click.option(
+    "--dry-run", is_flag=True, default=False, help="Show all packages to synced",
+)
+def sync(local, upstream, specs, subdirs, silent, keep, dry_run):
+    """Syncs a LOCAL anaconda channel to an UPSTREAM channel with packages and recursive
+    dependencies defined in anaconda match specification strings (SPECS)."""
 
-    if patch:
-        if patch_folder:
-            patch_folder = Path(patch_folder)
-        else:
-            now = datetime.datetime.now()
-            patch_folder = Path(f"patch_{now.strftime('%Y%m%d_%H%M%S')}")
+    silent = True if dry_run else silent
 
-    api.sync(
+    results = api.sync(
         local=local,
         upstream=upstream,
         specs=specs,
         subdirs=subdirs,
-        patch=patch_folder,
         silent=silent,
+        keep=keep,
+        dry_run=dry_run,
     )
 
-    if patch:
-        click.echo(f"Patch created: {patch_folder.resolve()}")
-    else:
-        click.echo("Sync complete")
+    if dry_run:
+        print(json.dumps(results, indent=4))

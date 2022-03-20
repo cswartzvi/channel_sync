@@ -27,6 +27,7 @@ def fetch_local_specs(channel) -> List[str]:
         "test08",
         "test09",
         "test10",
+        "test11",
     ],
 )
 def test_query_of_packages(datadir, subdirs, name):

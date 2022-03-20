@@ -11,7 +11,7 @@ from conda_local.external import (
 )
 from conda_local.grouping import Grouping
 
-LOGGER = logging.Logger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 _DependencyNode = Union[str, PackageRecord]
 _T = TypeVar("_T")
@@ -69,7 +69,7 @@ class DependencyFinder:
             attribute "include" that indicates whether or not a node is included in
             the final solution.
         """
-        graph = _DependencyGraph()
+        graph = _DependencyGraph(specs)
         spec_stream = _UpdateStream(specs)
 
         for spec in spec_stream:
@@ -77,12 +77,16 @@ class DependencyFinder:
             graph.add_spec(spec)
             for record in query_channel(self._channel, [spec], self._subdirs):
                 if self._is_constrainted(record, constraints):
-                    LOGGER.debug("Constrained record: %s", record)
+                    LOGGER.debug("Ignoring constrained record: %s", record)
                     continue
+
                 LOGGER.debug("Processing record: %s", record)
                 graph.add_candidate(spec, record)
 
                 for dependency in record.depends:
+                    LOGGER.debug(
+                        "Processing record dependency: %s -- %s", record, dependency
+                    )
                     spec_stream.add(dependency)
                     graph.add_dependency(record, dependency)
 
@@ -103,10 +107,17 @@ class DependencyFinder:
         if any(True for _ in graph.successors(spec)):
             return  # spec is satisfied
 
+        if graph.is_root(spec):
+            LOGGER.debug("Excluding unsatisfied ROOT spec: %s", spec)
+        else:
+            LOGGER.debug("Excluding unsatisfied spec: %s", spec)
         graph.mark_exclude(spec)  # spec is unsatisfied
 
         for parent in graph.predecessors(spec):
             # All parent records of an unsatisfied specs are excluded
+            LOGGER.debug(
+                "Excluding record with unsatisfied dependency: %s -> %s", parent, spec
+            )
             graph.mark_exclude(parent)
 
             # Excluded parent records may create orphaned sibling specs
@@ -153,15 +164,23 @@ class DependencyFinder:
             graph: A dependency graph consisting of match specifications
                 and package records.
         """
+        # Root nodes cannot be considered orphaned
+        if graph.is_root(spec):
+            return
+
         # A spec is not considered orphaned if it has parent records
-        if any(True for _ in graph.predecessors(spec)):
+        if any(True for _ in graph.predecessors(spec)):  # True if any predecessors
             return  # spec is not orphaned
 
+        LOGGER.debug("Excluding orphaned spec: %s", spec)
         graph.mark_exclude(spec)
 
         # Child records are considered orphaned if they have no other parent specs
         for child in graph.successors(spec):
-            if all(False for _ in graph.predecessors(child)):
+            if all(False for _ in graph.predecessors(child)):  # True if no predecessors
+                LOGGER.debug(
+                    "Excluding candidate of orphaned spec: %s -> %s", child, spec
+                )
                 graph.mark_exclude(child)
                 for grandchildren in graph.successors(child):
                     self._exclude_orphaned_nodes(grandchildren, graph)
@@ -171,9 +190,12 @@ class _DependencyGraph:
     """A ``networkx.DiGraph`` wrapper for dealing with str / PackageRecords nodes."""
 
     _attribute: Final[str] = "include"
+    _root: Final[str] = "root"
 
-    def __init__(self) -> None:
+    def __init__(self, spec_roots: Iterable[str]) -> None:
         self._graph = nx.DiGraph()
+        for spec_root in spec_roots:
+            self._add_spec_root(spec_root)
 
     @property
     def specs(self) -> Iterator[str]:
@@ -189,7 +211,11 @@ class _DependencyGraph:
 
     def add_spec(self, spec: str) -> None:
         if spec not in self._graph.nodes:
-            self._graph.add_node(spec, **{self._attribute: True})
+            self._graph.add_node(spec, **{self._attribute: True, self._root: False})
+
+    def _add_spec_root(self, spec: str) -> None:
+        if spec not in self._graph.nodes:
+            self._graph.add_node(spec, **{self._attribute: True, self._root: True})
 
     def _add_record(self, record: PackageRecord) -> None:
         self._graph.add_node(record, **{self._attribute: True})
@@ -206,6 +232,9 @@ class _DependencyGraph:
 
     def is_included(self, node: _DependencyNode) -> bool:
         return self._graph.nodes[node][self._attribute]
+
+    def is_root(self, node: _DependencyNode) -> bool:
+        return self._graph.nodes[node][self._root]
 
     def mark_exclude(self, node: _DependencyNode):
         self._graph.nodes[node][self._attribute] = False

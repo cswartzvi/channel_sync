@@ -20,7 +20,7 @@ def ensure_list(items: Union[T, Iterable[T]]) -> List[T]:
     return results
 
 
-def print_task_complete(text: str, silent: bool = False) -> None:
+def _print_task_complete(text: str, silent: bool = False) -> None:
     if not silent:
         print(f"{text}: done")
 
@@ -58,11 +58,19 @@ def progressbar(
         for item in items:
             yield item
             bar.update()
-    print_task_complete(desc, silent=disabled)
+    _print_task_complete(desc, silent=disabled)
 
 
 @contextmanager
 def task(desc: str, disable: bool = False):
+    """Provides a context wrapper around a single task. Similar to  ``progressbar``.
+
+    Args:
+        desc:
+            The description used in the prefix of the progressbar.
+        disable:
+            A flag indicating whether to disable the entire task wrapper.
+    """
     print(f"{desc}:")
     yield None
 
@@ -71,4 +79,4 @@ def task(desc: str, disable: bool = False):
     ERASE_LINE = "\x1b[2K"
     print(CURSOR_UP_ONE + ERASE_LINE, end="")
 
-    print_task_complete(desc, silent=disable)
+    _print_task_complete(desc, silent=disable)

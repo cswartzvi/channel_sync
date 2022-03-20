@@ -2,17 +2,21 @@ import logging
 
 import click
 
+from conda_local.cli import cmd_merge, cmd_patch, cmd_sync
+
 LOGGER = logging.Logger(__name__)
 
 
 @click.group()
 @click.option("-v", "--verbose", count=True, default=0)
 def app(verbose):
-    """Manage local or air-gapped anaconda channels."""
-    if verbose > 0:
-        LOGGER.setLevel(logging.INFO)
-    if verbose > 1:
-        LOGGER.setLevel(logging.DEBUG)
+    """Manage local, potentially air-gapped, anaconda channels."""
+    if verbose >= 1:
+        logging.basicConfig(level=logging.DEBUG)
+    elif verbose == 1:
+        logging.basicConfig(level=logging.INFO)
 
 
-from conda_local.cli import cmd_merge, cmd_sync  # noqa
+app.add_command(cmd_merge.merge)
+app.add_command(cmd_patch.patch)
+app.add_command(cmd_sync.sync)
