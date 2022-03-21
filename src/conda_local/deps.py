@@ -187,7 +187,16 @@ class DependencyFinder:
 
 
 class _DependencyGraph:
-    """A ``networkx.DiGraph`` wrapper for dealing with str / PackageRecords nodes."""
+    """A `networkx.DiGraph` wrapper for the anaconda dependency directed graph.
+
+    The dependency graph contains alternating match specification strings and package
+    record nodes starting with match specification strings at the roots. Both types of
+    nodes are initially *included* but can be marked as *excluded* via interactions
+    with this class.
+
+    Args:
+        spec_root: Root match specification strings.
+    """
 
     _attribute: Final[str] = "include"
     _root: Final[str] = "root"
@@ -199,77 +208,106 @@ class _DependencyGraph:
 
     @property
     def specs(self) -> Iterator[str]:
+        """Returns all currently included match specification strings."""
         for node in self._graph.nodes:
             if isinstance(node, str) and self.is_included(node):
                 yield node
 
     @property
     def records(self) -> Iterator[PackageRecord]:
+        """Returns all currently included package records objects."""
         for node in self._graph.nodes:
             if isinstance(node, PackageRecord) and self.is_included(node):
                 yield node
 
     def add_spec(self, spec: str) -> None:
+        """Adds a non-root match specification string to the graph."""
         if spec not in self._graph.nodes:
             self._graph.add_node(spec, **{self._attribute: True, self._root: False})
 
     def _add_spec_root(self, spec: str) -> None:
-        if spec not in self._graph.nodes:
-            self._graph.add_node(spec, **{self._attribute: True, self._root: True})
+        """Adds a root match specification string to the graph."""
+        self._graph.add_node(spec, **{self._attribute: True, self._root: True})
 
     def _add_record(self, record: PackageRecord) -> None:
+        """Adds a package record object to the graph."""
         self._graph.add_node(record, **{self._attribute: True})
 
     def add_candidate(self, spec: str, candidate: PackageRecord) -> None:
+        """Connects a match specification string to a package records candidate.
+
+        Candidates are package records that *may* satisfy a match specification. Nodes
+        that do not currently exists in the underlying graph are added.
+        """
         self.add_spec(spec)
         self._add_record(candidate)
         self._graph.add_edge(spec, candidate)
 
     def add_dependency(self, record: PackageRecord, dependency: str) -> None:
+        """Connects a package record to a match specification dependency.
+
+        Dependencies are match specification strings that are required to be installed
+        by a package record. Nodes that do not currently exists in the underlying graph
+        are added.
+        """
         self._add_record(record)
         self.add_spec(dependency)
         self._graph.add_edge(record, dependency)
 
     def is_included(self, node: _DependencyNode) -> bool:
+        """Returns True if the specified node is marked include, False otherwise."""
         return self._graph.nodes[node][self._attribute]
 
     def is_root(self, node: _DependencyNode) -> bool:
+        """Returns True if the specified node is a root node, False otherwise."""
         return self._graph.nodes[node][self._root]
 
-    def mark_exclude(self, node: _DependencyNode):
+    def mark_exclude(self, node: _DependencyNode) -> None:
+        """Marks a specified node as excluded."""
         self._graph.nodes[node][self._attribute] = False
 
     @overload
     def predecessors(self, node: str) -> Iterator[PackageRecord]:
+        """Returns package record predecessors of a match specifcation node."""
         ...
 
     @overload
     def predecessors(self, node: PackageRecord) -> Iterator[str]:
+        """Returns match specifcation predecessors of a package records node."""
         ...
 
     def predecessors(
         self, node: _DependencyNode
     ) -> Union[Iterator[str], Iterator[PackageRecord]]:
+        """Returns a predecessor (parents) nodes for the specified node."""
         for pred in self._graph.predecessors(node):
             if self.is_included(pred):
                 yield pred
 
     @overload
     def successors(self, node: str) -> Iterator[PackageRecord]:
+        """Returns package record successors of a match specifcation node."""
         ...
 
     @overload
     def successors(self, node: PackageRecord) -> Iterator[str]:
+        """Returns match specifcation successors of a package records node."""
         ...
 
     def successors(
         self, node: Union[str, PackageRecord]
     ) -> Union[Iterator[str], Iterator[PackageRecord]]:
+        """Returns a successor (children) nodes for the specified node."""
         for suc in self._graph.successors(node):
             if self.is_included(suc):
                 yield suc
 
     def unsatisfied_specs(self) -> Iterator[str]:
+        """Yields all unsatisfied match specification nodes.
+
+        Unsatisfied match specification nodes have no included package records
+        candidates.
+        """
         yield from (spec for spec in self.specs if self._graph.out_degree(spec) == 0)
 
 
