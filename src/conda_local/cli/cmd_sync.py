@@ -27,9 +27,12 @@ from conda_local import api
     "--keep", is_flag=True, default=False, help="Only add packages, do not remove",
 )
 @click.option(
+    "--latest", is_flag=True, default=False, help="Keep only the latest build numbers.",
+)
+@click.option(
     "--dry-run", is_flag=True, default=False, help="Show all packages to synced",
 )
-def sync(local, upstream, specs, subdirs, silent, keep, dry_run):
+def sync(local, upstream, specs, subdirs, silent, keep, latest, dry_run):
     """Syncs a LOCAL anaconda channel to an UPSTREAM channel with packages and recursive
     dependencies defined in anaconda match specification strings (SPECS)."""
 
@@ -42,6 +45,7 @@ def sync(local, upstream, specs, subdirs, silent, keep, dry_run):
         subdirs=subdirs,
         silent=silent,
         keep=keep,
+        latest=latest,
         dry_run=dry_run,
     )
 

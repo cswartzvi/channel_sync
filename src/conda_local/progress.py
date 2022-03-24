@@ -12,7 +12,7 @@ T = TypeVar("T", covariant=True)
 
 def bar(
     items: Sequence[T],
-    description: str = "",
+    description: str,
     silent: Optional[bool] = None,
     leave: Optional[bool] = True,
     **kwargs,
@@ -56,7 +56,7 @@ def spinner(description: str, silent: bool = False) -> Spinner:
         silent:
             A flag indicating that all console output should be silenced.
     """
-    with Spinner(enabled=not silent, json=silent) as _spinner:
+    with Spinner(description, enabled=not silent, json=silent) as _spinner:
         yield _spinner
 
 

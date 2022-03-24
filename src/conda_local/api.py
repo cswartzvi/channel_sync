@@ -23,15 +23,6 @@ PathOrString = Union[str, Path]
 _T = TypeVar("_T", covariant=True)
 
 
-def find_missing_packages(
-    source: str,
-    target: str,
-    specs: OneOrMoreStrings,
-    subdirs: Optional[OneOrMoreStrings] = None,
-) -> Iterator[PackageRecord]:
-    pass
-
-
 def iterate(
     channel: PathOrString, subdirs: Optional[OneOrMoreStrings] = None,
 ) -> Iterator[PackageRecord]:
@@ -75,6 +66,7 @@ def query(
     channel: PathOrString,
     specs: OneOrMoreStrings,
     subdirs: Optional[OneOrMoreStrings] = None,
+    latest: bool = False,
     graph_file: Optional[PathOrString] = None,
 ) -> Iterable[PackageRecord]:
     """Query an anaconda channel use the match specification query language.
@@ -96,7 +88,7 @@ def query(
     subdirs = _process_subdirs_arg(subdirs)
 
     finder = DependencyFinder(channel, subdirs)
-    records, graph = finder.search(specs)
+    records, graph = finder.search(specs, latest=latest)
 
     if graph_file is not None:
         graph_file = Path(graph_file)
@@ -112,11 +104,10 @@ def sync(
     patch: Optional[PathOrString] = None,
     silent: bool = True,
     keep: bool = False,
+    latest: bool = False,
     dry_run: bool = False,
 ) -> Dict:
-    """Syncs a local anaconda channel with upstream anaconda channels.
-
-    """
+    """Syncs a local anaconda channel with upstream anaconda channels."""
     local = setup_channel(local)
     upstream = _process_channel_arg(upstream)
     specs = _ensure_list(specs)
@@ -129,7 +120,7 @@ def sync(
         local_records = iterate(local.resolve().as_uri(), subdirs=subdirs)
 
     with progress.spinner("Querying upstream channel", silent=silent):
-        upstream_records = query(upstream, specs, subdirs=subdirs)
+        upstream_records = query(upstream, specs, subdirs=subdirs, latest=latest)
 
     added, removed = compare_records(upstream_records, local_records)
 
@@ -140,7 +131,10 @@ def sync(
         removed_by_subdir = groupby(removed, lambda rec: rec.subdir)
 
         for subdir in progress.bar(
-            subdirs, desc="Downloading patch instructions", disable=silent, leave=False,
+            subdirs,
+            description="Downloading patch instructions",
+            silent=silent,
+            leave=False,
         ):
             fetch_patch_instructions(
                 upstream, destination, subdir, removed_by_subdir.get(subdir)
@@ -148,8 +142,8 @@ def sync(
 
         for record in progress.bar(
             sorted(added, key=lambda rec: rec.fn),
-            desc="Downloading packages",
-            disable=silent,
+            description="Downloading packages",
+            silent=silent,
             leave=False,
         ):
             download_package(record, destination)
@@ -187,6 +181,6 @@ def _process_channel_arg(channel: PathOrString) -> str:
 
 def _process_subdirs_arg(subdirs: Optional[OneOrMoreStrings] = None) -> List[str]:
     """Processes a subdir argument, returning a list of strings."""
-    if subdirs is None:
+    if not subdirs:
         return get_default_subdirs()
     return _ensure_list(subdirs)

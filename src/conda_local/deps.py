@@ -9,7 +9,7 @@ from conda_local.external import (
     create_spec_lookup,
     query_channel,
 )
-from conda_local.grouping import Grouping
+from conda_local.grouping import Grouping, groupby
 
 LOGGER = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ class DependencyFinder:
         self._subdirs = list(subdirs)
 
     def search(
-        self, specs: Iterable[str]
+        self, specs: Iterable[str], latest: bool = False
     ) -> Tuple[Iterator[PackageRecord], nx.DiGraph]:
         """Searches for package dependencies for given anaconda match specifications.
 
@@ -49,12 +49,12 @@ class DependencyFinder:
             A tuple of a package record iterator and the annotated dependency graph.
         """
         constraints = create_spec_lookup(specs)
-        graph = self._construct_dependency_graph(specs, constraints)
+        graph = self._construct_dependency_graph(specs, constraints, latest)
         records = self._extract_records(graph)
         return records, graph
 
     def _construct_dependency_graph(
-        self, specs: Iterable[str], constraints: Grouping[str, MatchSpec]
+        self, specs: Iterable[str], constraints: Grouping[str, MatchSpec], latest: bool,
     ) -> "_DependencyGraph":
         """Constrcuts a dependency graph for the current calculation.
 
@@ -72,10 +72,15 @@ class DependencyFinder:
         graph = _DependencyGraph(specs)
         spec_stream = _UpdateStream(specs)
 
+        if latest:
+            query_records = self._query_channel_latest
+        else:
+            query_records = self._query_channel_all
+
         for spec in spec_stream:
             LOGGER.info("Processing spec: %s", spec)
             graph.add_spec(spec)
-            for record in query_channel(self._channel, [spec], self._subdirs):
+            for record in query_records(spec):
                 if self._is_constrainted(record, constraints):
                     LOGGER.debug("Ignoring constrained record: %s", record)
                     continue
@@ -184,6 +189,17 @@ class DependencyFinder:
                 graph.mark_exclude(child)
                 for grandchildren in graph.successors(child):
                     self._exclude_orphaned_nodes(grandchildren, graph)
+
+    def _query_channel_all(self, spec: str) -> Iterator[PackageRecord]:
+        yield from query_channel(self._channel, [spec], self._subdirs)
+
+    def _query_channel_latest(self, spec: str) -> Iterator[PackageRecord]:
+        records = query_channel(self._channel, [spec], self._subdirs)
+        groups = groupby(records, lambda rec: (rec.name, rec.version, rec.build))
+        for key, group in groups.items():
+            print(key)
+            ranked = sorted(group, reverse=True, key=lambda rec: rec.build_number)
+            yield ranked[0]
 
 
 class _DependencyGraph:
