@@ -15,11 +15,11 @@ def groupby(
     """Groups items by the results of the specified function.
 
     Args:
-        items: An iterable of items to be group.
-        func: Key-producing function.
+        items: An iterable of items to be grouped.
+        func: A function that generates the key used to group items.
 
     Returns:
-        Items grouped by the results of the specified function.
+        The original items grouped by the results of the specified function.
     """
     grouping = defaultdict(set)
     for item in items:

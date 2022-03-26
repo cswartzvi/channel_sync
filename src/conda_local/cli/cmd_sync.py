@@ -8,7 +8,7 @@ from conda_local import api
 
 @click.command()
 @click.argument(
-    "local", nargs=1, type=click.Path(exists=False, file_okay=False, path_type=Path),
+    "target", nargs=1, type=click.Path(exists=False, file_okay=False, path_type=Path),
 )
 @click.argument("upstream", nargs=1, type=str)
 @click.argument("specs", nargs=-1, type=str)
@@ -32,14 +32,15 @@ from conda_local import api
 @click.option(
     "--dry-run", is_flag=True, default=False, help="Show all packages to synced",
 )
-def sync(local, upstream, specs, subdirs, silent, keep, latest, dry_run):
-    """Syncs a LOCAL anaconda channel to an UPSTREAM channel with packages and recursive
-    dependencies defined in anaconda match specification strings (SPECS)."""
+def sync(target, upstream, specs, subdirs, silent, keep, latest, dry_run):
+    """Syncs a TARGET anaconda channel to an UPSTREAM anaconda channel with packages
+    and recursive dependencies defined in anaconda match specification strings (SPECS).
+    """
 
     silent = True if dry_run else silent
 
-    results = api.sync(
-        local=local,
+    results = api.synchronize(
+        target=target,
         upstream=upstream,
         specs=specs,
         subdirs=subdirs,

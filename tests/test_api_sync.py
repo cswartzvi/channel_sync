@@ -32,16 +32,23 @@ def check_record_is_installable_with_constraints(record, channel, constraints):
     return result.returncode == 0
 
 
-@pytest.mark.slow
 @pytest.mark.parametrize(
     "specs",
     [
-        ("python =3.8.12", "fastapi", "sqlalchemy"),
-        # ("python =3.8.12", "numpy =1.21.0", "matplotlib 3.5.0"),
+        pytest.param(
+            ("python =3.8.12", "fastapi", "sqlalchemy"), marks=pytest.mark.slow
+        ),
+        (
+            "libstdcxx-ng =11.2",
+            "libgcc-ng >=11.2",
+            "libgomp =11.2",
+            "llvm-openmp >=13.0,<14.0",
+            "_openmp_mutex >=4.5",
+        ),
     ],
 )
 def test_sync_installable_packages(tmp_path, subdirs, specs):
-    api.sync(tmp_path, "conda-forge", specs=specs, subdirs=subdirs, silent=False)
+    api.synchronize(tmp_path, "conda-forge", specs=specs, subdirs=subdirs, silent=False)
     records = api.iterate(tmp_path.resolve().as_uri(), subdirs=subdirs)
 
     failed_installs = []

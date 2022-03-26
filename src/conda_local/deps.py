@@ -9,9 +9,9 @@ from conda_local.external import (
     create_spec_lookup,
     query_channel,
 )
-from conda_local.grouping import Grouping, groupby
+from conda_local.grouping import Grouping
 
-LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 _DependencyNode = Union[str, PackageRecord]
 _T = TypeVar("_T")
@@ -20,12 +20,9 @@ _T = TypeVar("_T")
 class DependencyFinder:
     """Anaconda package dependency finder.
 
-    Note: This is not a package solver that attempts to find a singular path
-    through a dependency graph. Instead, the purpose of this class is to
-    recursively find *all* package records, within a channel, that satisfy
-    the dependencies of a given package. In terms of the dependency graph
-    this is equivalent to finding all the successor nodes of a dependency
-    that are themselves satisfied by at least one package.
+    This solver does **not** attempt to find a singular path through a dependency graph
+    (like the solver within the main `conda` executable). Instead, this solver
+    recursively finds all package records that
 
     Args:
         channel: The canonical name, URL, or URI of an anaconda channel.
@@ -40,7 +37,7 @@ class DependencyFinder:
     def search(
         self, specs: Iterable[str], latest: bool = False
     ) -> Tuple[Iterator[PackageRecord], nx.DiGraph]:
-        """Searches for package dependencies for given anaconda match specifications.
+        """S
 
         Args:
             specs: The anaconda match specifications used in the dependency search.
@@ -55,7 +52,7 @@ class DependencyFinder:
 
     def _construct_dependency_graph(
         self, specs: Iterable[str], constraints: Grouping[str, MatchSpec], latest: bool,
-    ) -> "_DependencyGraph":
+    ) -> "DependencyGraph":
         """Constrcuts a dependency graph for the current calculation.
 
         Args:
@@ -69,27 +66,22 @@ class DependencyFinder:
             attribute "include" that indicates whether or not a node is included in
             the final solution.
         """
-        graph = _DependencyGraph(specs)
+        graph = DependencyGraph(specs)
         spec_stream = _UpdateStream(specs)
 
-        if latest:
-            query_records = self._query_channel_latest
-        else:
-            query_records = self._query_channel_all
-
         for spec in spec_stream:
-            LOGGER.info("Processing spec: %s", spec)
+            _LOGGER.info("Processing spec: %s", spec)
             graph.add_spec(spec)
-            for record in query_records(spec):
+            for record in query_channel(self._channel, [spec], self._subdirs):
                 if self._is_constrainted(record, constraints):
-                    LOGGER.debug("Ignoring constrained record: %s", record)
+                    _LOGGER.debug("Ignoring constrained record: %s", record)
                     continue
 
-                LOGGER.debug("Processing record: %s", record)
+                _LOGGER.debug("Processing record: %s", record)
                 graph.add_candidate(spec, record)
 
                 for dependency in record.depends:
-                    LOGGER.debug(
+                    _LOGGER.debug(
                         "Processing record dependency: %s -- %s", record, dependency
                     )
                     spec_stream.add(dependency)
@@ -100,8 +92,8 @@ class DependencyFinder:
 
         return graph
 
-    def _exclude_unsatisfied_nodes(self, spec: str, graph: "_DependencyGraph") -> None:
-        """Excludes (marks include = False) unsatisfied nodes in a dependency graph.
+    def _exclude_unsatisfied_nodes(self, spec: str, graph: "DependencyGraph") -> None:
+        """Excludes nodes in the dependency graph that are determined to be unsatisfied.
 
         Args:
             spec: Starting match specification node in the dependency graph.
@@ -113,14 +105,14 @@ class DependencyFinder:
             return  # spec is satisfied
 
         if graph.is_root(spec):
-            LOGGER.debug("Excluding unsatisfied ROOT spec: %s", spec)
+            _LOGGER.debug("Excluding unsatisfied ROOT spec: %s", spec)
         else:
-            LOGGER.debug("Excluding unsatisfied spec: %s", spec)
+            _LOGGER.debug("Excluding unsatisfied spec: %s", spec)
         graph.mark_exclude(spec)  # spec is unsatisfied
 
         for parent in graph.predecessors(spec):
             # All parent records of an unsatisfied specs are excluded
-            LOGGER.debug(
+            _LOGGER.debug(
                 "Excluding record with unsatisfied dependency: %s -> %s", parent, spec
             )
             graph.mark_exclude(parent)
@@ -133,7 +125,7 @@ class DependencyFinder:
             for grandparent in graph.predecessors(parent):
                 self._exclude_unsatisfied_nodes(grandparent, graph)
 
-    def _extract_records(self, graph: "_DependencyGraph") -> Iterator[PackageRecord]:
+    def _extract_records(self, graph: "DependencyGraph") -> Iterator[PackageRecord]:
         """Yields included package records from the dependency graph.
 
         Args:
@@ -161,8 +153,8 @@ class DependencyFinder:
             return not all(const.match(record) for const in constraints[record.name])
         return False
 
-    def _exclude_orphaned_nodes(self, spec: str, graph: "_DependencyGraph") -> None:
-        """Excludes (marks include = False) orphaned nodes in a dependency graph.
+    def _exclude_orphaned_nodes(self, spec: str, graph: "DependencyGraph") -> None:
+        """Excludes nodes in the dependency graph that are determined to be orphaned.
 
         Args:
             spec: Starting match specification node in the dependency graph.
@@ -177,32 +169,21 @@ class DependencyFinder:
         if any(True for _ in graph.predecessors(spec)):  # True if any predecessors
             return  # spec is not orphaned
 
-        LOGGER.debug("Excluding orphaned spec: %s", spec)
+        _LOGGER.debug("Excluding orphaned spec: %s", spec)
         graph.mark_exclude(spec)
 
         # Child records are considered orphaned if they have no other parent specs
         for child in graph.successors(spec):
             if all(False for _ in graph.predecessors(child)):  # True if no predecessors
-                LOGGER.debug(
+                _LOGGER.debug(
                     "Excluding candidate of orphaned spec: %s -> %s", child, spec
                 )
                 graph.mark_exclude(child)
                 for grandchildren in graph.successors(child):
                     self._exclude_orphaned_nodes(grandchildren, graph)
 
-    def _query_channel_all(self, spec: str) -> Iterator[PackageRecord]:
-        yield from query_channel(self._channel, [spec], self._subdirs)
 
-    def _query_channel_latest(self, spec: str) -> Iterator[PackageRecord]:
-        records = query_channel(self._channel, [spec], self._subdirs)
-        groups = groupby(records, lambda rec: (rec.name, rec.version, rec.build))
-        for key, group in groups.items():
-            print(key)
-            ranked = sorted(group, reverse=True, key=lambda rec: rec.build_number)
-            yield ranked[0]
-
-
-class _DependencyGraph:
+class DependencyGraph:
     """A `networkx.DiGraph` wrapper for the anaconda dependency directed graph.
 
     The dependency graph contains alternating match specification strings and package

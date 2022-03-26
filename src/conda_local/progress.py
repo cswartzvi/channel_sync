@@ -1,4 +1,4 @@
-"""Utility functions for display progress to the console."""
+"""Utility functions for writing to the console."""
 
 from contextlib import contextmanager
 from typing import Iterator, Optional, Sequence, TypeVar
@@ -17,24 +17,19 @@ def bar(
     leave: Optional[bool] = True,
     **kwargs,
 ) -> Iterator[T]:
-    """Returns a type annotated iterator wrapper around ``tqdm.tqdm``.
+    """Returns a type annotated iterator wrapper around `tqdm.tqdm`.
 
     Args:
-        items:
-            An iterable of items to be decorated with a progressbar.
-        description:
-            The description used in the prefix of the progressbar.
-        silent:
-            A flag indicating that all console output should be silenced. If set to
-            None, disable on non-TTY
-        leave:
-            If True keeps all traces of the progressbar upon termination of iteration.
-            If None, will leave only if position is 0.
-        kwargs:
-            The remaining ``tqdm.tqdm`` parameters:
+        items: An iterable of items to be decorated with a progressbar.
+        description: The description used in the prefix of the progressbar.
+        silent: A flag indicating that all console output should be silenced. If set to
+            None, disable on non-TTY.
+        leave: If True, keeps all traces of the progressbar upon termination of
+            iteration. If None, will leave only if position is 0.
+        kwargs: The remaining ``tqdm.tqdm`` parameters
 
     Yields:
-         An items from the original iterable decorated with a progressbar.
+         An iterator over the items from the original sequence.
     """
     with tqdm(
         total=len(items), desc=description, disable=silent, leave=leave, **kwargs
@@ -48,13 +43,11 @@ def bar(
 
 @contextmanager
 def spinner(description: str, silent: bool = False) -> Spinner:
-    """Provides a context wrapper around a `conda.Spinner`. Similar to  ``progressbar``.
+    """Provides a context wrapper around a `conda.Spinner`.
 
     Args:
-        description:
-            The description used in the prefix of the spinner.
-        silent:
-            A flag indicating that all console output should be silenced.
+        description: The description used in the prefix of the spinner.
+        silent: A flag indicating that all console output should be silenced.
     """
     with Spinner(description, enabled=not silent, json=silent) as _spinner:
         yield _spinner
@@ -62,13 +55,11 @@ def spinner(description: str, silent: bool = False) -> Spinner:
 
 @contextmanager
 def task(description: str, silent: bool = False):
-    """Provides a context wrapper around a single task. Similar to  ``progressbar``.
+    """Provides a context wrapper around a single task.
 
     Args:
-        description:
-            The description used in the prefix of the task.
-        silent:
-            A flag indicating that all console output should be silence.
+        description: The description used in the prefix of the task.
+        silent: A flag indicating that all console output should be silence.
     """
     print(f"{description}:")
     yield None

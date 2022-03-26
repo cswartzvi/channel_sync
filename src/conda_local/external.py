@@ -1,5 +1,4 @@
-"""External interface for the `conda` and `conda_build` public (and not so
-public) APIs.
+"""External interface for the `conda` and `conda_build` (semi-)public APIs.
 
 Notes:
     Within this module anaconda channels can be referened by identifier or uri, e.g.:
@@ -46,20 +45,15 @@ def compare_records(
 ) -> Tuple[Set[PackageRecord], Set[PackageRecord]]:
     """Compares two iterables of package records by computing set-based differences.
 
-    Packages are compared by considering their platform sub-directory, name, version,
-    build and build number. Note, channel is *not* considered.
+    By default, a package record's hash includes it's channel. Because we may be
+    comparing package records from different channels, we cannot use the default hash
+    method. Therefore, in this function we use an internal function to group the
+    incoming package records by platform sub-directory, name, version, build and build
+    number. The internal function does *not* consider channel.
 
     Args:
-        left:
-            An iterable of package records.
-        right:
-            An iterable of package records
-
-    Notes:
-        By default, a package record's hash includes it's channel. Because we may be
-        comparing package records from different channels, we cannot use the default
-        hash method. Therefore, in this function we use an internal no_channel_key
-        function to group the incoming package records.
+        left: An iterable of package records.
+        right: An iterable of package records
 
     Returns:
         A tuple of sets containing set differences (left - right and right - left).
@@ -93,8 +87,7 @@ def create_spec_lookup(specs: Iterable[str]) -> Grouping[str, MatchSpec]:
     """Returns match specification objects grouped by associated package names.
 
     Args:
-        specs:
-            An interable of anaconda match specifications strings.
+        specs: An interable of anaconda match specifications strings.
     """
     return groupby([MatchSpec(spec) for spec in specs], lambda spec: spec.name)
 
@@ -105,13 +98,11 @@ def download_package(
     """Downloads the anaconda package associated with a specified package record.
 
     Args:
-        record:
-            The package record associated with the anaconda package to be downloaded.
-        destination:
-            The directory where the package will be downloaded. Note that additional
-            subdirs will be created within the destination directory if needed.
-        verify:
-            A flag indicating if packages should be verified.
+        record: The record associated with the anaconda package to be downloaded.
+        destination: The directory where the package will be downloaded. Note that
+            additional subdirs will be created within the destination directory if
+            necessary.
+        verify: A flag indicating if packages should be verified.
     """
     sha256_hash = record.sha256 if verify else None
     size = record.size if verify else None
@@ -141,16 +132,13 @@ def fetch_patch_instructions(
     """Retrives patch instructions from a platform sub-directory in a anaconda channel.
 
     Args:
-        channel:
-            An anaconda channel url or identifier.
-        subdirs:
-            The platform sub-directories within the anaconda channel.
-        destination:
-            The directory where the package will be downloaded. Note that additional
-            subdirs will be created within the destination directory if needed.
-        packages_to_remove:
-            Optional iterable of additional package records to remove. These packages
-            will be added to the patch instructions.
+        channel: An anaconda channel url or identifier.
+        subdirs: The platform sub-directories within the anaconda channel.
+        destination: The directory where the package will be downloaded. Note that
+            additional subdirs will be created within the destination directory if
+            needed.
+        packages_to_remove: Optional iterable of additional package records to remove.
+            These packages will be added to the patch instructions.
     """
 
     base_url = conda.models.channel.all_channel_urls([channel], subdirs=[subdir])[0]
@@ -183,11 +171,9 @@ def iter_channel(
     """Yields all package records from an anaconda channel.
 
     Args:
-        channel:
-            An anaconda channel url or identifier.
-        subdirs:
-            The platform sub-directories within the anaconda channel. If None, defaults
-            to the standard subdirs for the current platform.
+        channel: An anaconda channel url or identifier.
+        subdirs: The platform sub-directories within the anaconda channel. If None,
+            defaults to the standard subdirs for the current platform.
     """
     yield from query_channel(channel, ["*"], subdirs)
 
@@ -198,13 +184,10 @@ def query_channel(
     """Performs a package record query against the specified anaconda channels.
 
     Args:
-        channel:
-            An anaconda channel url or identifier.
-        specs:
-            The package match specifications used within the query
-        subdirs:
-            The platform sub-directories within the anaconda channel. If
-            None defaults to the standard subdirs for the current platform.
+        channel: An anaconda channel url or identifier.
+        specs: The package match specifications used within the query
+        subdirs: The platform sub-directories within the anaconda channel. If None
+            defaults to the standard subdirs for the current platform.
 
     Yields:
         Package records resulting from the anaconda channel query.
@@ -239,17 +222,14 @@ def setup_channel(path: Union[str, Path]) -> Path:
 def update_index(
     target: Path, subdirs: Optional[Iterable[str]] = None, silent: bool = False,
 ):
-    """Updates the channel index of a local anaconda channel.
+    """Updates the index of a local anaconda channel.
 
     Args:
-        target:
-            The location of a local anaconda channel.
-        subdirs:
-            The platform sub-directories within the anaconda channel. If
-            None defaults to the standard subdirs for the current platform.
-        silent:
-            A flag that indicates if the update should produce progress output. Note
-            that this output is generated from within the wrapped ``update_index``
+        target: The location of a local anaconda channel.
+        subdirs: The platform sub-directories within the anaconda channel. If None
+            defaults to the standard subdirs for the current platform.
+        silent: A flag that indicates if the update should produce progress output. Note
+            that this output is generated from within the wrapped `update_index`
             and cannot currently be altered. Defaults to False.
     """
     if subdirs is None:
@@ -269,6 +249,7 @@ def update_index(
                     tar.add(target / patch, arcname=patch)
             patch_generator = str(tarball.resolve())  # must be string (or None)
 
+        # TODO: Find a way to separate the progress bar from the api function.
         conda_build.api.update_index(
             target, patch_generator=patch_generator, progress=not silent
         )
@@ -278,10 +259,8 @@ def verify_file(path: Path, record: PackageRecord) -> bool:
     """Verifies that a file matches the sha256 and size of specified package record.
 
     Args:
-        path:
-            The location of a package records that is to be verified.
-        record:
-            The package record used to perfrom the verification.
+        path: The location of a package records that is to be verified.
+        record: The package record used to perfrom the verification.
     """
     file_size = path.stat().st_size
     file_bytes = path.read_bytes()
