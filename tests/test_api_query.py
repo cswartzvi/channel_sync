@@ -4,7 +4,7 @@ from typing import List
 import pytest
 
 from conda_local import api
-from conda_local.external import compare_records
+from conda_local.external import compute_relative_complements
 
 
 def fetch_local_specs(channel) -> List[str]:
@@ -35,6 +35,6 @@ def test_query_of_packages(datadir, subdirs, name):
     specs = fetch_local_specs(base)
     expected = api.iterate((base / "expected").as_uri(), subdirs=subdirs)
     actual = api.query((base / "all").as_uri(), specs, subdirs=subdirs)
-    added, removed = compare_records(actual, expected)
+    added, removed = compute_relative_complements(actual, expected)
     assert not added
     assert not removed

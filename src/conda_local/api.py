@@ -5,17 +5,18 @@ from pathlib import Path
 from typing import Dict, Iterable, Iterator, List, Optional, TypeVar, Union, cast
 
 from conda_local import progress
-from conda_local.deps import DependencyFinder
 from conda_local.external import (
     PackageRecord,
-    compare_records,
+    compute_relative_complements,
     download_package,
     fetch_patch_instructions,
     get_default_subdirs,
+    get_local_channel_subdirs,
     iter_channel,
     setup_channel,
     update_index,
 )
+from conda_local.graph import construct_dependency_graph
 from conda_local.grouping import groupby
 
 OneOrMoreStrings = Union[str, Iterable[str]]
@@ -53,13 +54,15 @@ def merge(
     patch = Path(patch)
     target = Path(target)
 
+    subdirs = get_local_channel_subdirs(target)
+
     with progress.spinner("Copying patch", silent=silent):
         for file in patch.glob("**/*"):
             if file.is_file():
                 shutil.copy(file, target / file.relative_to(patch))
 
     with progress.task("Updating index", silent=silent):
-        update_index(target, silent=silent, subdirs=[])
+        update_index(target, silent=silent, subdirs=subdirs)
 
 
 def query(
@@ -87,11 +90,8 @@ def query(
     specs = _ensure_list(specs)
     subdirs = _process_subdirs_arg(subdirs)
 
-    solver = DependencyFinder(channel, subdirs)
-    records, graph = solver.search(specs, latest=latest)
-
-    if graph_file is not None:
-        graph_file = Path(graph_file)
+    graph = construct_dependency_graph(channel, subdirs, specs)
+    records = graph.records
 
     return records
 
@@ -113,7 +113,8 @@ def synchronize(
         target:
 
     """
-    target = setup_channel(target)
+    target = Path(target)
+    setup_channel(target)
     upstream = _process_channel_arg(upstream)
     specs = _ensure_list(specs)
     subdirs = _process_subdirs_arg(subdirs)
@@ -127,7 +128,7 @@ def synchronize(
     with progress.spinner("Querying upstream channel", silent=silent):
         upstream_records = query(upstream, specs, subdirs=subdirs, latest=latest)
 
-    added, removed = compare_records(upstream_records, local_records)
+    added, removed = compute_relative_complements(upstream_records, local_records)
 
     if keep:
         removed.clear()
@@ -187,5 +188,5 @@ def _process_channel_arg(channel: PathOrString) -> str:
 def _process_subdirs_arg(subdirs: Optional[OneOrMoreStrings] = None) -> List[str]:
     """Processes a subdir argument, returning a list of strings."""
     if not subdirs:
-        return get_default_subdirs()
+        return list(get_default_subdirs())
     return _ensure_list(subdirs)

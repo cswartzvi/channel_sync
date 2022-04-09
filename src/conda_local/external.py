@@ -1,7 +1,7 @@
 """External interface for the `conda` and `conda_build` (semi-)public APIs.
 
 Notes:
-    Within this module anaconda channels can be referened by identifier or uri, e.g.:
+    Within this module anaconda channels can be referened by identifier or URI, e.g.:
     * "conda-forge"
     * "https://repo.anaconda.com/pkgs/main"
     * "file:///path/to/local/channel"
@@ -20,7 +20,7 @@ import tarfile
 import tempfile
 import urllib.parse
 from pathlib import Path
-from typing import Iterable, Iterator, List, Optional, Set, Tuple, Union
+from typing import Iterable, Iterator, Optional, Set, Tuple
 
 import conda.api
 import conda.base.context
@@ -29,9 +29,8 @@ import conda.models.channel
 import conda_build.api
 import requests
 
-# Passthrough imports
+# TODO: Explore using a differnet spinner when issue with update_index is fixed.
 from conda.common.io import Spinner  # noqa
-from conda.exceptions import UnavailableInvalidChannel  # noqa
 from conda.exports import MatchSpec, PackageRecord
 
 from conda_local.grouping import Grouping, groupby
@@ -40,23 +39,23 @@ LOGGER = logging.Logger(__name__)
 PATCH_INSTRUCTIONS = "patch_instructions.json"
 
 
-def compare_records(
+def compute_relative_complements(
     left: Iterable[PackageRecord], right: Iterable[PackageRecord]
 ) -> Tuple[Set[PackageRecord], Set[PackageRecord]]:
-    """Compares two iterables of package records by computing set-based differences.
+    """Computes channel independent relative complements of package record iterables.
 
-    By default, a package record's hash includes it's channel. Because we may be
-    comparing package records from different channels, we cannot use the default hash
-    method. Therefore, in this function we use an internal function to group the
-    incoming package records by platform sub-directory, name, version, build and build
-    number. The internal function does *not* consider channel.
+    By default, a package record's hash includes it's channel. Because each package
+    record iterable could come from a different channel, we cannot use the default hash
+    method. Therefore, we use an internal function to group the incoming package records
+    by platform sub-directory, name, version, build and build number. The internal
+    function does *not* consider channel.
 
     Args:
         left: An iterable of package records.
         right: An iterable of package records
 
     Returns:
-        A tuple of sets containing set differences (left - right and right - left).
+        A tuple of sets containing set differences (A - B and B - A).
     """
 
     def no_channel_key(record):
@@ -98,7 +97,8 @@ def download_package(
     """Downloads the anaconda package associated with a specified package record.
 
     Args:
-        record: The record associated with the anaconda package to be downloaded.
+        record: The record associated with the anaconda package to be downloaded. Note
+            the record must include the channel.
         destination: The directory where the package will be downloaded. Note that
             additional subdirs will be created within the destination directory if
             necessary.
@@ -132,7 +132,7 @@ def fetch_patch_instructions(
     """Retrives patch instructions from a platform sub-directory in a anaconda channel.
 
     Args:
-        channel: An anaconda channel url or identifier.
+        channel: An anaconda channel URI or identifier.
         subdirs: The platform sub-directories within the anaconda channel.
         destination: The directory where the package will be downloaded. Note that
             additional subdirs will be created within the destination directory if
@@ -152,56 +152,57 @@ def fetch_patch_instructions(
     instructions.write_bytes(response.content)
 
     if packages_to_remove:
-        with instructions.open("r+") as file:
+        with instructions.open("r") as file:
             data = json.load(file)
             for package in packages_to_remove:
                 data["remove"].append(package.fn)
-            file.seek(0)
+        with instructions.open("w") as file:
             json.dump(data, file)
 
 
-def get_default_subdirs() -> List[str]:
-    """Returns the default platform sub-directories for the current platform."""
-    return list(conda.base.context.context.subdirs)
+def get_default_subdirs() -> Tuple[str, ...]:
+    """Returns the default anaconda channel sub-directories for the current platform."""
+    return conda.base.context.context.subdirs
 
 
-def iter_channel(
-    channel: str, subdirs: Optional[Iterable[str]] = None
-) -> Iterator[PackageRecord]:
+def get_local_channel_subdirs(target: Path) -> Tuple[str, ...]:
+    """Returns all valid subdirs from a local anaconda channel.
+
+    Args:
+        target: The location of a local anaconda channel.
+    """
+    subdirs = tuple(file.parent.name for file in target.glob("**/repodata.json"))
+    return subdirs
+
+
+def iter_channel(channel: str, subdirs: Iterable[str]) -> Iterator[PackageRecord]:
     """Yields all package records from an anaconda channel.
 
     Args:
-        channel: An anaconda channel url or identifier.
-        subdirs: The platform sub-directories within the anaconda channel. If None,
-            defaults to the standard subdirs for the current platform.
+        channel: An anaconda channel URI or identifier.
+        subdirs: The platform sub-directories within the anaconda channel.
     """
-    yield from query_channel(channel, ["*"], subdirs)
+    yield from query_channel(channel, subdirs, "*")
 
 
 def query_channel(
-    channel: str, specs: Iterable[str], subdirs: Optional[Iterable[str]] = None,
+    channel: str, subdirs: Iterable[str], spec: str,
 ) -> Iterator[PackageRecord]:
     """Performs a package record query against the specified anaconda channels.
 
     Args:
-        channel: An anaconda channel url or identifier.
-        specs: The package match specifications used within the query
+        channel: An anaconda channel URI or identifier.
+        spec: The package match specification used within the query
         subdirs: The platform sub-directories within the anaconda channel. If None
             defaults to the standard subdirs for the current platform.
 
     Yields:
         Package records resulting from the anaconda channel query.
     """
-    yield from (
-        result
-        for spec in specs
-        for result in conda.api.SubdirData.query_all(
-            spec, channels=[channel], subdirs=subdirs
-        )
-    )
+    yield from conda.api.SubdirData.query_all(spec, channels=[channel], subdirs=subdirs)
 
 
-def setup_channel(path: Union[str, Path]) -> Path:
+def setup_channel(path: Path) -> None:
     """Setup the base requirements of local anaconda channels.
 
     No action is taken if the specified local anaconda chaneel already exists.
@@ -212,28 +213,21 @@ def setup_channel(path: Union[str, Path]) -> Path:
     Returns:
         The path of the initialized local anaconda channel.
     """
-    path = Path(path)
     noarch_repo = path / "noarch" / "repodata.json"
     noarch_repo.parent.mkdir(exist_ok=True, parents=True)
     noarch_repo.touch(exist_ok=True)
-    return path
 
 
-def update_index(
-    target: Path, subdirs: Optional[Iterable[str]] = None, silent: bool = False,
-):
+def update_index(target: Path, subdirs: Iterable[str], silent: bool = False) -> None:
     """Updates the index of a local anaconda channel.
 
     Args:
         target: The location of a local anaconda channel.
-        subdirs: The platform sub-directories within the anaconda channel. If None
-            defaults to the standard subdirs for the current platform.
+        subdirs: The platform sub-directories within the anaconda channel.
         silent: A flag that indicates if the update should produce progress output. Note
-            that this output is generated from within the wrapped `update_index`
-            and cannot currently be altered. Defaults to False.
+            that this output is generated from within the wrapped `update_index` and
+            cannot currently be altered. Defaults to False.
     """
-    if subdirs is None:
-        subdirs = get_default_subdirs()
     patches = [Path(subdir) / PATCH_INSTRUCTIONS for subdir in subdirs]
 
     with tempfile.TemporaryDirectory() as tmpdir:
