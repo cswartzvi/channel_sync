@@ -27,9 +27,6 @@ from conda_local import api
     "--keep", is_flag=True, default=False, help="Only add packages, do not remove",
 )
 @click.option(
-    "--latest", is_flag=True, default=False, help="Keep only the latest build numbers.",
-)
-@click.option(
     "--dry-run", is_flag=True, default=False, help="Show all packages to synced",
 )
 def sync(target, upstream, specs, subdirs, silent, keep, latest, dry_run):
@@ -46,9 +43,12 @@ def sync(target, upstream, specs, subdirs, silent, keep, latest, dry_run):
         subdirs=subdirs,
         silent=silent,
         keep=keep,
-        latest=latest,
         dry_run=dry_run,
     )
 
     if dry_run:
-        print(json.dumps(results, indent=4))
+        summary = {
+            "added": sorted(rec.fn for rec in results["added"]),
+            "removed": sorted(rec.fn for rec in results["removed"]),
+        }
+        print(json.dumps(summary, indent=4))

@@ -4,7 +4,11 @@ from typing import List
 import pytest
 
 from conda_local import api
-from conda_local.external import compute_relative_complements
+from conda_local.external import (
+    compute_relative_complements_of_records,
+    get_default_subdirs,
+    query_channel,
+)
 
 
 def fetch_local_specs(channel) -> List[str]:
@@ -17,24 +21,34 @@ def fetch_local_specs(channel) -> List[str]:
 @pytest.mark.parametrize(
     "name",
     [
-        "test01",
-        "test02",
-        "test03",
-        "test04",
-        "test05",
-        "test06",
-        "test07",
-        "test08",
-        "test09",
-        "test10",
-        "test11",
+        "query01",
+        "query02",
+        "query03",
+        "query04",
+        "query05",
+        "query06",
+        "query07",
+        "query08",
+        "query09",
+        "query10",
+        "query11",
     ],
 )
-def test_query_of_packages(datadir, subdirs, name):
+def test_query_on_example_channels(datadir, subdirs, name):
     base = datadir / name
     specs = fetch_local_specs(base)
     expected = api.iterate((base / "expected").as_uri(), subdirs=subdirs)
     actual = api.query((base / "all").as_uri(), specs, subdirs=subdirs)
-    added, removed = compute_relative_complements(actual, expected)
+    added, removed = compute_relative_complements_of_records(actual, expected)
+    assert not added
+    assert not removed
+
+
+def test_python_query_on_current_system():
+    subdirs = get_default_subdirs()
+    records = api.query("conda-forge", "python")
+    actual = (record for record in records if record.name == "python")
+    expected = query_channel("conda-forge", subdirs=subdirs, spec="python")
+    added, removed = compute_relative_complements_of_records(actual, expected)
     assert not added
     assert not removed

@@ -23,6 +23,33 @@ def check_record_is_installable(record, channel, constraints=None):
     return result.returncode == 0
 
 
+# @pytest.mark.parametrize(
+#     "name",
+#     [
+#         "sync01",
+#         "sync02",
+#         "sync03",
+#     ],
+# )
+# def test_sync_on_example_channels(datadir, subdirs, name):
+#     base = datadir / name
+#     data = api.synchronize(
+#         (base / "local").resolve().as_uri(),
+#         (base / "upstream").resolve().as_uri(),
+#         "a",
+#         subdirs=subdirs,
+#         dry_run=True,
+#     )
+#     expected_added = set(
+#         api.iterate((base / "added").resolve().as_uri(), subdirs=subdirs)
+#     )
+#     assert expect_added
+
+# expect_removed = api.iterate(
+#     (base / "removed").resolve().as_uri(), subdirs=subdirs
+# )
+
+
 @pytest.mark.parametrize(
     "specs",
     [
@@ -39,7 +66,7 @@ def check_record_is_installable(record, channel, constraints=None):
         ),
     ],
 )
-def test_sync_installable_packages(tmp_path, subdirs, specs):
+def test_downloaded_packages_are_installable(tmp_path, subdirs, specs):
     api.synchronize(tmp_path, "conda-forge", specs=specs, subdirs=subdirs, silent=True)
     records = api.iterate(tmp_path.resolve().as_uri(), subdirs=subdirs)
 

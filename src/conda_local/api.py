@@ -2,12 +2,12 @@
 
 import shutil
 from pathlib import Path
-from typing import Dict, Iterable, Iterator, List, Optional, TypeVar, Union, cast
+from typing import Dict, Iterable, Iterator, List, Optional, Union, cast
 
 from conda_local import progress
 from conda_local.external import (
     PackageRecord,
-    compute_relative_complements,
+    compute_relative_complements_of_records,
     download_package,
     fetch_patch_instructions,
     get_default_subdirs,
@@ -21,7 +21,6 @@ from conda_local.grouping import groupby
 
 OneOrMoreStrings = Union[str, Iterable[str]]
 PathOrString = Union[str, Path]
-_T = TypeVar("_T", covariant=True)
 
 
 def iterate(
@@ -70,7 +69,6 @@ def query(
     specs: OneOrMoreStrings,
     subdirs: Optional[OneOrMoreStrings] = None,
     latest: bool = False,
-    graph_file: Optional[PathOrString] = None,
 ) -> Iterable[PackageRecord]:
     """Query an anaconda channel using the match specification query language.
 
@@ -104,9 +102,8 @@ def synchronize(
     patch: Optional[PathOrString] = None,
     silent: bool = True,
     keep: bool = False,
-    latest: bool = False,
     dry_run: bool = False,
-) -> Dict:
+) -> Dict[str, List[PackageRecord]]:
     """Synchronizes a target anaconda channel to an upstream anaconda channel.
 
     Args:
@@ -126,9 +123,11 @@ def synchronize(
         local_records = iterate(target.resolve().as_uri(), subdirs=subdirs)
 
     with progress.spinner("Querying upstream channel", silent=silent):
-        upstream_records = query(upstream, specs, subdirs=subdirs, latest=latest)
+        upstream_records = query(upstream, specs, subdirs=subdirs)
 
-    added, removed = compute_relative_complements(upstream_records, local_records)
+    added, removed = compute_relative_complements_of_records(
+        upstream_records, local_records
+    )
 
     if keep:
         removed.clear()
@@ -159,20 +158,18 @@ def synchronize(
                 update_index(target, silent=silent, subdirs=subdirs)
 
     summary = {
-        "added": sorted(rec.fn for rec in added),
-        "removed": sorted(rec.fn for rec in removed),
+        "added": list(added),
+        "removed": list(removed),
     }
 
     return summary
 
 
-def _ensure_list(items: Union[_T, Iterable[_T]]) -> List[_T]:
+def _ensure_list(items: Union[str, Iterable[str]]) -> List[str]:
     """Ensures that an argument is a list of elements."""
-    results: List[_T]
-    if not isinstance(items, Iterable):
-        results = [items]
-    elif isinstance(items, str):
-        results = cast(List[_T], [items])
+    results: List[str]
+    if isinstance(items, str):
+        results = cast(List[str], [items])
     else:
         results = list(items)
     return results

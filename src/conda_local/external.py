@@ -39,7 +39,7 @@ LOGGER = logging.Logger(__name__)
 PATCH_INSTRUCTIONS = "patch_instructions.json"
 
 
-def compute_relative_complements(
+def compute_relative_complements_of_records(
     left: Iterable[PackageRecord], right: Iterable[PackageRecord]
 ) -> Tuple[Set[PackageRecord], Set[PackageRecord]]:
     """Computes channel independent relative complements of package record iterables.
