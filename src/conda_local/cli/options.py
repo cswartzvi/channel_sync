@@ -11,7 +11,7 @@ from click_option_group import optgroup
 
 from conda_local.models import get_default_subdirs
 from conda_local.models.channel import CondaChannel
-from conda_local.models.spec import CondaSpecification
+from conda_local.models.specification import CondaSpecification
 
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"], "max_content_width": 150}
 

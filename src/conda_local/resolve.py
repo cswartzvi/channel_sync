@@ -10,7 +10,7 @@ from conda_local import CondaLocalException
 from conda_local.group import groupby
 from conda_local.models.channel import CondaChannel
 from conda_local.models.package import CondaPackage
-from conda_local.models.spec import CondaSpecification
+from conda_local.models.specification import CondaSpecification
 
 log = logging.getLogger(__name__)
 

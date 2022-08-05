@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import Dict, Tuple
+from typing import Any, Dict, List, Tuple
 
 from conda.exports import PackageRecord as _PackageRecord
+from pydantic import BaseModel, Field
 
 
 class CondaPackage:
@@ -96,3 +97,40 @@ class CondaPackage:
 
     def __str__(self):
         return self.fn
+
+
+class CondaPackage2(BaseModel):
+    name: str
+    version: str
+    build: str
+    build_number: int
+    channel: str
+    subdir: str
+    fn: str
+    url: str
+    depends: Tuple[str, ...]
+    license: str
+    size: int
+    sha256: str
+
+    class Config:
+        allow_mutation = False
+
+
+Packages = Dict[str, Dict[str, Any]]
+
+
+class PackageDataFile(BaseModel):
+    packages: Packages
+    conda_packages: Packages = Field(alias="conda.packages", default_factory=dict)
+    removed: List[str]
+
+
+class RepoData(PackageDataFile):
+    info: Dict[str, str]
+    version: int = Field(alias="repodata_version")
+
+
+class PatchInstructions(PackageDataFile):
+    revoke: List[str]
+    version: int = Field(alias="patch_instructions_version")
