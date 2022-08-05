@@ -3,11 +3,13 @@ import hashlib
 
 import json
 from operator import sub
+from struct import pack
 from typing import Dict, Iterable, Iterator, Optional, Tuple
 
 import fsspec
 from conda.api import SubdirData as _SubdirData
 from conda.exports import Channel as _Channel
+from conda_local import CondaLocalException
 
 from conda_local.group import groupby
 from conda_local.models import PATCH_INSTRUCTIONS_FILE
@@ -16,7 +18,7 @@ from conda_local.models import get_known_subdirs
 from conda_local.models.package import CondaPackage
 
 
-class CondaChannelStorage:
+class CondaFileSystem:
     def __init__(self, url: str) -> None:
         self._url = url
         self._mapper = fsspec.get_mapper(url)
@@ -33,25 +35,23 @@ class CondaChannelStorage:
         return tuple(found_subdirs)
 
     def add_package(self, package: CondaPackage) -> None:
-
         if self.contains_package(package):
-            data = self._read_file(package.subdir, package.fn)
-            if hashlib.sha256(data).hexdigest() == package.sha256:
+            contents = self._read_file(package.subdir, package.fn)
+            if hashlib.sha256(contents).hexdigest() == package.sha256:
                 return
 
-        data = response.content
+        with fsspec.open(package.url, "rb") as fp:
+            contents = fp.read()
 
-        if len(data) != package.size:
+        if len(contents) != package.size:
             raise BadPackageDownload(f"{package.fn} has incorrect size")
-        if package.sha256 != hashlib.sha256(data).hexdigest():
+        if package.sha256 != hashlib.sha256(contents).hexdigest():
             raise BadPackageDownload(f"{package.fn} has incorrect sha256")
 
-        path.parent.mkdir(exist_ok=True, parents=True)
-        with path.open("wb") as file:
-            file.write(data)
+        self._write_file(package.subdir, package.fn, contents)
 
     def remove_package(self, package: CondaPackage) -> None:
-        pass
+        self._remove_file(package.subdir, package.fn)
 
     def contains_package(self, package: CondaPackage) -> bool:
         return self._contains_file(package.subdir, package.fn)
@@ -73,6 +73,12 @@ class CondaChannelStorage:
     def write_repodata(self, subdir: str, repodata: Dict) -> None:
         contents = json.dumps(repodata).encode("utf-8")
         self._write_file(subdir, REPODATA_FILE, contents)
+
+    def update_index(self) -> None:
+        pass
+
+    def _purge_packages(self) -> None:
+        pass
 
     def _read_file(
         self, subdir: str, filename: str, default: Optional[bytes] = None
@@ -100,7 +106,7 @@ class CondaChannelStorage:
         return "/".join(parts)
 
 
-class CondaChannel(CondaChannelStorage):
+class CondaChannel(CondaFileSystem):
     def __init__(self, source: str) -> None:
         source = source.replace("\\", "/")
         self._internal = _Channel(source)
@@ -130,15 +136,13 @@ class CondaChannel(CondaChannelStorage):
         results = tuple(CondaPackage(package) for package in packages)
         return results
 
-    def update_index(self) -> None:
-        pass
-
-    def _purge_packages(self) -> None:
-        pass
-
     def __repr__(self):
         class_name = self.__class__.__name__
         return f"<{class_name}: url={self.url!r}>"
+
+
+class CondaChannelPatch(CondaFileSystem):
+    pass
 
 
 class BadPackageDownload(CondaLocalException):
