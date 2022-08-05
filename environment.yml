@@ -1,8 +1,21 @@
 channels:
   - conda-forge
 dependencies:
-  # production
-  - python=3.8
-  - networkx
+  - python>=3.8
   - conda
-  - conda-build
+  - networkx
+  - rich
+  - click
+  - click-option-group
+  - fsspec
+  - requests
+  - aiohttp
+  - yaml
+  # development
+  - mypy
+  - flake8
+  - black
+  - isort
+  - pytest
+  - pytest-cov
+  - pre-commit

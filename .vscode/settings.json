@@ -1,11 +1,11 @@
 {
     "cSpell.enabled": true,
     "cSpell.words": [
-        "conda",
-        "deps",
-        "isoconda",
+        "networkx",
+        "removables",
         "repodata",
-        "subdirs"
+        "typer",
+        "urlpath"
     ],
     "python.analysis.extraPaths": [
         "${workspaceFolder}/src"
@@ -29,6 +29,9 @@
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
     "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src"
+    },
+    "terminal.integrated.env.osx": {
         "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src"
     },
     "terminal.integrated.env.windows": {
