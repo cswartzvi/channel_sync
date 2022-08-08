@@ -1,5 +1,5 @@
 channel: conda-forge
-reference: ./temp-channel
+# reference: ./temp-channel
 latest: true
 constraints:
   - arrow-cpp >=7.0.0
@@ -31,7 +31,7 @@ requirements:
   - mypy
   - userpath
   # From anaconda
-  
+
   - pydantic
   - aiohttp
   - aiosignal

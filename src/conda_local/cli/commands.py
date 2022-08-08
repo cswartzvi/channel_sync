@@ -4,22 +4,20 @@ from rich.console import Console
 from conda_local.cli.options import (
     CONTEXT_SETTINGS,
     AppState,
-    channel_options,
+    test_options,
     configuration_option,
     output_option,
     pass_state,
     patch_options,
     quiet_option,
-    search_options,
+    common_search_options,
     specifications_argument,
+    update_options,
+)
+from conda_local.models.channel import (
+    LocalCondaContainer
 )
 from conda_local.output import print_output
-from conda_local.patch import (
-    create_patch_generator,
-    create_patch_instructions,
-    fetch_package,
-    update_patch_instructions,
-)
 from conda_local.progress import iterate_progress, start_status
 from conda_local.resolve import resolve_packages
 
@@ -29,13 +27,13 @@ from conda_local.resolve import resolve_packages
     context_settings=CONTEXT_SETTINGS,
 )
 @specifications_argument
-@channel_options
-@search_options
+@test_options
+@common_search_options
 @output_option
 @configuration_option
 @quiet_option
 @pass_state
-def search(state: AppState):
+def test(state: AppState):
     """Search for packages and dependencies within an anaconda channel based on
     SPECIFICATIONS.
 
@@ -52,7 +50,7 @@ def search(state: AppState):
             requirements=state.requirements,
             constraints=state.constraints,
             disposables=state.disposables,
-            reference=state.reference,
+            reference=state.target,
             latest=state.latest,
             validate=state.validate,
         )
@@ -64,13 +62,13 @@ def search(state: AppState):
     context_settings=CONTEXT_SETTINGS,
 )
 @specifications_argument
-@channel_options
-@search_options
+@test_options
+@common_search_options
 @patch_options
 @quiet_option
 @configuration_option
 @pass_state
-def fetch(state: AppState):
+def patch(state: AppState):
     """Fetch packages and dependencies from an anaconda channel based on SPECIFICATIONS.
 
     \b
@@ -86,26 +84,77 @@ def fetch(state: AppState):
             requirements=state.requirements,
             constraints=state.constraints,
             disposables=state.disposables,
-            reference=state.reference,
+            reference=state.target,
             latest=state.latest,
             validate=state.validate,
         )
 
-    patch = state.patch_directory.resolve() / state.patch_name
-    patch.mkdir(exist_ok=True, parents=True)
+    patch = LocalCondaContainer(state.patch_directory.resolve() / state.patch_name)
 
     message = "Downloading packages "
     for package in iterate_progress(resolved.to_add, message, console=console):
-        fetch_package(patch, package)
+        patch.add_package(package)
 
     message = "Patching instructions"
     for subdir in iterate_progress(state.subdirs, message, console=console):
-        create_patch_instructions(patch, subdir, source=state.channel)
-        update_patch_instructions(patch, removals=resolved.to_remove)
+        instructions = state.channel.read_patch_instructions(subdir)
+        instructions.update(remove=list(pkg.fn for pkg in resolved.to_remove))
+        patch.write_instructions(subdir, instructions)
 
     with start_status("Creating patch generator", console=console):
-        create_patch_generator(patch)
+        patch.write_patch_generator()
 
-    console.print(f"Patch location: [bold cyan]{patch.resolve()}")
+    console.print(f"Patch location: [bold cyan]{patch.path.resolve()}")
     if console.quiet:
-        print(patch.resolve())
+        print(patch.path.resolve())
+
+
+@click.command(
+    short_help="Fetch packages from an anaconda channel",
+    context_settings=CONTEXT_SETTINGS,
+)
+@specifications_argument
+@update_options
+@common_search_options
+@quiet_option
+@configuration_option
+@pass_state
+def update(state: AppState):
+    """Update an anaconda channel based on SPECIFICATIONS from an upstream channel.
+
+    \b
+    Specifications are constructed using the anaconda match specification query syntax:
+    https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications
+    """
+    console = Console(quiet=state.quiet, color_system="windows")
+
+    with start_status(f"Searching [bold cyan]{state.channel.name}", console=console):
+        resolved = resolve_packages(
+            channel=state.channel,
+            subdirs=state.subdirs,
+            requirements=state.requirements,
+            constraints=state.constraints,
+            disposables=state.disposables,
+            reference=state.target,
+            latest=state.latest,
+            validate=state.validate,
+        )
+
+    patch = LocalCondaContainer(state.patch_directory.resolve() / state.target)
+
+    message = "Downloading packages "
+    for package in iterate_progress(resolved.to_add, message, console=console):
+        patch.add_package(package)
+
+    message = "Patching instructions"
+    for subdir in iterate_progress(state.subdirs, message, console=console):
+        instructions = state.channel.read_patch_instructions(subdir)
+        instructions.update(remove=list(pkg.fn for pkg in resolved.to_remove))
+        patch.write_instructions(subdir, instructions)
+
+    with start_status("Creating patch generator", console=console):
+        patch.write_patch_generator()
+
+    console.print(f"Patch location: [bold cyan]{patch.path.resolve()}")
+    if console.quiet:
+        print(patch.path.resolve())

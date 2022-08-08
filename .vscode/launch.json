@@ -11,8 +11,9 @@
             "module": "conda_local",
             "args": [
                 "search",
-                "--config",
-                "./config.yml",
+                "--channel",
+                "conda-forge",
+                "python",
             ],
             "justMyCode": true
         }

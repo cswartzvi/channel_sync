@@ -11,6 +11,7 @@ from click_option_group import optgroup
 
 from conda_local.models import get_default_subdirs
 from conda_local.models.channel import CondaChannel
+from conda_local.models.channel import LocalCondaContainer
 from conda_local.models.specification import CondaSpecification
 
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"], "max_content_width": 150}
@@ -25,7 +26,7 @@ def _default_patch_name() -> str:
 @dataclass
 class AppState:
     channel: CondaChannel = CondaChannel("conda-forge")
-    reference: Optional[CondaChannel] = None
+    target: Optional[LocalCondaContainer] = None
     requirements: List[CondaSpecification] = field(default_factory=list)
     constraints: List[CondaSpecification] = field(default_factory=list)
     disposables: List[CondaSpecification] = field(default_factory=list)
@@ -54,7 +55,7 @@ def configuration_option(f, option=click.option):
             with open(value, "rt") as file:
                 data = yaml.load(file, Loader=yaml.CLoader)
                 for key, values in data.items():
-                    if key in ["channel", "reference"]:
+                    if key in ["channel", "target"]:
                         setattr(state, key, CondaChannel(values))
                     elif key in ["requirements", "constraints", "disposables"]:
                         setattr(state, key, [CondaSpecification(val) for val in values])
@@ -115,11 +116,11 @@ def channel_option(f, option=click.option):
     )(f)
 
 
-def target_option(f, option=click.option):
+def generic_target_option(f, option=click.option):
     def callback(context, parameter, value):
         state = _get_context_state(context)
         if value:
-            state.reference = CondaChannel(value)
+            state.target = CondaChannel(value)
         return value
 
     return option(
@@ -132,6 +133,26 @@ def target_option(f, option=click.option):
         help=(
             "Target anaconda channel, forces all operations to be preformed relative "
             "this baseline."
+        ),
+    )(f)
+
+
+def generic_target_option(f, option=click.option):
+    def callback(context, parameter, value):
+        state = _get_context_state(context)
+        if value:
+            state.target = LocalCondaContainer(value)
+        return value
+
+    return option(
+        "--target",
+        required=True,
+        nargs=1,
+        callback=callback,
+        expose_value=False,
+        is_eager=False,
+        help=(
+            "Target anaconda channel"
         ),
     )(f)
 
@@ -314,20 +335,7 @@ def output_option(f, option=click.option):
     )(f)
 
 
-def channel_options(f):
-    option = optgroup.option
-    group = optgroup.group("Channel configuration")
-
-    # Reverse order
-    f = subdir_option(f, option=option)
-    f = target_option(f, option=option)
-    f = channel_option(f, option=option)
-    f = group(f)
-
-    return f
-
-
-def search_options(f):
+def common_search_options(f):
     option = optgroup.option
     group = optgroup.group("Search Options")
 
@@ -336,6 +344,32 @@ def search_options(f):
     f = latest_option(f, option=option)
     f = disposable_option(f, option=option)
     f = constraint_option(f, option=option)
+    f = group(f)
+
+    return f
+
+
+def update_options(f):
+    option = optgroup.option
+    group = optgroup.group("Channel configuration")
+
+    # Reverse order
+    f = subdir_option(f, option=option)
+    f = target_option(f, option=option, required=True)
+    f = channel_option(f, option=option)
+    f = group(f)
+
+    return f
+
+
+def test_options(f):
+    option = optgroup.option
+    group = optgroup.group("Channel configuration")
+
+    # Reverse order
+    f = subdir_option(f, option=option)
+    f = target_option(f, option=option, required=False)
+    f = channel_option(f, option=option)
     f = group(f)
 
     return f

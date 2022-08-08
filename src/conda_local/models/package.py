@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, Tuple
+from typing import Dict, Tuple
 
-from conda.exports import PackageRecord as _PackageRecord
-from pydantic import BaseModel, Field
+import conda.exports
 
 
 class CondaPackage:
 
     __slots__ = {"_internal", "_key", "_hash"}
 
-    def __init__(self, source: _PackageRecord) -> None:
+    def __init__(self, source: conda.exports.PackageRecord) -> None:
         self._internal = source
 
         # Equality / hash key should NOT include channel
@@ -23,12 +22,6 @@ class CondaPackage:
         )
 
         self._hash = hash(self._key)
-
-    @classmethod
-    def from_dict(cls, data: Dict) -> CondaPackage:
-        source = _PackageRecord.from_objects(data)
-        adapter = cls(source)
-        return adapter
 
     @property
     def build(self) -> str:
@@ -89,48 +82,12 @@ class CondaPackage:
 
     def __repr__(self):
         class_name = self.__class__.__name__
-        return (
-            f"<{class_name}: name={self.name!r}, version={self.version!r}, "
-            f"build={self.build!r}, build_number={self.build_number!r}, "
-            f"channel={self.channel!r}, subdir={self.subdir!r}>"
+        text = f"<{class_name}: " + ", ".join(
+            f"{key}: {getattr(self, key)}"
+            for key, value in CondaPackage.__dict__.items()
+            if isinstance(value, property)
         )
+        return text
 
     def __str__(self):
         return self.fn
-
-
-class CondaPackage2(BaseModel):
-    name: str
-    version: str
-    build: str
-    build_number: int
-    channel: str
-    subdir: str
-    fn: str
-    url: str
-    depends: Tuple[str, ...]
-    license: str
-    size: int
-    sha256: str
-
-    class Config:
-        allow_mutation = False
-
-
-Packages = Dict[str, Dict[str, Any]]
-
-
-class PackageDataFile(BaseModel):
-    packages: Packages
-    conda_packages: Packages = Field(alias="conda.packages", default_factory=dict)
-    removed: List[str]
-
-
-class RepoData(PackageDataFile):
-    info: Dict[str, str]
-    version: int = Field(alias="repodata_version")
-
-
-class PatchInstructions(PackageDataFile):
-    revoke: List[str]
-    version: int = Field(alias="patch_instructions_version")
