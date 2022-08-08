@@ -5,15 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Module (search)",
+            "name": "Python: query",
             "type": "python",
             "request": "launch",
             "module": "conda_local",
             "args": [
-                "search",
+                "query",
                 "--channel",
                 "conda-forge",
                 "python",
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "Python: patch",
+            "type": "python",
+            "request": "launch",
+            "module": "conda_local",
+            "args": [
+                "patch",
+                "python==3.8.12",
             ],
             "justMyCode": true
         }

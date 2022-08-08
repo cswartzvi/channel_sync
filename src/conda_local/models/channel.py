@@ -6,8 +6,8 @@ import tarfile
 from pathlib import Path
 from typing import Any, Dict, Iterable, Iterator, List, Optional, Tuple
 
-import fsspec
 import conda_build.api
+import fsspec
 from conda.api import SubdirData as _SubdirData
 from conda.exports import Channel as _Channel
 from pydantic import BaseModel, Field
@@ -113,7 +113,7 @@ class CondaContainer:
 class LocalCondaContainer(CondaContainer):
     def __init__(self, path: Path) -> None:
         self._path = path
-        super().__init__(path.as_uri())
+        super().__init__(path.resolve().as_uri())
 
     @property
     def path(self) -> Path:

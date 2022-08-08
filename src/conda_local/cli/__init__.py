@@ -1,9 +1,6 @@
 import click
 
-# from conda_local.commands.fetch import fetch
-from conda_local.cli.commands import patch, test
-
-# from conda_local.cli.search import search
+from conda_local.cli.commands import fetch, query, update
 
 
 @click.group()
@@ -11,5 +8,6 @@ def app():
     pass
 
 
-app.add_command(test)
-app.add_command(patch)
+app.add_command(query)
+app.add_command(fetch)
+app.add_command(update)
