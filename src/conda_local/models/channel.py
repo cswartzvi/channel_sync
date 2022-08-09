@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
 import tarfile
 from pathlib import Path
 from typing import Any, Dict, Iterable, Iterator, List, Optional, Tuple
@@ -14,7 +15,7 @@ from pydantic import BaseModel, Field
 
 from conda_local import CondaLocalException
 from conda_local.group import groupby
-from conda_local.models import get_known_subdirs
+from conda_local.models import REPODATA_FILE, get_known_subdirs
 from conda_local.models.package import CondaPackage
 
 _PATCH_GENERATOR_FILE = "patch_generator.tar.bz2"
@@ -126,9 +127,21 @@ class LocalCondaContainer(CondaContainer):
     def update_index(self) -> None:
         generator = self._path / _PATCH_GENERATOR_FILE
         conda_build.api.update_index(
-            self._path, patch_generator=generator, progress=True
+            self._path, patch_generator=str(generator.resolve()), progress=True
         )
         self._purge_packages()
+
+    def merge(self, source: LocalCondaContainer) -> None:
+        shutil.copytree(source.path, self.path, dirs_exist_ok=True)
+
+    def is_setup(self) -> bool:
+        return (self._path / "noarch" / REPODATA_FILE).exists()
+
+    def setup(self) -> None:
+        noarch = self.path / "noarch"
+        noarch.mkdir(exist_ok=True, parents=True)
+        repodata = noarch / REPODATA_FILE
+        repodata.touch(exist_ok=True)
 
     def _purge_packages(self) -> None:
         for subdir in self.find_subdirs():

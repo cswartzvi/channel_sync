@@ -23,10 +23,10 @@ class ResolvedPackages:
 
 def resolve_packages(
     channel: CondaChannel,
-    subdirs: Iterable[str],
     requirements: Iterable[CondaSpecification],
-    constraints: Iterable[CondaSpecification],
+    exclusions: Iterable[CondaSpecification],
     disposables: Iterable[CondaSpecification],
+    subdirs: Iterable[str],
     reference: Optional[CondaChannel] = None,
     latest: bool = True,
     validate: bool = True,
@@ -58,7 +58,7 @@ def resolve_packages(
         adapter objects.
     """
 
-    parameters = Parameters(requirements, constraints, disposables, subdirs)
+    parameters = Parameters(requirements, exclusions, disposables, subdirs)
     resolver = Resolver(channel, validate, latest)
     packages = set(resolver.resolve(parameters))
 
@@ -223,32 +223,37 @@ class Parameters:
     def __init__(
         self,
         requirements: Iterable[CondaSpecification],
-        constraints: Iterable[CondaSpecification],
+        exclusions: Iterable[CondaSpecification],
         disposables: Iterable[CondaSpecification],
         subdirs: Iterable[str],
     ) -> None:
-        self._requirements = tuple(requirements)
-        self._disposables_by_name = groupby(disposables, lambda spec: spec.name)
+        self._flat_requirements = tuple(requirements)
+        self._requirements = groupby(requirements, lambda spec: spec.name)
+        self._exclusions = groupby(exclusions, lambda spec: spec.name)
+        self._disposables = groupby(disposables, lambda spec: spec.name)
         self._subdirs = tuple(subdirs)
-
-        # Note: Requirements are implicit constraints
-        constraints = self._requirements + tuple(constraints)
-        self._constraints_by_name = groupby(constraints, lambda spec: spec.name)
 
     @property
     def requirements(self) -> Tuple[CondaSpecification, ...]:
-        return self._requirements
+        return self._flat_requirements
 
     @property
     def subdirs(self) -> Tuple[str, ...]:
         return self._subdirs
 
     def is_constrained(self, package: CondaPackage) -> bool:
-        constraints = self._constraints_by_name.get(package.name, [])
-        return not all(constraint.match(package) for constraint in constraints)
+        requirements = self._requirements.get(package.name, [])
+        if not all(spec.match(package) for spec in requirements):
+            return True
+
+        exclusions = self._exclusions.get(package.name, [])
+        if any(spec.match(package) for spec in exclusions):
+            return True
+
+        return False
 
     def is_disposable(self, package: CondaPackage) -> bool:
-        disposables = self._disposables_by_name.get(package.name, [])
+        disposables = self._disposables.get(package.name, [])
         return not all(disposable.match(package) for disposable in disposables)
 
 

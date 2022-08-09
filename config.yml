@@ -1,15 +1,15 @@
 channel: conda-forge
 # reference: ./temp-channel
 latest: true
-constraints:
-  - arrow-cpp >=7.0.0
-  - botocore >=1.25
-  - clangdev >=10.0
-  - grpc-cpp >=1.44
-  - mkl >=2022
-  - pandoc >=2.10
-  - pyarrow >=7.0.0
-  - setuptools >=60.0
+exclusions:
+  - arrow-cpp <7.0.0
+  - botocore <1.25
+  - clangdev <10.0
+  - grpc-cpp <1.44
+  - mkl <2022
+  - pandoc <2.10
+  - pyarrow <7.0.0
+  - setuptools <60.0
 requirements:
   - python >=3.9.0,<=3.10.0a0
 

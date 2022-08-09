@@ -1,5 +1,5 @@
 import contextlib
-from typing import Iterable, Iterator, TypeVar
+from typing import Iterable, Iterator, Optional, TypeVar
 
 from rich.console import Console
 from rich.progress import (
@@ -16,7 +16,9 @@ from rich.progress import (
 T = TypeVar("T")
 
 
-def iterate_progress(items: Iterable[T], message: str, console: Console) -> Iterator[T]:
+def iterate_progress(
+    items: Iterable[T], message: str, console: Optional[Console] = None
+) -> Iterator[T]:
     progress = Progress(
         SpinnerColumn(spinner_name="line", finished_text="[bold green]✓[/bold green]"),
         TextColumn("[progress.description]{task.description}"),
@@ -32,7 +34,7 @@ def iterate_progress(items: Iterable[T], message: str, console: Console) -> Iter
 
 
 @contextlib.contextmanager
-def start_status(message: str, console: Console) -> Iterator[None]:
+def start_status(message: str, console: Optional[Console]) -> Iterator[None]:
     with Progress(
         SpinnerColumn(spinner_name="line", finished_text="[bold green]✓[/bold green]"),
         TextColumn("[progress.description]{task.description}"),
