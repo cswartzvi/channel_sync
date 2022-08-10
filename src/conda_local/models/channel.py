@@ -29,7 +29,7 @@ class BadPackageDownload(CondaLocalException):
     pass
 
 
-class CondaContainer:
+class CondaFilesystem:
     def __init__(self, url: str) -> None:
         self._url = url
         self._mapper = fsspec.get_mapper(url)
@@ -37,53 +37,6 @@ class CondaContainer:
     @property
     def url(self) -> str:
         return self._url
-
-    def find_subdirs(self) -> Tuple[str, ...]:
-        found_subdirs = []
-        for subdir in get_known_subdirs():
-            if self._mapper.fs.exists(self._urlpath(self.url, subdir)):
-                found_subdirs.append(subdir)
-        return tuple(found_subdirs)
-
-    def add_package(self, package: CondaPackage) -> None:
-        if self.contains_package(package):
-            contents = self._read_file(package.subdir, package.fn)
-            if hashlib.sha256(contents).hexdigest() == package.sha256:
-                return
-
-        with fsspec.open(package.url, "rb") as fp:
-            contents = fp.read()
-
-        if len(contents) != package.size:
-            raise BadPackageDownload(f"{package.fn} has incorrect size")
-        if package.sha256 != hashlib.sha256(contents).hexdigest():
-            raise BadPackageDownload(f"{package.fn} has incorrect sha256")
-
-        self._write_file(package.subdir, package.fn, contents)
-
-    def remove_package(self, package: CondaPackage) -> None:
-        self._remove_file(package.subdir, package.fn)
-
-    def contains_package(self, package: CondaPackage) -> bool:
-        return self._contains_file(package.subdir, package.fn)
-
-    def read_patch_instructions(self, subdir: str) -> PatchInstructions:
-        contents = self._read_file(subdir, _PATCH_INSTRUCTIONS_FILE, b"{}")
-        instructions = PatchInstructions.parse_raw(contents)
-        return instructions
-
-    def write_instructions(self, subdir: str, instructions: PatchInstructions) -> None:
-        contents = json.dumps(instructions.dict(by_alias=True), indent=2)
-        self._write_file(subdir, _PATCH_INSTRUCTIONS_FILE, contents.encode("utf-8"))
-
-    def read_repodata(self, subdir: str) -> RepoData:
-        contents = self._read_file(subdir, _REPODATA_FILE, b"{}")
-        repodata = RepoData.parse_raw(contents)
-        return repodata
-
-    def write_repodata(self, subdir: str, repodata: RepoData) -> None:
-        contents = json.dumps(repodata.dict(by_alias=True), indent=2)
-        self._write_file(subdir, _REPODATA_FILE, contents.encode("utf-8"))
 
     def _read_file(
         self, subdir: str, filename: str, default: Optional[bytes] = None
@@ -107,65 +60,36 @@ class CondaContainer:
         urlpath = self._urlpath(subdir, filename)
         return urlpath in self._mapper
 
+    def _contains_folder(self, folder: str) -> bool:
+        return self._mapper.fs.exists(self._urlpath(self.url, folder))
+
     def _urlpath(self, *parts: str) -> str:
         return "/".join(parts)
 
-
-class LocalCondaContainer(CondaContainer):
-    def __init__(self, path: Path) -> None:
-        self._path = path
-        super().__init__(path.resolve().as_uri())
-
-    @property
-    def path(self) -> Path:
-        return self._path
-
-    @property
-    def _patch_generator(self) -> Path:
-        return self._path / _PATCH_GENERATOR_FILE
-
-    def update_index(self) -> None:
-        generator = self._path / _PATCH_GENERATOR_FILE
-        conda_build.api.update_index(
-            self._path, patch_generator=str(generator.resolve()), progress=True
-        )
-        self._purge_packages()
-
-    def merge(self, source: LocalCondaContainer) -> None:
-        shutil.copytree(source.path, self.path, dirs_exist_ok=True)
-
-    def is_setup(self) -> bool:
-        return (self._path / "noarch" / REPODATA_FILE).exists()
-
-    def setup(self) -> None:
-        noarch = self.path / "noarch"
-        noarch.mkdir(exist_ok=True, parents=True)
-        repodata = noarch / REPODATA_FILE
-        repodata.touch(exist_ok=True)
-
-    def _purge_packages(self) -> None:
-        for subdir in self.find_subdirs():
-            repodata = self.read_repodata(subdir)
-            for filename in repodata.removed:
-                self._remove_file(subdir, filename)
-
-    def write_patch_generator(self) -> None:
-        generator = self._patch_generator
-        generator.parent.mkdir(exist_ok=True, parents=True)
-        with tarfile.open(generator, "w:bz2") as tar:
-            for instructions in self._path.glob("**/" + _PATCH_INSTRUCTIONS_FILE):
-                tar.add(instructions, arcname=instructions.relative_to(self._path))
+    def __repr__(self):
+        class_name = self.__class__.__name__
+        return f"<{class_name}: url={self.url!r}>"
 
 
-class CondaChannel(CondaContainer):
+class CondaChannel(CondaFilesystem):
     def __init__(self, source: str) -> None:
         source = source.replace("\\", "/")
         self._internal = _Channel(source)
-        super().__init__(self._internal.base_url)
+        super().__init__(self._internal.base_url_)
+
+    @property
+    def is_queryable(self) -> bool:
+        return self._urlpath("noarch", REPODATA_FILE) in self._mapper
 
     @property
     def name(self) -> str:
         return self._internal.canonical_name
+
+    def find_subdirs(self) -> Tuple[str, ...]:
+        subdirs = tuple(
+            subdir for subdir in get_known_subdirs() if self._contains_folder(subdir)
+        )
+        return subdirs
 
     def iter_packages(self, subdirs: Iterable[str]) -> Iterator[CondaPackage]:
         return self.query_packages("*", subdirs=subdirs)
@@ -184,9 +108,82 @@ class CondaChannel(CondaContainer):
         else:
             yield from packages
 
-    def __repr__(self):
-        class_name = self.__class__.__name__
-        return f"<{class_name}: url={self.url!r}>"
+    def contains_package(self, package: CondaPackage) -> bool:
+        return self._contains_file(package.subdir, package.fn)
+
+    def read_instructions(self, subdir: str) -> PatchInstructions:
+        contents = self._read_file(subdir, _PATCH_INSTRUCTIONS_FILE, b"{}")
+        instructions = PatchInstructions.parse_raw(contents)
+        return instructions
+
+    def read_repodata(self, subdir: str) -> RepoData:
+        contents = self._read_file(subdir, _REPODATA_FILE, b"{}")
+        repodata = RepoData.parse_raw(contents)
+        return repodata
+
+
+class LocalCondaChannel(CondaChannel):
+    def __init__(self, source: str) -> None:
+        self._path = Path(source).resolve()
+        if not self._path.exists():
+            self._path = self._path.absolute()
+        super().__init__(self._path.as_uri())
+
+    def setup(self) -> None:
+        noarch = self._path / "noarch"
+        noarch.mkdir(exist_ok=True, parents=True)
+        repodata = noarch / REPODATA_FILE
+        repodata.touch(exist_ok=True)
+
+    def add_package(self, package: CondaPackage) -> None:
+        if self.contains_package(package):
+            contents = self._read_file(package.subdir, package.fn)
+            if hashlib.sha256(contents).hexdigest() == package.sha256:
+                return
+
+        with fsspec.open(package.url, "rb") as fp:
+            contents = fp.read()
+
+        if len(contents) != package.size:
+            raise BadPackageDownload(f"{package.fn} has incorrect size")
+        if package.sha256 != hashlib.sha256(contents).hexdigest():
+            raise BadPackageDownload(f"{package.fn} has incorrect sha256")
+
+        self._write_file(package.subdir, package.fn, contents)
+
+    def remove_package(self, package: CondaPackage) -> None:
+        self._remove_file(package.subdir, package.fn)
+
+    def update_index(self) -> None:
+        generator = self._path / _PATCH_GENERATOR_FILE
+        conda_build.api.update_index(
+            self._path, patch_generator=str(generator.resolve()), progress=True
+        )
+        self.purge_packages()
+
+    def purge_packages(self) -> None:
+        for subdir in self.find_subdirs():
+            repodata = self.read_repodata(subdir)
+            for filename in repodata.removed:
+                self._remove_file(subdir, filename)
+
+    def merge(self, source: LocalCondaChannel) -> None:
+        shutil.copytree(source._path, self._path, dirs_exist_ok=True)
+
+    def write_instructions(self, subdir: str, instructions: PatchInstructions) -> None:
+        contents = json.dumps(instructions.dict(by_alias=True), indent=2)
+        self._write_file(subdir, _PATCH_INSTRUCTIONS_FILE, contents.encode("utf-8"))
+
+    def write_patch_generator(self) -> None:
+        generator = self._path / _PATCH_GENERATOR_FILE
+        generator.parent.mkdir(exist_ok=True, parents=True)
+        with tarfile.open(generator, "w:bz2") as tar:
+            for instructions in self._path.glob("**/" + _PATCH_INSTRUCTIONS_FILE):
+                tar.add(instructions, arcname=instructions.relative_to(self._path))
+
+    def write_repodata(self, subdir: str, repodata: RepoData) -> None:
+        contents = json.dumps(repodata.dict(by_alias=True), indent=2)
+        self._write_file(subdir, _REPODATA_FILE, contents.encode("utf-8"))
 
 
 class RepoData(BaseModel):

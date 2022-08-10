@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Any, Iterable, Iterator, Optional, Set, Tuple
+from typing import Any, Iterable, Iterator, Set, Tuple
 
 import networkx as nx
 
@@ -23,13 +23,13 @@ class ResolvedPackages:
 
 def resolve_packages(
     channel: CondaChannel,
-    requirements: Iterable[CondaSpecification],
-    exclusions: Iterable[CondaSpecification],
-    disposables: Iterable[CondaSpecification],
+    target: CondaChannel,
+    requirements: Iterable[str],
+    exclusions: Iterable[str],
+    disposables: Iterable[str],
     subdirs: Iterable[str],
-    reference: Optional[CondaChannel] = None,
-    latest: bool = True,
-    validate: bool = True,
+    latest: bool,
+    validate: bool,
 ) -> ResolvedPackages:
     """Performs package resolution on an anaconda channel based on specified parameters.
 
@@ -58,17 +58,19 @@ def resolve_packages(
         adapter objects.
     """
 
-    parameters = Parameters(requirements, exclusions, disposables, subdirs)
+    parameters = Parameters(
+        requirements=[CondaSpecification(spec) for spec in requirements],
+        exclusions=[CondaSpecification(spec) for spec in exclusions],
+        disposables=[CondaSpecification(spec) for spec in disposables],
+        subdirs=subdirs
+    )
     resolver = Resolver(channel, validate, latest)
     packages = set(resolver.resolve(parameters))
 
-    results = ResolvedPackages()
-    if reference is None:
-        results.to_add = packages
-    else:
-        existing_packages = set(reference.iter_packages(subdirs))
-        results.to_add = packages - existing_packages
-        results.to_remove = existing_packages - packages
+    existing_packages = set(target.iter_packages(subdirs))
+    to_add = packages - existing_packages
+    to_remove = existing_packages - packages
+    results = ResolvedPackages(to_add=to_add, to_remove=to_remove)
 
     return results
 

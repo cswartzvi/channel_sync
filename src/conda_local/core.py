@@ -4,39 +4,37 @@ from rich.console import Console
 
 from conda_local.models import get_default_subdirs
 from conda_local.models.channel import CondaChannel, LocalCondaContainer
-from conda_local.models.specification import CondaSpecification
 from conda_local.output import print_output
 from conda_local.progress import iterate_progress, start_status
 from conda_local.resolve import resolve_packages
 
 
 def do_fetch(
-    channel: CondaChannel,
-    target: LocalCondaContainer,
-    requirements: Iterable[CondaSpecification],
-    exclusions: Optional[Iterable[CondaSpecification]] = None,
-    disposables: Optional[Iterable[CondaSpecification]] = None,
-    subdirs: Optional[Iterable[str]] = None,
+    channel_url: str,
+    target_url: str,
+    requirements: Iterable[str],
+    exclusions: Iterable[str],
+    disposables: Iterable[str],
+    subdirs: Iterable[str],
     latest: bool = True,
     validate: bool = True,
-    console: Optional[Console] = None,
+    quiet: bool = True,
 ) -> None:
 
-    exclusions = exclusions if exclusions else []
-    disposables = disposables if disposables else []
+    channel = CondaChannel(channel_url)
+    target = LocalCondaContainer(target_url)
     subdirs = subdirs if subdirs else get_default_subdirs()
+    console = Console(quiet=quiet, color_system="windows")
 
     target.setup()
-    reference = CondaChannel(target.url)
-
     with start_status(f"Searching [bold cyan]{channel.name}", console=console):
         results = resolve_packages(
             channel=channel,
+            target=target,
             subdirs=subdirs,
             requirements=requirements,
             exclusions=exclusions,
             disposables=disposables,
-            reference=reference,
             latest=latest,
             validate=validate,
         )
@@ -45,9 +43,9 @@ def do_fetch(
     for package in iterate_progress(results.to_add, message, console=console):
         target.add_package(package)
 
-    message = "Patching instructions"
+    message = "Updating instructions"
     for subdir in iterate_progress(subdirs, message, console=console):
-        instructions = channel.read_patch_instructions(subdir)
+        instructions = channel.read_instructions(subdir)
         instructions.update(remove=list(pkg.fn for pkg in results.to_remove))
         target.write_instructions(subdir, instructions)
 
@@ -55,39 +53,39 @@ def do_fetch(
         target.write_patch_generator()
 
 
-def do_index(target: LocalCondaContainer, console: Optional[Console] = None) -> None:
-    target.update_index()
+def do_index(target_url: str, quiet: bool = True) -> None:
+    console = Console(quiet=quiet, color_system="windows")
+    target = LocalCondaContainer(target_url)
+    with start_status("Updating index", console=console):
+        target.update_index()
 
 
 def do_query(
-    channel: CondaChannel,
-    requirements: Iterable[CondaSpecification],
-    exclusions: Optional[Iterable[CondaSpecification]] = None,
-    disposables: Optional[Iterable[CondaSpecification]] = None,
-    subdirs: Optional[Iterable[str]] = None,
-    target: Optional[LocalCondaContainer] = None,
+    channel_url: str,
+    target_url: str,
+    requirements: Iterable[str],
+    exclusions: Iterable[str],
+    disposables: Iterable[str],
+    subdirs: Iterable[str],
     latest: bool = True,
-    validate: bool = True,
+    validate: bool = False,
+    quiet: bool = True,
     output: str = "summary",
-    console: Optional[Console] = None,
 ) -> None:
 
-    exclusions = exclusions if exclusions else []
-    disposables = disposables if disposables else []
+    channel = CondaChannel(channel_url)
+    target = CondaChannel(target_url)
     subdirs = subdirs if subdirs else get_default_subdirs()
-
-    reference = None
-    if target is not None and target.is_setup():
-        reference = CondaChannel(target.url)
+    console = Console(quiet=quiet, color_system="windows")
 
     with start_status(f"Searching [bold cyan]{channel.name}", console=console):
         results = resolve_packages(
             channel=channel,
+            target=target,
             subdirs=subdirs,
             requirements=requirements,
             exclusions=exclusions,
             disposables=disposables,
-            reference=reference,
             latest=latest,
             validate=validate,
         )
@@ -96,30 +94,53 @@ def do_query(
 
 
 def do_sync(
-    channel: CondaChannel,
-    target: LocalCondaContainer,
-    requirements: Iterable[CondaSpecification],
-    exclusions: Optional[Iterable[CondaSpecification]] = None,
-    disposables: Optional[Iterable[CondaSpecification]] = None,
-    subdirs: Optional[Iterable[str]] = None,
+    channel_url: str,
+    target_url: str,
+    requirements: Iterable[str],
+    exclusions: Iterable[str],
+    disposables: Iterable[str],
+    subdirs: Iterable[str],
     latest: bool = True,
     validate: bool = True,
-    console: Optional[Console] = None,
+    quiet: bool = True,
 ) -> None:
 
-    do_fetch(
-        channel=channel,
-        target=target,
-        requirements=requirements,
-        exclusions=exclusions,
-        disposables=disposables,
-        subdirs=subdirs,
-        latest=latest,
-        validate=validate,
-        console=console,
-    )
+    channel = CondaChannel(channel_url)
+    target = LocalCondaContainer(target_url)
+    subdirs = subdirs if subdirs else get_default_subdirs()
+    console = Console(quiet=quiet, color_system="windows")
 
-    do_index(target, console)
+    target.setup()
+    with start_status(f"Searching [bold cyan]{channel.name}", console=console):
+        results = resolve_packages(
+            channel=channel,
+            target=target,
+            subdirs=subdirs,
+            requirements=requirements,
+            exclusions=exclusions,
+            disposables=disposables,
+            latest=latest,
+            validate=validate,
+        )
+
+    message = "Downloading packages"
+    for package in iterate_progress(results.to_add, message, console=console):
+        target.add_package(package)
+
+    message = "Removing packages"
+    for package in iterate_progress(results.to_remove, message, console=console):
+        target.remove_package(package)
+
+    message = "Downloading instructions"
+    for subdir in iterate_progress(subdirs, message, console=console):
+        instructions = channel.read_instructions(subdir)
+        target.write_instructions(subdir, instructions)
+
+    with start_status("Creating patch generator", console=console):
+        target.write_patch_generator()
+
+    with start_status("Updating index", console=console):
+        target.update_index()
 
 
 def do_merge(
