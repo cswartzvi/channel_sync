@@ -6,7 +6,7 @@ from rich.console import Console
 from rich.table import Table
 
 from conda_local.group import groupby
-from conda_local.models.package import CondaPackage
+from conda_local.adapt.package import CondaPackage
 from conda_local.resolve import ResolvedPackages
 
 

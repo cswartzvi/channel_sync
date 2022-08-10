@@ -1,6 +1,6 @@
 import conda.exports
 
-from conda_local.models.package import CondaPackage
+from conda_local.adapt.package import CondaPackage
 
 
 class CondaSpecification:

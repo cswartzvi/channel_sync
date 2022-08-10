@@ -1,26 +1,25 @@
 import datetime
-from pathlib import Path
+import os
 
 import click
-from rich.console import Console
 
 from conda_local.cli.parameters import (
     CONTEXT_SETTINGS,
     ApplicationState,
-    channel_options,
-    common_search_options,
     configuration_option,
-    destination_argument,
+    channel_option,
+    latest_option,
     output_option,
     pass_state,
-    patch_options,
     quiet_option,
     requirements_argument,
-    source_argument,
-    target_argument,
+    subdir_option,
+    target_option,
+    validate_option,
+    exclusions_option,
+    disposables_option
 )
 from conda_local.core import do_fetch, do_index, do_merge, do_query, do_sync
-from conda_local.models.channel import LocalCondaContainer
 
 
 @click.command(
@@ -28,10 +27,16 @@ from conda_local.models.channel import LocalCondaContainer
     context_settings=CONTEXT_SETTINGS,
 )
 @requirements_argument
-@channel_options
-@common_search_options
+@channel_option
+@target_option
+@exclusions_option
+@disposables_option
+@subdir_option
+@latest_option
+@validate_option
 @output_option
 @configuration_option
+@quiet_option
 @pass_state
 def query(state: ApplicationState):
     """Search for packages and dependencies based on upstream REQUIREMENTS.
@@ -40,78 +45,89 @@ def query(state: ApplicationState):
     Requirements and all other specifications are constructed using the anaconda package query syntax:
     https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications
     """  # noqa: E501
-    console = Console(quiet=state.quiet, color_system="windows")
-
     do_query(
-        channel=state.channel,
+        channel_url=state.channel,
+        target_url=state.target,
         requirements=state.requirements,
         exclusions=state.exclusions,
         disposables=state.disposables,
         subdirs=state.subdirs,
-        target=state.target,
         latest=state.latest,
         validate=state.validate,
         output=state.output,
-        console=console,
+        quiet=state.quiet,
     )
 
 
 @click.command(
-    short_help="Fetch packages from an upstream anaconda channel.",
+    short_help="Fetch packages from an upstream channel to a patch folder.",
     context_settings=CONTEXT_SETTINGS,
 )
 @requirements_argument
-@channel_options
-@common_search_options
-@patch_options
-@quiet_option
+@channel_option
+@target_option
+@exclusions_option
+@disposables_option
+@subdir_option
+@click.option(
+    "--name",
+    type=click.types.STRING,
+    help="Name of the patch. [patch_%Y%m%d_%H%M%S]",
+)
+@click.option(
+    "--directory",
+    default=".",
+    type=click.types.Path(dir_okay=True, resolve_path=True),
+    help="Parent directory where patches will be written [current directory]"
+)
+@latest_option
+@validate_option
 @configuration_option
+@quiet_option
 @pass_state
-def fetch(state: ApplicationState):
+def fetch(state: ApplicationState, name: str, directory: str):
     """Fetch packages and dependencies based on upstream REQUIREMENTS.
 
     \b
     Requirements and all other specifications are constructed using the anaconda package query syntax:
     https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications
     """  # noqa: E501
-    console = Console(quiet=state.quiet, color_system="windows")
 
-    patch_directory = Path(state.patch_directory).resolve()
-
-    patch_name = state.patch_name
-    if not patch_name:
+    if not name:
         now = datetime.datetime.now()
-        patch_name = f"patch_{now.strftime('%Y%m%d_%H%M%S')}"
+        name = f"patch_{now.strftime('%Y%m%d_%H%M%S')}"
 
-    target = LocalCondaContainer(patch_directory / patch_name)
+    destination = os.path.join(directory, name)
 
     do_fetch(
-        channel=state.channel,
-        target=target,
+        channel_url=state.channel,
+        destination_url=destination,
         requirements=state.requirements,
         exclusions=state.exclusions,
         disposables=state.disposables,
         subdirs=state.subdirs,
+        target_url=state.target,
         latest=state.latest,
         validate=state.validate,
-        console=console,
+        quiet=state.quiet,
     )
-
-    console.print(f"Patch location: [bold cyan]{target.path.resolve()}")
-    if console.quiet:
-        print(target.path.resolve())
 
 
 @click.command(
     short_help="Sync local and upstream anaconda channels.",
     context_settings=CONTEXT_SETTINGS,
 )
-@target_argument
 @requirements_argument
-@channel_options
-@common_search_options
-@quiet_option
+@channel_option
+@target_option
+@exclusions_option
+@disposables_option
+@subdir_option
+@latest_option
+@validate_option
+@output_option
 @configuration_option
+@quiet_option
 @pass_state
 def sync(state: ApplicationState):
     """Sync a TARGET and upstream channel based on REQUIREMENTS.
@@ -120,52 +136,47 @@ def sync(state: ApplicationState):
     Requirements and all other specifications are constructed using the anaconda package query syntax:
     https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications
     """  # noqa: E501
-    console = Console(quiet=state.quiet, color_system="windows")
-
     assert state.target is not None
     do_sync(
-        channel=state.channel,
-        target=state.target,
+        channel_url=state.channel,
+        target_url=state.target,
         requirements=state.requirements,
         exclusions=state.exclusions,
         disposables=state.disposables,
         subdirs=state.subdirs,
         latest=state.latest,
         validate=state.validate,
-        console=console,
+        quiet=state.quiet,
     )
 
 
 @click.command(
-    short_help="Merges and updates local anaconda channels.",
+    short_help="Merges a local anaconda channel with a patch folder.",
     context_settings=CONTEXT_SETTINGS,
 )
-@source_argument
-@destination_argument
-@pass_state
-def merge(state: ApplicationState):
-    """Merges SOURCE and DESTINATION anaconda channel and updates index.."""
-    console = Console(quiet=state.quiet, color_system="windows")
-
-    assert state.source is not None
-    assert state.destination is not None
-    do_merge(state.source, state.destination, console)
+@click.argument(
+    "source",
+    nargs=1,
+    type=click.types.Path(exists=True, dir_okay=True, resolve_path=True),
+)
+@click.argument(
+    "destination",
+    nargs=1,
+    type=click.types.Path(exists=True, dir_okay=True, resolve_path=True),
+)
+def merge(source, destination):
+    """Merges SOURCE and DESTINATION local anaconda channel and updates index."""
+    do_merge(source, destination)
 
 
 @click.command(
     short_help="Index a local anaconda channel.",
     context_settings=CONTEXT_SETTINGS,
 )
-@target_argument
-@requirements_argument
-@channel_options
-@common_search_options
-@quiet_option
+@target_option
 @configuration_option
+@quiet_option
 @pass_state
 def index(state: ApplicationState):
     """Update the package index of a local TARGET channel."""
-    console = Console(quiet=state.quiet, color_system="windows")
-
-    assert state.target is not None
-    do_index(state.target, console)
+    do_index(target_url=state.target, quiet=state.quiet)

@@ -4,7 +4,7 @@ from typing import Dict
 
 import pytest
 
-from conda_local.models.channel import CondaChannel
+from conda_local.adapt.channel import CondaChannel
 from conda_local.resolve import resolve_packages
 
 

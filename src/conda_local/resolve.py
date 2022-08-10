@@ -2,15 +2,15 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Any, Iterable, Iterator, Set, Tuple
+from typing import Any, Iterable, Iterator, Optional, Set, Tuple
 
 import networkx as nx
 
 from conda_local import CondaLocalException
 from conda_local.group import groupby
-from conda_local.models.channel import CondaChannel
-from conda_local.models.package import CondaPackage
-from conda_local.models.specification import CondaSpecification
+from conda_local.adapt.channel import CondaChannel
+from conda_local.adapt.package import CondaPackage
+from conda_local.adapt.specification import CondaSpecification
 
 log = logging.getLogger(__name__)
 
@@ -23,13 +23,13 @@ class ResolvedPackages:
 
 def resolve_packages(
     channel: CondaChannel,
-    target: CondaChannel,
     requirements: Iterable[str],
     exclusions: Iterable[str],
     disposables: Iterable[str],
     subdirs: Iterable[str],
-    latest: bool,
-    validate: bool,
+    target: Optional[CondaChannel] = None,
+    latest: bool = True,
+    validate: bool = True,
 ) -> ResolvedPackages:
     """Performs package resolution on an anaconda channel based on specified parameters.
 
@@ -49,6 +49,7 @@ def resolve_packages(
             is considered constrained if it fails to match any of the specifications.
         subdirs (optional): Platform sub-directories where package resolution should
             take place. If None, then all default
+        target (optional):
         validate (optional): Determines if the package resolution process must find
             at least on package for all specified requirements.
         latest:
@@ -67,10 +68,13 @@ def resolve_packages(
     resolver = Resolver(channel, validate, latest)
     packages = set(resolver.resolve(parameters))
 
-    existing_packages = set(target.iter_packages(subdirs))
-    to_add = packages - existing_packages
-    to_remove = existing_packages - packages
-    results = ResolvedPackages(to_add=to_add, to_remove=to_remove)
+    if target is None:
+        results = ResolvedPackages(to_add=packages)
+    else:
+        existing_packages = set(target.iter_packages(subdirs))
+        to_add = packages - existing_packages
+        to_remove = existing_packages - packages
+        results = ResolvedPackages(to_add=to_add, to_remove=to_remove)
 
     return results
 
