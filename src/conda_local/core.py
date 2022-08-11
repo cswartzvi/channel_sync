@@ -1,3 +1,4 @@
+from struct import pack
 from typing import Iterable
 
 from rich.console import Console
@@ -5,7 +6,7 @@ from rich.console import Console
 from conda_local.adapters.subdir import get_default_subdirs
 from conda_local.adapters.channel import CondaChannel, LocalCondaChannel
 from conda_local.output import print_output
-from conda_local.progress import iterate_progress, start_status, monkeypatch_tqdm
+from conda_local.progress import iterate_progress, start_status, start_index_monkeypatch
 from conda_local.resolve import resolve_packages
 
 
@@ -30,7 +31,7 @@ def do_fetch(
     destination = LocalCondaChannel(destination_url)
     destination.setup()
 
-    with start_status(f"Searching [bold cyan]{channel.name}", console=console):
+    with start_status(f"Searching {channel.name}", console=console):
         results = resolve_packages(
             channel=channel,
             subdirs=subdirs,
@@ -42,9 +43,10 @@ def do_fetch(
             validate=validate,
         )
 
-    message = "Downloading packages "
-    for package in iterate_progress(results.to_add, message, console=console):
-        destination.add_package(package)
+    if results.to_add:
+        message = "Downloading packages "
+        for package in iterate_progress(results.to_add, message, console=console):
+            destination.add_package(package)
 
     message = "Updating instructions"
     for subdir in iterate_progress(subdirs, message, console=console):
@@ -55,15 +57,15 @@ def do_fetch(
     with start_status("Creating patch generator", console=console):
         destination.write_patch_generator()
 
-    console.print(f"Patch location: [bold cyan]{destination_url}")
+    console.print(f"Patch location: {destination_url}")
     if console.quiet:
         print(destination_url)
 
 
 def do_index(target_url: str, quiet: bool = True) -> None:
-    console = Console(quiet=quiet, color_system="windows")
     target = LocalCondaChannel(target_url)
-    with monkeypatch_tqdm(console):
+    console = Console(quiet=quiet, color_system="windows")
+    with start_index_monkeypatch("Indexing subdirs", console=console):
         target.update_index()
 
 
@@ -76,7 +78,8 @@ def do_query(
     target_url: str = "",
     latest: bool = True,
     validate: bool = False,
-    quiet: bool = True, output: str = "summary",
+    quiet: bool = True,
+    output: str = "summary",
 ) -> None:
 
     channel = CondaChannel(channel_url)
@@ -84,7 +87,7 @@ def do_query(
     subdirs = subdirs if subdirs else get_default_subdirs()
     console = Console(quiet=quiet, color_system="windows")
 
-    with start_status(f"Searching [bold cyan]{channel.name}", console=console):
+    with start_status(f"Searching {channel.name}", console=console):
         results = resolve_packages(
             channel=channel,
             subdirs=subdirs,
@@ -117,7 +120,7 @@ def do_sync(
     console = Console(quiet=quiet, color_system="windows")
 
     target.setup()
-    with start_status(f"Searching [bold cyan]{channel.name}", console=console):
+    with start_status(f"Searching {channel.name}", console=console):
         results = resolve_packages(
             channel=channel,
             target=target,
@@ -129,13 +132,15 @@ def do_sync(
             validate=validate,
         )
 
-    message = "Downloading packages "
-    for package in iterate_progress(results.to_add, message, console=console):
-        target.add_package(package)
+    if results.to_add:
+        message = "Downloading packages "
+        for package in iterate_progress(results.to_add, message, console=console):
+            target.add_package(package)
 
-    message = "Removing packages    "
-    for package in iterate_progress(results.to_remove, message, console=console):
-        target.remove_package(package)
+    if results.to_remove:
+        message = "Removing packages    "
+        for package in iterate_progress(results.to_remove, message, console=console):
+            target.remove_package(package)
 
     message = "Copying instructions "
     for subdir in iterate_progress(subdirs, message, console=console):
