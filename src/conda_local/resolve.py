@@ -61,9 +61,10 @@ def resolve_packages(
 
     parameters = Parameters(
         requirements=[CondaSpecification(spec) for spec in requirements],
+        
         exclusions=[CondaSpecification(spec) for spec in exclusions],
         disposables=[CondaSpecification(spec) for spec in disposables],
-        subdirs=subdirs
+        subdirs=subdirs,
     )
     resolver = Resolver(channel, validate, latest)
     packages = set(resolver.resolve(parameters))

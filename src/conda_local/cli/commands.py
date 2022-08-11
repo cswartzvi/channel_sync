@@ -17,7 +17,7 @@ from conda_local.cli.parameters import (
     target_option,
     validate_option,
     exclusions_option,
-    disposables_option
+    disposables_option,
 )
 from conda_local.core import do_fetch, do_index, do_merge, do_query, do_sync
 
@@ -81,7 +81,7 @@ def query(state: ApplicationState):
     "--directory",
     default=".",
     type=click.types.Path(dir_okay=True, resolve_path=True),
-    help="Parent directory where patches will be written [current directory]"
+    help="Parent directory where patches will be written [current directory]",
 )
 @latest_option
 @validate_option

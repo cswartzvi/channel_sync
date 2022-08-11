@@ -13,38 +13,8 @@ from rich.progress import (
     TimeElapsedColumn,
     TimeRemainingColumn,
 )
-from rich.progress import track
-from tqdm import tqdm
 
 T = TypeVar("T")
-
-
-class TqdmMonkeyPatch:
-
-    def __init__(self, *args, **kwargs) -> None:
-        self._args = args
-        self._kwargs = kwargs
-
-        self._kwargs.pop("disable", None)
-        self._kwargs["disable"] = True
-        print("New tqdm monkeypatch")
-
-    def __iter__(self):
-        iterable, *args = self._args
-        desc = self._kwargs.pop("desc", "")
-        for item in track(iterable, description=desc, ):
-            yield item
-
-    def __enter__(self):
-        print("Start context")
-        return tqdm(*self._args, **self._kwargs)
-
-    def __exit__(self, exc_type, exc_value, exc_traceback):
-        print("Ending context")
-
-
-def monkeypatch_tqdmm():
-    conda_build.index.tqdm = TqdmMonkeyPatch
 
 
 def iterate_progress(
@@ -76,3 +46,70 @@ def start_status(message: str, console: Optional[Console]) -> Iterator[None]:
         yield
         progress.update(task, advance=1)
         progress.update(task)
+
+
+@contextlib.contextmanager
+def monkeypatch_tqdm(console: Optional[Console] = None):
+    # NOTE: Yes, I hate this as much as you do.
+
+    old_tqdm = conda_build.index.tqdm
+    with Progress(console=console) as progress:
+        conda_build.index.tqdm = CondaIndexMonkeyPatch(progress)
+        yield
+    conda_build.index.tqdm = old_tqdm
+
+
+class CondaIndexMonkeyPatch:
+    def __init__(self, progress, description=""):
+        self._progress = progress
+        self._first = True
+
+    def __call__(self, *args, **kwargs):
+        visible = self._first
+        convertor = TqdmToRichConvertor(self._progress, visible, *args, **kwargs)
+        self._first = False
+        return convertor
+
+
+class TqdmToRichConvertor:
+    def __init__(self, progress, visible, *args, **kwargs):
+        self._progress = progress
+        self._visible = visible
+
+        self._kwargs = kwargs
+        self._iterable = self._kwargs.get("iterable", None)
+        self._description = self._kwargs.get("desc", None)
+        self._total = self._kwargs.get("total", None)
+
+        self._args = list(args)
+        if self._args:
+            self._iterable, *self._args = self._args
+        if self._args:
+            self._description, *self._args = self._args
+        if self._args:
+            self._total, *self._args = self._args
+
+    def __iter__(self):
+        self._task = self._progress.add_task(self._description, total=self._total)
+        yield from self._progress.track(
+            self._iterable,
+            total=self._total,
+            description=self._description,
+            task_id=self._task,
+        )
+        self._progress.update(
+            self._task, completed=True, visible=self._visible, refresh=True
+        )
+
+    def __enter__(self):
+        self._task = self._progress.add_task(self._description, total=self._total)
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self._progress.update(self._task, visible=self._visible, refresh=True)
+
+    def set_description(self, desc):
+        self._progress.update(self._task, description=self._description, refresh=True)
+
+    def update(self, n=1):
+        self._progress.update(self._task, advance=n, refresh=True)

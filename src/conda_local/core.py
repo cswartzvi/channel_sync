@@ -5,7 +5,7 @@ from rich.console import Console
 from conda_local.adapters.subdir import get_default_subdirs
 from conda_local.adapters.channel import CondaChannel, LocalCondaChannel
 from conda_local.output import print_output
-from conda_local.progress import iterate_progress, start_status, monkeypatch_tqdmm
+from conda_local.progress import iterate_progress, start_status, monkeypatch_tqdm
 from conda_local.resolve import resolve_packages
 
 
@@ -61,9 +61,10 @@ def do_fetch(
 
 
 def do_index(target_url: str, quiet: bool = True) -> None:
-    # monkeypatch_tqdmm()
+    console = Console(quiet=quiet, color_system="windows")
     target = LocalCondaChannel(target_url)
-    target.update_index()
+    with monkeypatch_tqdm(console):
+        target.update_index()
 
 
 def do_query(
@@ -75,8 +76,7 @@ def do_query(
     target_url: str = "",
     latest: bool = True,
     validate: bool = False,
-    quiet: bool = True,
-    output: str = "summary",
+    quiet: bool = True, output: str = "summary",
 ) -> None:
 
     channel = CondaChannel(channel_url)

@@ -129,7 +129,6 @@ class CondaChannel:
 
 
 class MutableCondaChannel(CondaChannel):
-
     def setup(self) -> None:
         if not self._container.contains_file("noarch", _REPODATA_FILE):
             self._container.write_file("noarch", _REPODATA_FILE, b"")

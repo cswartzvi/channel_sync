@@ -18,15 +18,26 @@
             "justMyCode": true
         },
         {
-            "name": "Python: patch",
+            "name": "Python: fetch",
             "type": "python",
             "request": "launch",
             "module": "conda_local",
             "args": [
-                "patch",
+                "fetch",
                 "python==3.8.12",
             ],
             "justMyCode": true
+        },
+        {
+            "name": "Python: index",
+            "type": "python",
+            "request": "launch",
+            "module": "conda_local",
+            "args": [
+                "index",
+                "./temp-channel2",
+            ],
+            "justMyCode": false
         }
     ],
 }
