@@ -45,6 +45,9 @@ def query(state: ApplicationState):
     Requirements and all other specifications are constructed using the anaconda package query syntax:
     https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications
     """  # noqa: E501
+    if state.output == "json":
+        state.quiet = True
+
     do_query(
         channel_url=state.channel,
         target_url=state.target,
@@ -173,10 +176,14 @@ def merge(source, destination):
     short_help="Index a local anaconda channel.",
     context_settings=CONTEXT_SETTINGS,
 )
-@target_option
+@click.argument(
+    "target",
+    nargs=1,
+    type=click.types.Path(exists=True, dir_okay=True, resolve_path=True),
+)
 @configuration_option
 @quiet_option
 @pass_state
-def index(state: ApplicationState):
+def index(state: ApplicationState, target: str):
     """Update the package index of a local TARGET channel."""
-    do_index(target_url=state.target, quiet=state.quiet)
+    do_index(target_url=target, quiet=state.quiet)

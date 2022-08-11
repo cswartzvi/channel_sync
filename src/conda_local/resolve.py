@@ -8,9 +8,9 @@ import networkx as nx
 
 from conda_local import CondaLocalException
 from conda_local.group import groupby
-from conda_local.adapt.channel import CondaChannel
-from conda_local.adapt.package import CondaPackage
-from conda_local.adapt.specification import CondaSpecification
+from conda_local.adapters.channel import CondaChannel
+from conda_local.adapters.package import CondaPackage
+from conda_local.adapters.specification import CondaSpecification
 
 log = logging.getLogger(__name__)
 
@@ -68,7 +68,7 @@ def resolve_packages(
     resolver = Resolver(channel, validate, latest)
     packages = set(resolver.resolve(parameters))
 
-    if target is None:
+    if target is None or not target.is_queryable:
         results = ResolvedPackages(to_add=packages)
     else:
         existing_packages = set(target.iter_packages(subdirs))
@@ -216,9 +216,10 @@ class Resolver:
             if not parameters.is_disposable(node):
                 packages.add(node)
 
-        missing = required_package_names - package_names
-        if missing:
-            raise UnsatisfiedRequirementsError(missing)
+        if self.validate:
+            missing = required_package_names - package_names
+            if missing:
+                raise UnsatisfiedRequirementsError(missing)
 
         return tuple(packages)
 
@@ -260,7 +261,7 @@ class Parameters:
 
     def is_disposable(self, package: CondaPackage) -> bool:
         disposables = self._disposables.get(package.name, [])
-        return not all(disposable.match(package) for disposable in disposables)
+        return any(disposable.match(package) for disposable in disposables)
 
 
 class UnsatisfiedRequirementsError(CondaLocalException):

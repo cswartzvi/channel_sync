@@ -2,10 +2,10 @@ from typing import Iterable
 
 from rich.console import Console
 
-from conda_local.adapt.subdir import get_default_subdirs
-from conda_local.adapt.channel import CondaChannel, LocalCondaChannel
+from conda_local.adapters.subdir import get_default_subdirs
+from conda_local.adapters.channel import CondaChannel, LocalCondaChannel
 from conda_local.output import print_output
-from conda_local.progress import iterate_progress, start_status
+from conda_local.progress import iterate_progress, start_status, monkeypatch_tqdmm
 from conda_local.resolve import resolve_packages
 
 
@@ -61,10 +61,9 @@ def do_fetch(
 
 
 def do_index(target_url: str, quiet: bool = True) -> None:
-    console = Console(quiet=quiet, color_system="windows")
+    # monkeypatch_tqdmm()
     target = LocalCondaChannel(target_url)
-    with start_status("Updating index", console=console):
-        target.update_index()
+    target.update_index()
 
 
 def do_query(
@@ -130,15 +129,15 @@ def do_sync(
             validate=validate,
         )
 
-    message = "Downloading packages"
+    message = "Downloading packages "
     for package in iterate_progress(results.to_add, message, console=console):
         target.add_package(package)
 
-    message = "Removing packages"
+    message = "Removing packages    "
     for package in iterate_progress(results.to_remove, message, console=console):
         target.remove_package(package)
 
-    message = "Downloading instructions"
+    message = "Copying instructions "
     for subdir in iterate_progress(subdirs, message, console=console):
         instructions = channel.read_instructions(subdir)
         target.write_instructions(subdir, instructions)
@@ -146,8 +145,8 @@ def do_sync(
     with start_status("Creating patch generator", console=console):
         target.write_patch_generator()
 
-    with start_status("Updating index", console=console):
-        target.update_index()
+    # with start_status("Updating index", console=console):
+    target.update_index()
 
 
 def do_merge(

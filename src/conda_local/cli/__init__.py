@@ -5,6 +5,7 @@ from conda_local.cli.commands import fetch, index, merge, query, sync
 
 @click.group()
 def app():
+    """Manage local, potentially air-gapped, mirrored anaconda channels."""
     pass
 
 

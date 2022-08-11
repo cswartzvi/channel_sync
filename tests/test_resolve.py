@@ -1,33 +1,31 @@
+from itertools import chain
 import json
 from pathlib import Path
 from typing import Dict
 
 import pytest
 
-from conda_local.adapt.channel import CondaChannel
+from conda_local.adapters.channel import CondaChannel, LocalCondaChannel
+from conda_local.adapters.channel import RepoData
 from conda_local.resolve import resolve_packages
+from conda_local.resolve import UnsatisfiedRequirementsError
 
 
 def make_temp_local_channel(path: Path, packages: Dict) -> CondaChannel:
     """Returns a test local channel based on a temporary directory."""
 
-    data = {"info": {"subdir": "noarch"}, "packages": packages}
-
-    repodata = path / "noarch" / "repodata.json"
-    repodata.parent.mkdir(parents=True, exist_ok=True)
-    repodata.touch()
-
-    with repodata.open("wt") as file:
-        json.dump(data, file)
-
-    channel = CondaChannel(str(path.resolve()))
+    channel = LocalCondaChannel(path.resolve())
+    channel.setup()
+    repodata = RepoData(packages=packages)
+    channel.write_repodata("noarch", repodata)
     return channel
 
 
 VALID_QUERIES = {
     "valid00": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -71,7 +69,8 @@ VALID_QUERIES = {
     },
     "valid01": {
         "requirements": ["a >=2.0"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -109,7 +108,8 @@ VALID_QUERIES = {
     },
     "valid02": {
         "requirements": ["a 3.0 b001_0"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -147,7 +147,8 @@ VALID_QUERIES = {
     },
     "valid03": {
         "requirements": ["a", "b >=2.0"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "build": "",
@@ -227,7 +228,8 @@ VALID_QUERIES = {
     },
     "valid04": {
         "requirements": ["a", "b >=2.0"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -333,7 +335,8 @@ VALID_QUERIES = {
     },
     "valid05": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -376,7 +379,8 @@ VALID_QUERIES = {
     },
     "valid06": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -412,7 +416,8 @@ VALID_QUERIES = {
     },
     "valid07": {
         "requirements": ["a"],
-        "constraints": ["a >=2.0"],
+        "exclusions": ["a <2.0"],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -450,7 +455,8 @@ VALID_QUERIES = {
     },
     "valid08": {
         "requirements": ["a"],
-        "constraints": ["b >=2.0"],
+        "exclusions": ["b <2.0"],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -490,7 +496,8 @@ VALID_QUERIES = {
     },
     "valid09-cyclic": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "initial": {
             "a-1.0.tar.bz2": {
                 "build": "",
@@ -529,7 +536,8 @@ VALID_QUERIES = {
 INVALID_QUERIES = {
     "invalid00": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "packages": {
             "a-1.0.tar.bz2": {
                 "build": "",
@@ -549,7 +557,8 @@ INVALID_QUERIES = {
     },
     "invalid01-cyclic": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "packages": {
             "a-1.0.tar.bz2": {
                 "build": "",
@@ -569,7 +578,8 @@ INVALID_QUERIES = {
     },
     "invalid02": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "packages": {
             "a-1.0.tar.bz2": {
                 "build": "",
@@ -596,7 +606,8 @@ INVALID_QUERIES = {
     },
     "invalid03": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "packages": {
             "a-1.0.tar.bz2": {
                 "name": "a",
@@ -623,7 +634,8 @@ INVALID_QUERIES = {
     },
     "invalid04": {
         "requirements": ["a"],
-        "constraints": None,
+        "exclusions": [],
+        "disposables": [],
         "packages": {
             "a-1.0.tar.bz2": {
                 "version": "1.0",
@@ -671,17 +683,22 @@ def test_package_resolution_for_valid_queries(tmp_path_factory, data):
         tmp_path_factory.mktemp("initial"), data["initial"]
     )
     results = resolve_packages(
-            initial_channel,
-            data["requirements"],
-            constraints=data["constraints"],
+            channel=initial_channel,
+            requirements=data["requirements"],
+            exclusions=data["exclusions"],
+            disposables=data["disposables"],
             subdirs=["noarch"],
+            target=None,
+            latest=True,
+            validate=True
         )
+
     actual = results.to_add
 
     final_channel = make_temp_local_channel(
         tmp_path_factory.mktemp("final"), data["final"]
     )
-    expected = set(final_channel.records(["noarch"]))
+    expected = set(final_channel.iter_packages(["noarch"]))
 
     assert set(expected) == set(actual)
 
@@ -691,20 +708,27 @@ def test_package_resolution_for_invalid_queries(tmp_path, data):
     channel = make_temp_local_channel(tmp_path, data["packages"])
     with pytest.raises(UnsatisfiedRequirementsError):
         _ = resolve_packages(
-            channel,
-            data["requirements"],
-            constraints=data["constraints"],
-            subdirs=["noarch"],
-        )
+                channel=channel,
+                requirements=data["requirements"],
+                exclusions=data["exclusions"],
+                disposables=data["disposables"],
+                subdirs=["noarch"],
+                target=None,
+                latest=True,
+                validate=True
+            )
 
 
 @pytest.mark.parametrize("data", INVALID_QUERIES.values())
 def test_package_resolution_for_invalid_queries_without_validate(tmp_path, data):
     channel = make_temp_local_channel(tmp_path, data["packages"])
     _ = resolve_packages(
-        channel,
-        data["requirements"],
-        constraints=data["constraints"],
-        subdirs=["noarch"],
-        validate=False
-    )
+            channel=channel,
+            requirements=data["requirements"],
+            exclusions=data["exclusions"],
+            disposables=data["disposables"],
+            subdirs=["noarch"],
+            target=None,
+            latest=True,
+            validate=False
+        )

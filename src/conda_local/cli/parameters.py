@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import List, Optional
 
 import click
@@ -25,7 +24,7 @@ class ApplicationState:
     quiet: bool = False
 
     def update(self, configuration: Configuration):
-        for name in Configuration.__fields_set__:
+        for name in configuration.__fields_set__:
             value = getattr(configuration, name)
             if value is None:
                 continue
@@ -34,7 +33,7 @@ class ApplicationState:
 
             attribute = getattr(self, name)
             if isinstance(attribute, list):
-                attribute.append(value)
+                attribute.extend(value)
             else:
                 setattr(self, name, value)
 
@@ -44,7 +43,7 @@ pass_state = click.make_pass_decorator(ApplicationState, ensure=True)
 
 class Configuration(BaseSettings):
     channel: str = ""
-    target: Optional[Path] = None
+    target: Optional[str] = None
     requirements: List[str] = Field(default_factory=list)
     exclusions: List[str] = Field(default_factory=list)
     disposables: List[str] = Field(default_factory=list)

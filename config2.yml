@@ -1,7 +1,11 @@
 channel: conda-forge
-target: ./temp-channel4
+target: .\temp-channel2
 latest: true
-# exclusions:
-#   - setuptools <60.0
+exclusions:
+  - setuptools <61.0
+  - pip <21.0
+disposables: []
 requirements:
   - python =3.8.12
+  - attrs >=18.0
+  - pydantic

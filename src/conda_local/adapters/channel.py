@@ -15,8 +15,8 @@ from pydantic import BaseModel, Field
 
 from conda_local import CondaLocalException
 from conda_local.group import groupby
-from conda_local.adapt.package import CondaPackage
-from conda_local.adapt.subdir import get_known_subdirs
+from conda_local.adapters.package import CondaPackage
+from conda_local.adapters.subdir import get_known_subdirs
 
 _PATCH_GENERATOR_FILE = "patch_generator.tar.bz2"
 _INSTRUCTIONS_FILE = "patch_instructions.json"

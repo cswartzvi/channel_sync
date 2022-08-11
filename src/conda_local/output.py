@@ -6,18 +6,18 @@ from rich.console import Console
 from rich.table import Table
 
 from conda_local.group import groupby
-from conda_local.adapt.package import CondaPackage
+from conda_local.adapters.package import CondaPackage
 from conda_local.resolve import ResolvedPackages
 
 
 def print_output(output: str, packages: ResolvedPackages) -> None:
 
     if output == "summary":
-        _print_output_summary(packages.to_add, "Packages to Add   ")
-        _print_output_summary(packages.to_remove, "Packages to Remove")
+        _print_output_summary(packages.to_add, "Packages to add   ")
+        _print_output_summary(packages.to_remove, "Packages to remove")
     elif output == "list":
-        _print_output_list(packages.to_add, "Packages to Add")
-        _print_output_list(packages.to_remove, "Packages to Remove")
+        _print_output_list(packages.to_add, "Packages to add")
+        _print_output_list(packages.to_remove, "Packages to remove")
     elif output == "json":
         _print_output_json(packages.to_add, packages.to_remove)
 
