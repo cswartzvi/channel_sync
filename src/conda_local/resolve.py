@@ -1,16 +1,17 @@
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from typing import Any, Iterable, Iterator, Optional, Set, Tuple
 
 import networkx as nx
 
 from conda_local import CondaLocalException
-from conda_local.group import groupby
 from conda_local.adapters.channel import CondaChannel
 from conda_local.adapters.package import CondaPackage
 from conda_local.adapters.specification import CondaSpecification
+from conda_local.group import groupby
 
 log = logging.getLogger(__name__)
 

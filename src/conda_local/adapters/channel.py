@@ -11,12 +11,13 @@ import conda_build.api
 import fsspec
 from conda.api import SubdirData as _SubdirData
 from conda.exports import Channel as _Channel
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic import Field
 
 from conda_local import CondaLocalException
-from conda_local.group import groupby
 from conda_local.adapters.package import CondaPackage
 from conda_local.adapters.subdir import get_known_subdirs
+from conda_local.group import groupby
 
 _PATCH_GENERATOR_FILE = "patch_generator.tar.bz2"
 _INSTRUCTIONS_FILE = "patch_instructions.json"

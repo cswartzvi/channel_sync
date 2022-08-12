@@ -3,23 +3,25 @@ import os
 
 import click
 
-from conda_local.cli.parameters import (
-    CONTEXT_SETTINGS,
-    ApplicationState,
-    configuration_option,
-    channel_option,
-    latest_option,
-    output_option,
-    pass_state,
-    quiet_option,
-    requirements_argument,
-    subdir_option,
-    target_option,
-    validate_option,
-    exclusions_option,
-    disposables_option,
-)
-from conda_local.core import do_fetch, do_index, do_merge, do_query, do_sync
+from conda_local.cli.parameters import CONTEXT_SETTINGS
+from conda_local.cli.parameters import ApplicationState
+from conda_local.cli.parameters import channel_option
+from conda_local.cli.parameters import configuration_option
+from conda_local.cli.parameters import disposables_option
+from conda_local.cli.parameters import exclusions_option
+from conda_local.cli.parameters import latest_option
+from conda_local.cli.parameters import output_option
+from conda_local.cli.parameters import pass_state
+from conda_local.cli.parameters import quiet_option
+from conda_local.cli.parameters import requirements_argument
+from conda_local.cli.parameters import subdir_option
+from conda_local.cli.parameters import target_option
+from conda_local.cli.parameters import validate_option
+from conda_local.core import run_patch
+from conda_local.core import run_index
+from conda_local.core import run_merge
+from conda_local.core import run_search
+from conda_local.core import run_sync
 
 
 @click.command(
@@ -38,7 +40,7 @@ from conda_local.core import do_fetch, do_index, do_merge, do_query, do_sync
 @configuration_option
 @quiet_option
 @pass_state
-def query(state: ApplicationState):
+def search(state: ApplicationState):
     """Search for packages and dependencies based on upstream REQUIREMENTS.
 
     \b
@@ -48,7 +50,7 @@ def query(state: ApplicationState):
     if state.output == "json":
         state.quiet = True
 
-    do_query(
+    run_search(
         channel_url=state.channel,
         target_url=state.target,
         requirements=state.requirements,
@@ -63,7 +65,7 @@ def query(state: ApplicationState):
 
 
 @click.command(
-    short_help="Fetch packages from an upstream channel to a patch folder.",
+    short_help="Create a patch folder from an upstream channel.",
     context_settings=CONTEXT_SETTINGS,
 )
 @requirements_argument
@@ -88,8 +90,8 @@ def query(state: ApplicationState):
 @configuration_option
 @quiet_option
 @pass_state
-def fetch(state: ApplicationState, name: str, directory: str):
-    """Fetch packages and dependencies based on upstream REQUIREMENTS.
+def patch(state: ApplicationState, name: str, directory: str):
+    """Create a patch folder from an upstream anaconda channel based on REQUIREMENTS.
 
     \b
     Requirements and all other specifications are constructed using the anaconda package query syntax:
@@ -102,7 +104,7 @@ def fetch(state: ApplicationState, name: str, directory: str):
 
     destination = os.path.join(directory, name)
 
-    do_fetch(
+    run_patch(
         channel_url=state.channel,
         destination_url=destination,
         requirements=state.requirements,
@@ -133,14 +135,14 @@ def fetch(state: ApplicationState, name: str, directory: str):
 @quiet_option
 @pass_state
 def sync(state: ApplicationState):
-    """Sync a TARGET and upstream channel based on REQUIREMENTS.
+    """Sync a local TARGET anaconda channel with an upstream channel based on REQUIREMENTS.
 
     \b
     Requirements and all other specifications are constructed using the anaconda package query syntax:
     https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications
     """  # noqa: E501
     assert state.target is not None
-    do_sync(
+    run_sync(
         channel_url=state.channel,
         target_url=state.target,
         requirements=state.requirements,
@@ -169,7 +171,7 @@ def sync(state: ApplicationState):
 )
 def merge(source, destination):
     """Merges SOURCE and DESTINATION local anaconda channel and updates index."""
-    do_merge(source, destination)
+    run_merge(source, destination)
 
 
 @click.command(
@@ -186,4 +188,4 @@ def merge(source, destination):
 @pass_state
 def index(state: ApplicationState, target: str):
     """Update the package index of a local TARGET channel."""
-    do_index(target_url=target, quiet=state.quiet)
+    run_index(target_url=target, quiet=state.quiet)

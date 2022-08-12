@@ -1,16 +1,18 @@
-from struct import pack
 from typing import Iterable
 
 from rich.console import Console
 
+from conda_local.adapters.channel import CondaChannel
+from conda_local.adapters.channel import LocalCondaChannel
 from conda_local.adapters.subdir import get_default_subdirs
-from conda_local.adapters.channel import CondaChannel, LocalCondaChannel
 from conda_local.output import print_output
-from conda_local.progress import iterate_progress, start_status, start_index_monkeypatch
+from conda_local.progress import iterate_progress
+from conda_local.progress import start_index_monkeypatch
+from conda_local.progress import start_status
 from conda_local.resolve import resolve_packages
 
 
-def do_fetch(
+def run_patch(
     channel_url: str,
     destination_url: str,
     requirements: Iterable[str],
@@ -31,7 +33,7 @@ def do_fetch(
     destination = LocalCondaChannel(destination_url)
     destination.setup()
 
-    with start_status(f"Searching {channel.name}", console=console):
+    with start_status(console, f"Searching {channel.name}"):
         results = resolve_packages(
             channel=channel,
             subdirs=subdirs,
@@ -44,17 +46,17 @@ def do_fetch(
         )
 
     if results.to_add:
-        message = "Downloading packages "
-        for package in iterate_progress(results.to_add, message, console=console):
+        message = "Downloading packages"
+        for package in iterate_progress(results.to_add, console, message, length=20):
             destination.add_package(package)
 
     message = "Updating instructions"
-    for subdir in iterate_progress(subdirs, message, console=console):
+    for subdir in iterate_progress(subdirs, console, message, length=20):
         instructions = channel.read_instructions(subdir)
         instructions.update(remove=list(pkg.fn for pkg in results.to_remove))
         destination.write_instructions(subdir, instructions)
 
-    with start_status("Creating patch generator", console=console):
+    with start_status(console, "Creating patch generator"):
         destination.write_patch_generator()
 
     console.print(f"Patch location: {destination_url}")
@@ -62,14 +64,14 @@ def do_fetch(
         print(destination_url)
 
 
-def do_index(target_url: str, quiet: bool = True) -> None:
+def run_index(target_url: str, quiet: bool = True) -> None:
     target = LocalCondaChannel(target_url)
     console = Console(quiet=quiet, color_system="windows")
-    with start_index_monkeypatch("Indexing subdirs", console=console):
+    with start_index_monkeypatch(console, "Indexing subdirs"):
         target.update_index()
 
 
-def do_query(
+def run_search(
     channel_url: str,
     requirements: Iterable[str],
     exclusions: Iterable[str],
@@ -87,7 +89,7 @@ def do_query(
     subdirs = subdirs if subdirs else get_default_subdirs()
     console = Console(quiet=quiet, color_system="windows")
 
-    with start_status(f"Searching {channel.name}", console=console):
+    with start_status(console, f"Searching {channel.name}"):
         results = resolve_packages(
             channel=channel,
             subdirs=subdirs,
@@ -102,7 +104,7 @@ def do_query(
     print_output(output, results)
 
 
-def do_sync(
+def run_sync(
     channel_url: str,
     target_url: str,
     requirements: Iterable[str],
@@ -120,7 +122,7 @@ def do_sync(
     console = Console(quiet=quiet, color_system="windows")
 
     target.setup()
-    with start_status(f"Searching {channel.name}", console=console):
+    with start_status(console, f"Searching {channel.name}"):
         results = resolve_packages(
             channel=channel,
             target=target,
@@ -133,28 +135,28 @@ def do_sync(
         )
 
     if results.to_add:
-        message = "Downloading packages "
-        for package in iterate_progress(results.to_add, message, console=console):
+        message = "Downloading packages"
+        for package in iterate_progress(results.to_add, console, message, length=21):
             target.add_package(package)
 
     if results.to_remove:
-        message = "Removing packages    "
-        for package in iterate_progress(results.to_remove, message, console=console):
+        message = "Removing packages"
+        for package in iterate_progress(results.to_remove, console, message, length=21):
             target.remove_package(package)
 
-    message = "Copying instructions "
-    for subdir in iterate_progress(subdirs, message, console=console):
+    message = "Copying instructions"
+    for subdir in iterate_progress(subdirs, console, message, length=21):
         instructions = channel.read_instructions(subdir)
         target.write_instructions(subdir, instructions)
 
-    with start_status("Creating patch generator", console=console):
+    with start_status(console, "Creating patch generator"):
         target.write_patch_generator()
 
-    # with start_status("Updating index", console=console):
-    target.update_index()
+    with start_index_monkeypatch(console, "Indexing channel subdirs"):
+        target.update_index()
 
 
-def do_merge(
+def run_merge(
     source_url: str,
     destination_url: str,
     quiet: bool = True,
@@ -163,7 +165,7 @@ def do_merge(
     destination = LocalCondaChannel(destination_url)
     console = Console(quiet=quiet, color_system="windows")
 
-    with start_status("Merging local channels", console=console):
+    with start_status(console, "Merging local channels"):
         destination.merge(source)
 
     destination.update_index()

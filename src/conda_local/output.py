@@ -5,8 +5,8 @@ from rich import box
 from rich.console import Console
 from rich.table import Table
 
-from conda_local.group import groupby
 from conda_local.adapters.package import CondaPackage
+from conda_local.group import groupby
 from conda_local.resolve import ResolvedPackages
 
 

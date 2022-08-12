@@ -1,20 +1,10 @@
 import contextlib
-import sys
-from typing import Iterable, Iterator, Optional, TypeVar
+from typing import Iterable, Iterator, TypeVar
 
-import tqdm
 import conda_build.index
+import tqdm
 from rich.console import Console
-from rich.progress import (
-    BarColumn,
-    MofNCompleteColumn,
-    Progress,
-    SpinnerColumn,
-    TaskProgressColumn,
-    TextColumn,
-    TimeElapsedColumn,
-    TimeRemainingColumn,
-)
+from rich.control import Control
 
 T = TypeVar("T")
 
@@ -32,48 +22,50 @@ MONKEYPATCH_BAR_FORMAT = (
 
 
 def iterate_progress(
-    items: Iterable[T], message: str, console: Optional[Console] = None
+    items: Iterable[T], console: Console, message: str, length: int = 0
 ) -> Iterator[T]:
+    message = message.strip() + ":"
+    if length:
+        message = f"{message:{length}}"
     yield from tqdm.tqdm(
         items,
         desc=message,
         ascii=True,
         bar_format=STANDARD_BAR_FORMAT,
         colour="cyan",
+        disable=console.quiet,
     )
 
 
 @contextlib.contextmanager
-def start_status(message: str, console: Console) -> Iterator[None]:
-    console.print(message + " ... ", end="", style="default")
+def start_status(
+    console: Console,
+    message: str,
+) -> Iterator[None]:
+    console.print(message.strip() + ": [cyan]...[/cyan]", end="")
     yield
+    console.control(Control.move(x=-3))
     console.print("[cyan]Done[/cyan]")
 
 
 @contextlib.contextmanager
-def start_index_monkeypatch(message: str, console: Console):
+def start_index_monkeypatch(console: Console, message: str):
     # NOTE: Yes, I hate this as much as you do.
-    old_tqdm = conda_build.index.tqdm
-    try:
-        console.print(message + " ... ", style="default")
-        conda_build.index.tqdm = CondaIndexMonkeyPatch(console.quiet)
-        yield
-        sys.stdout.write("\033[K")
-        console.print("[cyan]Done[/cyan]")
-    finally:
-        conda_build.index.tqdm = old_tqdm
 
-
-class CondaIndexMonkeyPatch:
-    def __init__(self, quiet=False):
-        self._quiet = quiet
-
-    def __call__(self, *args, **kwargs):
+    def patched_tqdm(*args, **kwargs):
         kwargs["ascii"] = True
         kwargs["bar_format"] = MONKEYPATCH_BAR_FORMAT
-        kwargs["disable"] = self._quiet
+        kwargs["disable"] = console.quiet
         kwargs["colour"] = "cyan"
+        return tqdm.tqdm(*args, **kwargs)
 
-        patched_tqdm = tqdm.tqdm(*args, **kwargs)
-        self._first = False
-        return patched_tqdm
+    message = message.strip()
+    old_tqdm = conda_build.index.tqdm
+    try:
+        conda_build.index.tqdm = patched_tqdm
+        console.print(message + ": [cyan]...[/cyan]")
+        yield
+        console.control(Control.move(y=-1))
+        console.print(message + ": [cyan]Done[/cyan]")
+    finally:
+        conda_build.index.tqdm = old_tqdm

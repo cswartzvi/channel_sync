@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from typing import List, Optional
 
 import click
 import yaml
-from pydantic import BaseSettings, Field
+from pydantic import BaseSettings
+from pydantic import Field
 
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"], "max_content_width": 130}
 

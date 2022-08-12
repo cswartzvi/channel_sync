@@ -1,6 +1,10 @@
 import click
 
-from conda_local.cli.commands import fetch, index, merge, query, sync
+from conda_local.cli.commands import patch
+from conda_local.cli.commands import index
+from conda_local.cli.commands import merge
+from conda_local.cli.commands import search
+from conda_local.cli.commands import sync
 
 
 @click.group()
@@ -9,8 +13,8 @@ def app():
     pass
 
 
-app.add_command(query)
-app.add_command(fetch)
+app.add_command(search)
+app.add_command(patch)
 app.add_command(sync)
 app.add_command(index)
 app.add_command(merge)
