@@ -1,0 +1,6124 @@
+{
+  "info": {
+    "subdir": "win-64"
+  },
+  "packages": {
+    "bzip2-1.0.8-h8ffe710_4.tar.bz2": {
+      "build": "h8ffe710_4",
+      "build_number": 4,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "bzip2-1.0.6",
+      "license_family": "BSD",
+      "md5": "7c03c66026944073040cb19a4f3ec3c9",
+      "name": "bzip2",
+      "sha256": "5389dad4e73e4865bb485f460fc60b120bae74404003d457ecb1a62eb7abf0c1",
+      "size": 152247,
+      "subdir": "win-64",
+      "timestamp": 1606605223049,
+      "version": "1.0.8"
+    },
+    "bzip2-1.0.8-he774522_2.tar.bz2": {
+      "build": "he774522_2",
+      "build_number": 2,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "bzip2",
+      "license_family": "BSD",
+      "md5": "363fe26125971b902afb65235ebdb21f",
+      "name": "bzip2",
+      "sha256": "dc3b3da50384cdd91aa9235688364f5f6f3f65930e72fccffb85c1bbf248fd86",
+      "size": 152068,
+      "subdir": "win-64",
+      "timestamp": 1597195818131,
+      "version": "1.0.8"
+    },
+    "bzip2-1.0.8-he774522_3.tar.bz2": {
+      "build": "he774522_3",
+      "build_number": 3,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "bzip2-1.0.6",
+      "license_family": "BSD",
+      "md5": "1b9e3dd1a5163553f00d4093f5def1da",
+      "name": "bzip2",
+      "sha256": "2009bfff4ba9357c37a01f9f84982b60fd58eb4f6c65359fdba14031cfca9250",
+      "size": 151635,
+      "subdir": "win-64",
+      "timestamp": 1598024592967,
+      "version": "1.0.8"
+    },
+    "bzip2-1.0.8-hfa6e2cd_1.tar.bz2": {
+      "build": "hfa6e2cd_1",
+      "build_number": 1,
+      "depends": [
+        "vc >=14,<15.0a0"
+      ],
+      "license": "bzip2",
+      "license_family": "BSD",
+      "md5": "ea2b74dfd298f438e07afbd0fe19492b",
+      "name": "bzip2",
+      "sha256": "8b7688a6778172756a416c25fd74c474a0e8f93f4c8319c32a023e5214835124",
+      "size": 151763,
+      "subdir": "win-64",
+      "timestamp": 1568072355085,
+      "version": "1.0.8"
+    },
+    "bzip2-1.0.8-hfa6e2cd_2.tar.bz2": {
+      "build": "hfa6e2cd_2",
+      "build_number": 2,
+      "depends": [
+        "vc >=14,<15.0a0"
+      ],
+      "license": "bzip2",
+      "license_family": "BSD",
+      "md5": "d461647fb32e3690b5f6be186e2a7045",
+      "name": "bzip2",
+      "sha256": "a2c6cfdd79d5bcfa4d8c6778811e3553a00e5d57849f137f1289b9fc4d673933",
+      "size": 151083,
+      "subdir": "win-64",
+      "timestamp": 1575750999740,
+      "version": "1.0.8"
+    },
+    "ca-certificates-2016.2.28-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "8f64ec2b8c0e339c4aff2dcea6ad379a",
+      "name": "ca-certificates",
+      "sha256": "d280cd03621d8208f8eade6405153bb9b2284cc414a4a2c8769ed7b82f7ec67a",
+      "size": 202442,
+      "subdir": "win-64",
+      "version": "2016.2.28"
+    },
+    "ca-certificates-2016.8.2-3.tar.bz2": {
+      "build": "3",
+      "build_number": 3,
+      "depends": [],
+      "license": "ISC",
+      "md5": "c2c08e55e4f34d69d8b96c6146596c2a",
+      "name": "ca-certificates",
+      "sha256": "865fb9a1a0526e9fb233231628ca4e4282d89b61e6256f3d83015f9e495dee59",
+      "size": 211395,
+      "subdir": "win-64",
+      "version": "2016.8.2"
+    },
+    "ca-certificates-2016.8.31-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "416c607aeb510f3d10baa18d50aa1b3a",
+      "name": "ca-certificates",
+      "sha256": "dcb1f4962b30a43d388f9aa46df9b95a67458a9f51b5d246d4c691cbe394ad4f",
+      "size": 210138,
+      "subdir": "win-64",
+      "version": "2016.8.31"
+    },
+    "ca-certificates-2016.8.8-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "49e2d84501a0fd24dc139c8dc16de766",
+      "name": "ca-certificates",
+      "sha256": "5d2ee12a584c7c7cbf1f1fcc55ae5bb7332e958da7e61f3529938e6c95d4e99f",
+      "size": 213263,
+      "subdir": "win-64",
+      "version": "2016.8.8"
+    },
+    "ca-certificates-2016.9.26-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "0153c99e9c3300d76a30da4054e8944b",
+      "name": "ca-certificates",
+      "sha256": "2878e49c7acf71bf75c329c410301817d50c18b00dec70790cec4e843b898b06",
+      "size": 208985,
+      "subdir": "win-64",
+      "version": "2016.9.26"
+    },
+    "ca-certificates-2017.1.23-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "6b4a9ebc17cc481dee8e31511bae2b37",
+      "name": "ca-certificates",
+      "sha256": "d9cdb126435e2b76c9dbeee48f4a6abb7bbd8bfc65a2cf5bf1488de2e7774ef4",
+      "size": 214733,
+      "subdir": "win-64",
+      "version": "2017.1.23"
+    },
+    "ca-certificates-2017.1.23-1.tar.bz2": {
+      "build": "1",
+      "build_number": 1,
+      "depends": [],
+      "license": "ISC",
+      "md5": "ab4d2cdd66e56606c9d17ea3ac119c45",
+      "name": "ca-certificates",
+      "sha256": "6fd5d37e989d2b61fab89139f6ed189ffc87062981fa79a43c0dfe247fd70bcb",
+      "size": 215407,
+      "subdir": "win-64",
+      "version": "2017.1.23"
+    },
+    "ca-certificates-2017.11.5-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "880011c1a31e6064b5dbe1f362b308d7",
+      "name": "ca-certificates",
+      "sha256": "4b54e12a28c6e5f9e5d0b665dd66497097d4a8ca3c4db769c314da08424bd682",
+      "size": 186529,
+      "subdir": "win-64",
+      "version": "2017.11.5"
+    },
+    "ca-certificates-2017.4.17-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "92a0fedfe6537038f22238c698063ffb",
+      "name": "ca-certificates",
+      "sha256": "72eb5e0eab2ffeedb7d0ca143f3b18e66f74d012f182ae4fcea659e61bf26b2e",
+      "size": 211212,
+      "subdir": "win-64",
+      "version": "2017.4.17"
+    },
+    "ca-certificates-2017.7.27.1-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "94762f40f9b70670f402f624ab2e5337",
+      "name": "ca-certificates",
+      "sha256": "5c99b64c9f6bb2dc326b2330d8c9289a5dffa8d84e2e01470e5498f9d528e6f6",
+      "size": 196799,
+      "subdir": "win-64",
+      "version": "2017.7.27.1"
+    },
+    "ca-certificates-2018.1.18-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "6303176208bd9508a5cc4655a45a0dbd",
+      "name": "ca-certificates",
+      "sha256": "457df7601fa5a95c4a2c69f37a9cd55b7dc6432c6e508860976ae24ee41612ed",
+      "size": 181983,
+      "subdir": "win-64",
+      "version": "2018.1.18"
+    },
+    "ca-certificates-2018.10.15-ha4d7672_0.tar.bz2": {
+      "build": "ha4d7672_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "5c6a5a186da54e8f129b6ca6de3fc6ca",
+      "name": "ca-certificates",
+      "sha256": "7446496fcb8141dfe28979d08bfc85a82d59817a7d3ec9466b7be6a2b795a90b",
+      "size": 173647,
+      "subdir": "win-64",
+      "timestamp": 1539740606280,
+      "version": "2018.10.15"
+    },
+    "ca-certificates-2018.11.29-ha4d7672_0.tar.bz2": {
+      "build": "ha4d7672_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "5dde0cd096df9b3349e3cb1c16cc74df",
+      "name": "ca-certificates",
+      "sha256": "1392bca957a3308637595a5bfebd71ce6115371d6200ef7beecf58700dfa1b01",
+      "size": 183509,
+      "subdir": "win-64",
+      "timestamp": 1543533566113,
+      "version": "2018.11.29"
+    },
+    "ca-certificates-2018.4.16-0.tar.bz2": {
+      "build": "0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "fb607fc8f6398a1a9fb6249c36c3ffdc",
+      "name": "ca-certificates",
+      "sha256": "194e55a2fc229cc3c027e7593ed62bd5e118b361761589dfa67eddebe34818ba",
+      "size": 179984,
+      "subdir": "win-64",
+      "version": "2018.4.16"
+    },
+    "ca-certificates-2018.8.13-ha4d7672_0.tar.bz2": {
+      "build": "ha4d7672_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "e86e2798159bcf4d1320c18656533c01",
+      "name": "ca-certificates",
+      "sha256": "40417548b1fe60c1acb5bc97806416073e47d73245d895eb972446282ad8ba0e",
+      "size": 173993,
+      "subdir": "win-64",
+      "timestamp": 1534505883006,
+      "version": "2018.8.13"
+    },
+    "ca-certificates-2018.8.24-ha4d7672_0.tar.bz2": {
+      "build": "ha4d7672_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "937855b6e0c12e8196c36eff719d3d3f",
+      "name": "ca-certificates",
+      "sha256": "ce64e95f0bfff21f7b319ae2058d196e0db0d6e5011a9c0b9fcb3a078f0a58cd",
+      "size": 174541,
+      "subdir": "win-64",
+      "timestamp": 1535111793378,
+      "version": "2018.8.24"
+    },
+    "ca-certificates-2019.11.28-hecc5488_0.tar.bz2": {
+      "build": "hecc5488_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "8c58c4b7bae4f2300083a1e4a8341cd3",
+      "name": "ca-certificates",
+      "sha256": "f9ba102063f9b12a00b2fe853ec932198e74914f28c7051fd551bc09a1f8558c",
+      "size": 186841,
+      "subdir": "win-64",
+      "timestamp": 1574957711542,
+      "version": "2019.11.28"
+    },
+    "ca-certificates-2019.3.9-hecc5488_0.tar.bz2": {
+      "build": "hecc5488_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "40296a665a7ca6cd437c69b9e39a9010",
+      "name": "ca-certificates",
+      "sha256": "fc99ddd488c8fbd4cb01f21e497735df34b1943f3de0f421e014d1c2072f11b4",
+      "size": 188874,
+      "subdir": "win-64",
+      "timestamp": 1552136370427,
+      "version": "2019.3.9"
+    },
+    "ca-certificates-2019.6.16-hecc5488_0.tar.bz2": {
+      "build": "hecc5488_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "be241855c835cebfbef95d131d7ceb5e",
+      "name": "ca-certificates",
+      "sha256": "a104d21275f4c7ec426e2254333664ee53f634964f150c7f0969203b85134f8e",
+      "size": 187165,
+      "subdir": "win-64",
+      "timestamp": 1560698430556,
+      "version": "2019.6.16"
+    },
+    "ca-certificates-2019.9.11-hecc5488_0.tar.bz2": {
+      "build": "hecc5488_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "cb864272e370e6ae6cabb46778b52b7a",
+      "name": "ca-certificates",
+      "sha256": "ed6cda43aee02065de0166c9e40556232ac8cc71a5aa6bb91136fcf8e7510ddc",
+      "size": 184862,
+      "subdir": "win-64",
+      "timestamp": 1568230772000,
+      "version": "2019.9.11"
+    },
+    "ca-certificates-2020.11.8-h5b45459_0.tar.bz2": {
+      "build": "h5b45459_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "21fea8c142c35d2967cb0300e5056980",
+      "name": "ca-certificates",
+      "sha256": "45cc1473cf53c5daa6ed8f0f9f03e94e28c1d7bcb24f78da6c73b492c97b8387",
+      "size": 186960,
+      "subdir": "win-64",
+      "timestamp": 1605091168300,
+      "version": "2020.11.8"
+    },
+    "ca-certificates-2020.12.5-h5b45459_0.tar.bz2": {
+      "build": "h5b45459_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "f36a2988a9f57cffdc43929ba67a3a2a",
+      "name": "ca-certificates",
+      "sha256": "5fbbcc29551c512aef88a562573d05303520fe5c8cbbf2d08b5e22db88d1e4bb",
+      "size": 177663,
+      "subdir": "win-64",
+      "timestamp": 1607208487589,
+      "version": "2020.12.5"
+    },
+    "ca-certificates-2020.4.5.1-hecc5488_0.tar.bz2": {
+      "build": "hecc5488_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "7afb177406ca1009b6f0d7cf958ed2c1",
+      "name": "ca-certificates",
+      "sha256": "f5d7f2c78f31dae5077a5dc5f675e475e2bb56b45aca0f2111731bb39aba457b",
+      "size": 188208,
+      "subdir": "win-64",
+      "timestamp": 1586119692997,
+      "version": "2020.4.5.1"
+    },
+    "ca-certificates-2020.4.5.2-hecda079_0.tar.bz2": {
+      "build": "hecda079_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "1a45d3d8f7666ce2dbab5216f786a85c",
+      "name": "ca-certificates",
+      "sha256": "9b073ea00df3f311d7d360fc42e2b39989f2c4826b410d62ffe5657db4ea0471",
+      "size": 188841,
+      "subdir": "win-64",
+      "timestamp": 1591548515890,
+      "version": "2020.4.5.2"
+    },
+    "ca-certificates-2020.6.20-hecda079_0.tar.bz2": {
+      "build": "hecda079_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "942ac2555f1e5d2c43391234a745449e",
+      "name": "ca-certificates",
+      "sha256": "6580e10753170bd3c827b1e365a2866a16c9702c199db7064feb26cef8c2ebff",
+      "size": 187998,
+      "subdir": "win-64",
+      "timestamp": 1592685065396,
+      "version": "2020.6.20"
+    },
+    "ca-certificates-2021.10.8-h5b45459_0.tar.bz2": {
+      "build": "h5b45459_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "2ddd48c9b52f7f65361b9645b2c5d370",
+      "name": "ca-certificates",
+      "sha256": "5885d65c1861fe0575982fd431f9e7dd4ab54f574844e7ac1072c5da8a42a1fc",
+      "size": 179782,
+      "subdir": "win-64",
+      "timestamp": 1633733356356,
+      "version": "2021.10.8"
+    },
+    "ca-certificates-2021.5.30-h5b45459_0.tar.bz2": {
+      "build": "h5b45459_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "cfb6380d41af681ad323403f02755a15",
+      "name": "ca-certificates",
+      "sha256": "779b0be4eff93e87dd35453d4fe2929292580e77e1b56af3ddbfa634664f873f",
+      "size": 175421,
+      "subdir": "win-64",
+      "timestamp": 1622399468868,
+      "version": "2021.5.30"
+    },
+    "ca-certificates-2022.5.18-h5b45459_0.tar.bz2": {
+      "build": "h5b45459_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "8d4adca89a5e6581f767c6250addc0a0",
+      "name": "ca-certificates",
+      "sha256": "daef39a83d11a1954d0c25d17936ce7afed7260f1e2cab87c731adaad8f54490",
+      "size": 186057,
+      "subdir": "win-64",
+      "timestamp": 1652909376039,
+      "version": "2022.5.18"
+    },
+    "ca-certificates-2022.5.18.1-h5b45459_0.tar.bz2": {
+      "build": "h5b45459_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "8fd522807e4af321181e74ae05f27ec8",
+      "name": "ca-certificates",
+      "sha256": "3f7b4d1e7c35c0693d628a4c8405f615aea0f8f89befaa064adf9989333d325a",
+      "size": 184754,
+      "subdir": "win-64",
+      "timestamp": 1653003655477,
+      "version": "2022.5.18.1"
+    },
+    "ca-certificates-2022.6.15-h5b45459_0.tar.bz2": {
+      "build": "h5b45459_0",
+      "build_number": 0,
+      "depends": [],
+      "license": "ISC",
+      "md5": "b84069692c33afe59f31c7117c80696e",
+      "name": "ca-certificates",
+      "sha256": "81929f2b1bdbb52a0a57f46f7b0aaf8db8cdfc6cbf53a04e5a71e31ce0d64886",
+      "size": 192020,
+      "subdir": "win-64",
+      "timestamp": 1655341115517,
+      "version": "2022.6.15"
+    },
+    "certifi-2019.11.28-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0"
+      ],
+      "license": "ISC",
+      "md5": "e842e92f6ead73147f8cfbcbe37c08dd",
+      "name": "certifi",
+      "sha256": "7ea9565f6d8cd911ea6a84e4d463e23fda8210591e61085a7667de1e3c5020ae",
+      "size": 152330,
+      "subdir": "win-64",
+      "timestamp": 1574941781276,
+      "version": "2019.11.28"
+    },
+    "certifi-2019.11.28-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "77dfbc160eaf7bebf83f9569dbb321b5",
+      "name": "certifi",
+      "sha256": "097096c8bf69770f9cdb3a82dc429464d963d26d42cf4197f33ea6b66a4d267f",
+      "size": 151976,
+      "subdir": "win-64",
+      "timestamp": 1583804450783,
+      "version": "2019.11.28"
+    },
+    "certifi-2019.11.28-py38h32f6830_1.tar.bz2": {
+      "build": "py38h32f6830_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "d0e0a296b0793b218dbbf29b03a2804d",
+      "name": "certifi",
+      "sha256": "614ba086a72597b6a429c6ab1f14f6bda16a40f54496d45ded2c26be595e62d9",
+      "size": 152311,
+      "subdir": "win-64",
+      "timestamp": 1583921870664,
+      "version": "2019.11.28"
+    },
+    "certifi-2019.9.11-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0"
+      ],
+      "license": "ISC",
+      "md5": "8bf175d3c6f29ba9d92c1d4e3aadc4b1",
+      "name": "certifi",
+      "sha256": "95ce8cddbec0d1b6f0a631acc1ba1f20f7ac14b841d594740e0b7b82ca4d4cff",
+      "size": 150619,
+      "subdir": "win-64",
+      "timestamp": 1572631234159,
+      "version": "2019.9.11"
+    },
+    "certifi-2020.11.8-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "1e3a88f8db13d19c4d23422e2f8f0e6c",
+      "name": "certifi",
+      "sha256": "7e3d71a516c894f0d66de6b491ea00388b86500759162d2b26911b2fb373b213",
+      "size": 154067,
+      "subdir": "win-64",
+      "timestamp": 1605125395139,
+      "version": "2020.11.8"
+    },
+    "certifi-2020.12.5-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "db40497e160e52cd67f94e491a75b63c",
+      "name": "certifi",
+      "sha256": "7eee17bc253fd1739393ae1b806ece74e5e37f00cc29563b162e8c7928749666",
+      "size": 146957,
+      "subdir": "win-64",
+      "timestamp": 1607208645060,
+      "version": "2020.12.5"
+    },
+    "certifi-2020.12.5-py38haa244fe_1.tar.bz2": {
+      "build": "py38haa244fe_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "0ff61c01f4afa91e32fa891796268c46",
+      "name": "certifi",
+      "sha256": "dfcca3d627273c9f7928144411156741f33444a9a072b5da43639d7b7bd83b14",
+      "size": 147034,
+      "subdir": "win-64",
+      "timestamp": 1609975873162,
+      "version": "2020.12.5"
+    },
+    "certifi-2020.4.5.1-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "152268c69cf3cd67053460212979ab2e",
+      "name": "certifi",
+      "sha256": "8fdf863d5fcb7f94f7121c03c336c26501ce5a615b666959661a73a83d1942c5",
+      "size": 154472,
+      "subdir": "win-64",
+      "timestamp": 1586119951130,
+      "version": "2020.4.5.1"
+    },
+    "certifi-2020.4.5.2-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "1963ba7427424b39534b335659fdbed3",
+      "name": "certifi",
+      "sha256": "5775825a7849bcecb48b3e700ffb54a049a00d54fcc6038e7c36363f749b9966",
+      "size": 156116,
+      "subdir": "win-64",
+      "timestamp": 1591557810684,
+      "version": "2020.4.5.2"
+    },
+    "certifi-2020.6.20-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "41a255ff16ca606fddde98656a8fc978",
+      "name": "certifi",
+      "sha256": "13f421d8cd6fa6fcde1fe63271d02839138cbb768b2ed38296f85f6b748b4581",
+      "size": 154959,
+      "subdir": "win-64",
+      "timestamp": 1592689342467,
+      "version": "2020.6.20"
+    },
+    "certifi-2020.6.20-py38h9bdc248_1.tar.bz2": {
+      "build": "py38h9bdc248_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "aa6117cc43d5339c2869f654b1285542",
+      "name": "certifi",
+      "sha256": "8c46008b8a2cc30111d851df588479facd43102d04402ff70d166356dcc39ef4",
+      "size": 155107,
+      "subdir": "win-64",
+      "timestamp": 1602188073617,
+      "version": "2020.6.20"
+    },
+    "certifi-2020.6.20-py38h9bdc248_2.tar.bz2": {
+      "build": "py38h9bdc248_2",
+      "build_number": 2,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "7fc6df998fe466440c010163812f340c",
+      "name": "certifi",
+      "sha256": "72b3d22679e7c594346bb03e3f454f6cbbf12a8d8de6cb3079d1a8b7e0704fac",
+      "size": 155295,
+      "subdir": "win-64",
+      "timestamp": 1602222116913,
+      "version": "2020.6.20"
+    },
+    "certifi-2021.10.8-py38h32ec214_2.tar.bz2": {
+      "build": "py38h32ec214_2",
+      "build_number": 2,
+      "depends": [
+        "pypy3.8 >=7.3.8",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "ISC",
+      "md5": "f4152e2d257e1e4c0c82db79377e490e",
+      "name": "certifi",
+      "sha256": "57cbc56aade7b553eddc464377c7678aa63cde54381ce35da7a180a4a443df44",
+      "size": 148930,
+      "subdir": "win-64",
+      "timestamp": 1648695866226,
+      "version": "2021.10.8"
+    },
+    "certifi-2021.10.8-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "05a359e365bda98ae3f581527e8c1807",
+      "name": "certifi",
+      "sha256": "010a104168ad883d1a9eabdc75b8183fe9f709bccbe6acf818c81870860ea0d6",
+      "size": 148283,
+      "subdir": "win-64",
+      "timestamp": 1633741998363,
+      "version": "2021.10.8"
+    },
+    "certifi-2021.10.8-py38haa244fe_1.tar.bz2": {
+      "build": "py38haa244fe_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "0e59c8bd41496c8fae9e4a523257b355",
+      "name": "certifi",
+      "sha256": "95935b05c87dfbb7411364efeddc4b056fc13911cb473d9db31fe0acef74fb8f",
+      "size": 148597,
+      "subdir": "win-64",
+      "timestamp": 1635794157341,
+      "version": "2021.10.8"
+    },
+    "certifi-2021.10.8-py38haa244fe_2.tar.bz2": {
+      "build": "py38haa244fe_2",
+      "build_number": 2,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "632c416a7b1cda7712254bc58dd3de10",
+      "name": "certifi",
+      "sha256": "3a1e51242bf1278d61e9099021ca8515345f87cb09c26c1fb973ce2ffebcdd9d",
+      "size": 149238,
+      "subdir": "win-64",
+      "timestamp": 1648696087070,
+      "version": "2021.10.8"
+    },
+    "certifi-2021.5.30-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "c67310f818089d4919abe5f0d73dd4e4",
+      "name": "certifi",
+      "sha256": "a4f0249b3ea0e227fd3b51313576c0c57e16f8b1398543322b1331277f4ba5a0",
+      "size": 145323,
+      "subdir": "win-64",
+      "timestamp": 1622399555133,
+      "version": "2021.5.30"
+    },
+    "certifi-2022.5.18-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "ISC",
+      "md5": "381867385ce28c41816e6820c67ae9e6",
+      "name": "certifi",
+      "sha256": "fc179952844fc0e65b9dd2aea0ccba4e253d6a514e395cb0fa11984ff8a888f9",
+      "size": 154712,
+      "subdir": "win-64",
+      "timestamp": 1652909085544,
+      "version": "2022.5.18"
+    },
+    "certifi-2022.5.18-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "c9d0f9d7fb6d82be2c5f5447a448c27f",
+      "name": "certifi",
+      "sha256": "311bb042415d7cd2bf46e15fa564b93565b5d40c353a7078c29383322f0b2b73",
+      "size": 154523,
+      "subdir": "win-64",
+      "timestamp": 1652909179404,
+      "version": "2022.5.18"
+    },
+    "certifi-2022.5.18.1-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "ISC",
+      "md5": "3815c3d90eabf0984108434900a66c87",
+      "name": "certifi",
+      "sha256": "c98f2bb4276b025616e73fb2f1656d45cf39bb4ed220544b3425ced62cafdb0a",
+      "size": 154378,
+      "subdir": "win-64",
+      "timestamp": 1653012330082,
+      "version": "2022.5.18.1"
+    },
+    "certifi-2022.5.18.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "1361583065fbab1bd665946811b867f0",
+      "name": "certifi",
+      "sha256": "ea4bfa8e4366556560ca775dcc1ad59fecb8b1443423aa395a95f6365ae9ed8a",
+      "size": 154251,
+      "subdir": "win-64",
+      "timestamp": 1653012336323,
+      "version": "2022.5.18.1"
+    },
+    "certifi-2022.6.15-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "ISC",
+      "md5": "69a58db162ba4581c7adb9442ce36cfc",
+      "name": "certifi",
+      "sha256": "39e2be64d1cd882af41eb1e155dcec772a9a086835f1c708502e0d98a0505414",
+      "size": 159190,
+      "subdir": "win-64",
+      "timestamp": 1655324138666,
+      "version": "2022.6.15"
+    },
+    "certifi-2022.6.15-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "ISC",
+      "md5": "88eb5b7ef2bb7238573273a6ff04e461",
+      "name": "certifi",
+      "sha256": "ea2a158ca8247cb59a5e2e6d473ee1b63a3f0733aea8ea912a280ff67c66fe33",
+      "size": 158950,
+      "subdir": "win-64",
+      "timestamp": 1655324139402,
+      "version": "2022.6.15"
+    },
+    "expat-2.4.1-h39d44d4_0.tar.bz2": {
+      "build": "h39d44d4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7a8d10b5cc80e0ae1f0a44d2915b570b",
+      "name": "expat",
+      "sha256": "7b3b7c6431f1c5792a2272127b142ab2aface2d0e77b41c63dbe808850a9cc16",
+      "size": 285995,
+      "subdir": "win-64",
+      "timestamp": 1621886629583,
+      "version": "2.4.1"
+    },
+    "expat-2.4.2-h39d44d4_0.tar.bz2": {
+      "build": "h39d44d4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7e111e11106d40bba06f5c181949bd66",
+      "name": "expat",
+      "sha256": "873766e709255e64561a98e4d8a9d48cd17a170ea352f27af6dfc3e89ec413eb",
+      "size": 353033,
+      "subdir": "win-64",
+      "timestamp": 1640027260931,
+      "version": "2.4.2"
+    },
+    "expat-2.4.3-h39d44d4_0.tar.bz2": {
+      "build": "h39d44d4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ac40a064e8d505810a15fb7c85486ae6",
+      "name": "expat",
+      "sha256": "b58c3eafbfe2dd80053b257c626bcf4d004cbaee81b592a06f16d5d0234cc3c4",
+      "size": 397526,
+      "subdir": "win-64",
+      "timestamp": 1642533572572,
+      "version": "2.4.3"
+    },
+    "expat-2.4.4-h39d44d4_0.tar.bz2": {
+      "build": "h39d44d4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "e0704ca0874ecca4fbbdd00e2f911622",
+      "name": "expat",
+      "sha256": "ff271a0bb4ce0b30297bcc5eda047297492ac33e5f5b7834a307d7bd53740d60",
+      "size": 394370,
+      "subdir": "win-64",
+      "timestamp": 1643648108990,
+      "version": "2.4.4"
+    },
+    "expat-2.4.5-h39d44d4_0.tar.bz2": {
+      "build": "h39d44d4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "b97cdae6a5e7ecb9f087cd86484b98a1",
+      "name": "expat",
+      "sha256": "4acc1ff17e38c8ca70607278282009f7f5b69ac533d1cd9f5004035d0be4cf30",
+      "size": 379061,
+      "subdir": "win-64",
+      "timestamp": 1645531437028,
+      "version": "2.4.5"
+    },
+    "expat-2.4.6-h39d44d4_0.tar.bz2": {
+      "build": "h39d44d4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a5de65190efbc8102e26805ad047ab0c",
+      "name": "expat",
+      "sha256": "601bd5628f57c2c793833e2fe67bf9d9d5b94b2f3227026bcf6386932ad1e405",
+      "size": 354229,
+      "subdir": "win-64",
+      "timestamp": 1645554601010,
+      "version": "2.4.6"
+    },
+    "expat-2.4.7-h39d44d4_0.tar.bz2": {
+      "build": "h39d44d4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "620534b346ea37ea7f49d286fcfecc4a",
+      "name": "expat",
+      "sha256": "fed2a4fcaec651781c75f19eba45bd21e7790d75c5751b97a03f913011904197",
+      "size": 355321,
+      "subdir": "win-64",
+      "timestamp": 1646775628140,
+      "version": "2.4.7"
+    },
+    "expat-2.4.8-h39d44d4_0.tar.bz2": {
+      "build": "h39d44d4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f8e0f53713756c08456f50c9ce25748c",
+      "name": "expat",
+      "sha256": "e6988b413b2db6d5ad7f4e797948670a2bfd777e29c664bf6ec4fbf60dfc6254",
+      "size": 386971,
+      "subdir": "win-64",
+      "timestamp": 1648619033173,
+      "version": "2.4.8"
+    },
+    "libffi-3.4.2-h0e60522_0.tar.bz2": {
+      "build": "h0e60522_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "d05e8f0005a674dc4a9cf7da70ca358b",
+      "name": "libffi",
+      "sha256": "41761204b405af220b8ed34bab163d41ad3b7816907385417eefc1deae94a73b",
+      "size": 38896,
+      "subdir": "win-64",
+      "timestamp": 1630601104962,
+      "version": "3.4.2"
+    },
+    "libffi-3.4.2-h0e60522_1.tar.bz2": {
+      "build": "h0e60522_1",
+      "build_number": 1,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "608072a2504900743fd3292f1ee4f921",
+      "name": "libffi",
+      "sha256": "99e4bbea3f50845ca2e9ed7edd4bfe3ca93fdbed282ad5391286756652c1c2de",
+      "size": 41746,
+      "subdir": "win-64",
+      "timestamp": 1630944253419,
+      "version": "3.4.2"
+    },
+    "libffi-3.4.2-h0e60522_2.tar.bz2": {
+      "build": "h0e60522_2",
+      "build_number": 2,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "4b14e1b8976ae90085cecdccf16fe6c0",
+      "name": "libffi",
+      "sha256": "fe2d2c4dc14d600b3ef81e604af42014e38e0770e449a0307b33599b524ea74c",
+      "size": 41725,
+      "subdir": "win-64",
+      "timestamp": 1632175080227,
+      "version": "3.4.2"
+    },
+    "libffi-3.4.2-h0e60522_3.tar.bz2": {
+      "build": "h0e60522_3",
+      "build_number": 3,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "e81287f70abe1e4cc6d3f6427f8f53a4",
+      "name": "libffi",
+      "sha256": "64a383cc6c9eeebe19a666e3082cf9fdb8220ab875a4be6e2140ad4a00aaaa37",
+      "size": 41736,
+      "subdir": "win-64",
+      "timestamp": 1632348793437,
+      "version": "3.4.2"
+    },
+    "libffi-3.4.2-h0e60522_4.tar.bz2": {
+      "build": "h0e60522_4",
+      "build_number": 4,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c385892ac5e4fdae3dc2d340f490c886",
+      "name": "libffi",
+      "sha256": "f1faeee00438e7957bf3ba2de46fb30eae4f00f05f896d92817a3482c128094b",
+      "size": 41801,
+      "subdir": "win-64",
+      "timestamp": 1632489607040,
+      "version": "3.4.2"
+    },
+    "libffi-3.4.2-h8ffe710_5.tar.bz2": {
+      "build": "h8ffe710_5",
+      "build_number": 5,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "2c96d1b6915b408893f9472569dee135",
+      "name": "libffi",
+      "sha256": "1951ab740f80660e9bc07d2ed3aefb874d78c107264fd810f24a1a6211d4b1a5",
+      "size": 42063,
+      "subdir": "win-64",
+      "timestamp": 1636489106777,
+      "version": "3.4.2"
+    },
+    "libsqlite-3.39.2-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "63c1f08b51aa383076140abdb10373e7",
+      "name": "libsqlite",
+      "sha256": "77c1dfa5cb2e7f5312989b06ba372a60cdb7e0f6d8ebac5883f6d9e99433f1a0",
+      "size": 651799,
+      "subdir": "win-64",
+      "timestamp": 1660346796414,
+      "version": "3.39.2"
+    },
+    "libzlib-1.2.11-h8ffe710_1012.tar.bz2": {
+      "build": "h8ffe710_1012",
+      "build_number": 1012,
+      "constrains": [
+        "zlib 1.2.11 *_1012"
+      ],
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "d70a000165c51b1dfc54b26307b0a5fd",
+      "name": "libzlib",
+      "sha256": "b1cc42939fa9de9dc4f99a05c15147a811695a464891c49b2e31d57a588eeb33",
+      "size": 64851,
+      "subdir": "win-64",
+      "timestamp": 1633105383089,
+      "version": "1.2.11"
+    },
+    "libzlib-1.2.11-h8ffe710_1013.tar.bz2": {
+      "build": "h8ffe710_1013",
+      "build_number": 1013,
+      "constrains": [
+        "zlib 1.2.11 *_1013"
+      ],
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "b28dd2488b4e5f892c67071acc1d0a8c",
+      "name": "libzlib",
+      "sha256": "5b7e002932c0138d78d251caae0c571d13f857ff90e7ce21d58d67073381250e",
+      "size": 64836,
+      "subdir": "win-64",
+      "timestamp": 1633227226922,
+      "version": "1.2.11"
+    },
+    "libzlib-1.2.11-h8ffe710_1014.tar.bz2": {
+      "build": "h8ffe710_1014",
+      "build_number": 1014,
+      "constrains": [
+        "zlib 1.2.11 *_1014"
+      ],
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "5e57ffcf6d651d94d329a3e9ce1f8f21",
+      "name": "libzlib",
+      "sha256": "5859eb888e306ab8d974b9214b1739e0b5f12c0ccc6085c8c3ad2dcdc5681687",
+      "size": 65329,
+      "subdir": "win-64",
+      "timestamp": 1648307819627,
+      "version": "1.2.11"
+    },
+    "libzlib-1.2.12-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "constrains": [
+        "zlib 1.2.12 *_0"
+      ],
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "c3d49ce531c0b5bfe1a8c464ac3c709a",
+      "name": "libzlib",
+      "sha256": "70646f37e9968b564792c5fd4fb397af95836fc1f0f7ced5ac04d7d5d2348320",
+      "size": 68719,
+      "subdir": "win-64",
+      "timestamp": 1653673961229,
+      "version": "1.2.12"
+    },
+    "libzlib-1.2.12-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "constrains": [
+        "zlib 1.2.12 *_1"
+      ],
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "8b67614ab0539e803c03db2ed7990c6c",
+      "name": "libzlib",
+      "sha256": "8a4ea23985370300fc4987a7c2768a3885d2095d1d67b650f021b9794dcf4a0b",
+      "size": 69543,
+      "subdir": "win-64",
+      "timestamp": 1655244185943,
+      "version": "1.2.12"
+    },
+    "libzlib-1.2.12-h8ffe710_2.tar.bz2": {
+      "build": "h8ffe710_2",
+      "build_number": 2,
+      "constrains": [
+        "zlib 1.2.12 *_2"
+      ],
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "74585107cf2f18b31aa84375fcb24215",
+      "name": "libzlib",
+      "sha256": "e88ff9ab754e58a76162532e9d671637870a1dec9387fdda63a7841fc6a3b4c0",
+      "size": 69611,
+      "subdir": "win-64",
+      "timestamp": 1657717421424,
+      "version": "1.2.12"
+    },
+    "openssl-1.1.1l-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "OpenSSL",
+      "license_family": "Apache",
+      "md5": "07747b2557a7f795585b118bb4f186de",
+      "name": "openssl",
+      "sha256": "b67630f99c343c450aa36850452541cf78a88dce50cb618017898cf9a10b9240",
+      "size": 6006067,
+      "subdir": "win-64",
+      "timestamp": 1630665449706,
+      "version": "1.1.1l"
+    },
+    "openssl-1.1.1n-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "OpenSSL",
+      "license_family": "Apache",
+      "md5": "f2d2768c9d3f84fc3e99f96b66a49ba4",
+      "name": "openssl",
+      "sha256": "52dafcd6bdfa734d6e359cb4e81a06b7bb91122aea987df912a74c8d5d1630c1",
+      "size": 5995673,
+      "subdir": "win-64",
+      "timestamp": 1648112851428,
+      "version": "1.1.1n"
+    },
+    "openssl-1.1.1o-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "OpenSSL",
+      "license_family": "Apache",
+      "md5": "afd7ea72111c4cc1fe8101ae2a321bda",
+      "name": "openssl",
+      "sha256": "13ffdbd7abeae7917a7e6afd4019a65d29c723e33e362508e4ca476fe8ef2218",
+      "size": 6013637,
+      "subdir": "win-64",
+      "timestamp": 1651668581918,
+      "version": "1.1.1o"
+    },
+    "openssl-1.1.1p-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "OpenSSL",
+      "license_family": "Apache",
+      "md5": "2c34e13bb68c9ece446b5f96eb55d543",
+      "name": "openssl",
+      "sha256": "ea55496cc6b3de371254148db9dc31a041884c9881191ae35e0c3ee3bcee75b3",
+      "size": 6033233,
+      "subdir": "win-64",
+      "timestamp": 1655897643156,
+      "version": "1.1.1p"
+    },
+    "openssl-1.1.1q-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "OpenSSL",
+      "license_family": "Apache",
+      "md5": "2ee16f406ee12fe4dcd08b513e9bd0c6",
+      "name": "openssl",
+      "sha256": "0fcadfec125b1d4d9b0d7e5fd34fca8c150fc798b90091dfe3eeb85d87c909fa",
+      "size": 6062165,
+      "subdir": "win-64",
+      "timestamp": 1657105282208,
+      "version": "1.1.1q"
+    },
+    "openssl-3.0.0-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "0b546fa2f2fc96ab140358d857a730ec",
+      "name": "openssl",
+      "sha256": "efb71b27876de7b97480a694adc7a9fab1447ca6ea305eefde5892c03534e457",
+      "size": 10497884,
+      "subdir": "win-64",
+      "timestamp": 1631922198596,
+      "version": "3.0.0"
+    },
+    "openssl-3.0.0-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "ee17e64f6cc002dbef834f85c35801a4",
+      "name": "openssl",
+      "sha256": "57a2d71046ee4bc7f4406076d23dc29eeb06f80a7e3fd107f11290429c22125b",
+      "size": 10505306,
+      "subdir": "win-64",
+      "timestamp": 1632902388417,
+      "version": "3.0.0"
+    },
+    "openssl-3.0.0-h8ffe710_2.tar.bz2": {
+      "build": "h8ffe710_2",
+      "build_number": 2,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "cd0ec2b30e9d2bf834dca8dafc60b524",
+      "name": "openssl",
+      "sha256": "dc51f3a9a0c3aacc8c9a011e6eb2a35c322bacbf4c629ed7afd65a35e8e2c5f4",
+      "size": 10508139,
+      "subdir": "win-64",
+      "timestamp": 1635897757534,
+      "version": "3.0.0"
+    },
+    "openssl-3.0.2-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "dfc56d0e12d0596a5608c1b325cbdfd0",
+      "name": "openssl",
+      "sha256": "93083c0d63e3b9dd8c66190651694df5f02b712223112d6d61ced3a48373c0a9",
+      "size": 10558977,
+      "subdir": "win-64",
+      "timestamp": 1648094366944,
+      "version": "3.0.2"
+    },
+    "openssl-3.0.2-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "2f1ad4cb222088bcfbda800b083ea8ec",
+      "name": "openssl",
+      "sha256": "f0b67116ff026b6195ca81c362aec829e8de368ad741e7cf173c444c29c3bfac",
+      "size": 10559468,
+      "subdir": "win-64",
+      "timestamp": 1648114431735,
+      "version": "3.0.2"
+    },
+    "openssl-3.0.3-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "e4302fb9f2efe341d9bc80475784bff1",
+      "name": "openssl",
+      "sha256": "b378b6d0d478379c14e115ee30454bf781d5aa4a28b6116832c23d27a1645566",
+      "size": 10479899,
+      "subdir": "win-64",
+      "timestamp": 1651601151051,
+      "version": "3.0.3"
+    },
+    "openssl-3.0.4-h8ffe710_2.tar.bz2": {
+      "build": "h8ffe710_2",
+      "build_number": 2,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "5d9377f440b63c7e2aa8216fd918612e",
+      "name": "openssl",
+      "sha256": "c965aa9e1d534ff7fca959b4508a6899c1d81ab1386648d61b8bfea8183c6ec4",
+      "size": 8015646,
+      "subdir": "win-64",
+      "timestamp": 1656333620661,
+      "version": "3.0.4"
+    },
+    "openssl-3.0.5-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "63e79eeb4155fbcc3e01530af77e5601",
+      "name": "openssl",
+      "sha256": "28defe56f97be9fbbeaa1c948f9056e77dba7252aa429775bf10d04f07e50b00",
+      "size": 7989181,
+      "subdir": "win-64",
+      "timestamp": 1657106829305,
+      "version": "3.0.5"
+    },
+    "openssl-3.0.5-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "ca-certificates",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Apache-2.0",
+      "license_family": "Apache",
+      "md5": "6f60e279c639405b29881f4187807b18",
+      "name": "openssl",
+      "sha256": "b8404ecc489202c9b7b69819a8a6ac6e922ddde1c68d7b189c53745b6c018b03",
+      "size": 7974287,
+      "subdir": "win-64",
+      "timestamp": 1659400210389,
+      "version": "3.0.5"
+    },
+    "pip-19.3.1-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "setuptools",
+        "wheel"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a8023bfd160eb4508ad86f2623aec0e3",
+      "name": "pip",
+      "sha256": "dc491235ac7b14b57ad2dcb3d8dbb590ed3ad65965da3263cd358b495a390f29",
+      "size": 1978398,
+      "subdir": "win-64",
+      "timestamp": 1572656948028,
+      "version": "19.3.1"
+    },
+    "pip-20.0.1-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "setuptools",
+        "wheel"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a70e3296a2399faa2f38833af4b6d9f7",
+      "name": "pip",
+      "sha256": "423f0bbabfcc2da587850f2b4fc96c0e66595f88eab5496a4d660b374cd7a7d9",
+      "size": 1982784,
+      "subdir": "win-64",
+      "timestamp": 1579724114467,
+      "version": "20.0.1"
+    },
+    "pip-20.0.2-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "setuptools",
+        "wheel"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a76a4e20ad55f3e207eb134e0abc04c6",
+      "name": "pip",
+      "sha256": "bef6667ddaf738dec558997dcc841d68afcfcdfcc41c840506e6e2894f89257a",
+      "size": 2017689,
+      "subdir": "win-64",
+      "timestamp": 1579880473826,
+      "version": "20.0.2"
+    },
+    "pip-20.0.2-py38_1.tar.bz2": {
+      "build": "py38_1",
+      "build_number": 1,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "setuptools",
+        "wheel"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "902a6e06ed9c317effd9c916badbaf7e",
+      "name": "pip",
+      "sha256": "e45a8f11a3a9b13d63bc0f0bf97df8d9fd8ae3c0be874723eb7325f4ed836572",
+      "size": 1977296,
+      "subdir": "win-64",
+      "timestamp": 1580395571984,
+      "version": "20.0.2"
+    },
+    "pypy3.8-7.3.7-h4acdc65_3.tar.bz2": {
+      "build": "h4acdc65_3",
+      "build_number": 3,
+      "constrains": [
+        "pypy3.5 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.6 ==99999999999",
+        "pypy3.7 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.1,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=1.1.1l,<1.1.2a",
+        "sqlite >=3.36.0,<4.0a0",
+        "tk >=8.6.11,<8.7.0a0",
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9541ef128246012ab734be09c6b6af66",
+      "name": "pypy3.8",
+      "sha256": "e65dc08cb069f5104d31e919937757442874e25adddaac388f9ccc89243eb913",
+      "size": 28473323,
+      "subdir": "win-64",
+      "timestamp": 1636597681688,
+      "version": "7.3.7"
+    },
+    "pypy3.8-7.3.7-hd58c836_3.tar.bz2": {
+      "build": "hd58c836_3",
+      "build_number": 3,
+      "constrains": [
+        "pypy3.7 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.6 ==99999999999",
+        "pypy3.5 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.1,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=3.0.0,<4.0a0",
+        "sqlite >=3.36.0,<4.0a0",
+        "tk >=8.6.11,<8.7.0a0",
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "4040a9f3df0e3309aaaff38543cb4534",
+      "name": "pypy3.8",
+      "sha256": "b17f8af7a6c53da6ca3ab9b6042ff4480c94d0a9d3167e0caa980091f15d24da",
+      "size": 28421151,
+      "subdir": "win-64",
+      "timestamp": 1636984143870,
+      "version": "7.3.7"
+    },
+    "pypy3.8-7.3.8-h4acdc65_0.tar.bz2": {
+      "build": "h4acdc65_0",
+      "build_number": 0,
+      "constrains": [
+        "pypy3.7 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.6 ==99999999999",
+        "pypy3.5 ==99999999999",
+        "pypy3.9 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.7,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=1.1.1l,<1.1.2a",
+        "sqlite >=3.37.0,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "23fe8c9c4a59dd915dece051d4d3834f",
+      "name": "pypy3.8",
+      "sha256": "b7e319988779f552c5835913f8f2519dcefaf4dc9d15e32bc88276e64362db2d",
+      "size": 28229072,
+      "subdir": "win-64",
+      "timestamp": 1646877506894,
+      "version": "7.3.8"
+    },
+    "pypy3.8-7.3.8-h4acdc65_1.tar.bz2": {
+      "build": "h4acdc65_1",
+      "build_number": 1,
+      "constrains": [
+        "pypy3.5 ==99999999999",
+        "pypy3.9 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.6 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.7,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=1.1.1n,<1.1.2a",
+        "sqlite >=3.37.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ac0ec6d737127204b9d1579b0baedc64",
+      "name": "pypy3.8",
+      "sha256": "7609045bcdaf975b4a37bbf8067516c6cc0c8df9f38bde6bd6deac2f142430c6",
+      "size": 28252419,
+      "subdir": "win-64",
+      "timestamp": 1648577980735,
+      "version": "7.3.8"
+    },
+    "pypy3.8-7.3.8-h4acdc65_2.tar.bz2": {
+      "build": "h4acdc65_2",
+      "build_number": 2,
+      "constrains": [
+        "pypy3.5 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.9 ==99999999999",
+        "pypy3.6 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=1.1.1n,<1.1.2a",
+        "sqlite >=3.37.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "97cba0ac0d31952aeef0a2426588e5a4",
+      "name": "pypy3.8",
+      "sha256": "0c9ca6e10187d04e4d9b4ea0e6b25d9644d34823fe0cbf6789aa48380573d0a3",
+      "size": 28121596,
+      "subdir": "win-64",
+      "timestamp": 1648886927083,
+      "version": "7.3.8"
+    },
+    "pypy3.8-7.3.8-hd58c836_0.tar.bz2": {
+      "build": "hd58c836_0",
+      "build_number": 0,
+      "constrains": [
+        "python 3.8.* *_73_pypy",
+        "pypy3.5 ==99999999999",
+        "pypy3.6 ==99999999999",
+        "pypy3.9 ==99999999999",
+        "pypy3.7 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.7,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=3.0.0,<4.0a0",
+        "sqlite >=3.37.0,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "2d5bef9baa3ad37f6984edc4edc9390a",
+      "name": "pypy3.8",
+      "sha256": "9543d27c2521a60c5f821ea88c55fe60322ace28d625692a4bc714d8aadf1c49",
+      "size": 28274307,
+      "subdir": "win-64",
+      "timestamp": 1646878575163,
+      "version": "7.3.8"
+    },
+    "pypy3.8-7.3.8-hd58c836_1.tar.bz2": {
+      "build": "hd58c836_1",
+      "build_number": 1,
+      "constrains": [
+        "pypy3.6 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.5 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "pypy3.9 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.7,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=3.0.2,<4.0a0",
+        "sqlite >=3.37.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7e1acf67dfd1d8deedaded4cd5d4fd58",
+      "name": "pypy3.8",
+      "sha256": "1a95ac997048876a58b101817f6fa45438950e280b65f7f79572a7b8ed856d55",
+      "size": 28180152,
+      "subdir": "win-64",
+      "timestamp": 1648577834467,
+      "version": "7.3.8"
+    },
+    "pypy3.8-7.3.8-hd58c836_2.tar.bz2": {
+      "build": "hd58c836_2",
+      "build_number": 2,
+      "constrains": [
+        "pypy3.5 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.6 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "pypy3.9 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=3.0.2,<4.0a0",
+        "sqlite >=3.37.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "0e918ba7628d4cdd11570011bc4d1a81",
+      "name": "pypy3.8",
+      "sha256": "1c68145b424348a95adc5830ff51d3dd709443df694bb8c4efa1510c5d250028",
+      "size": 28241360,
+      "subdir": "win-64",
+      "timestamp": 1648887233249,
+      "version": "7.3.8"
+    },
+    "pypy3.8-7.3.9-h4acdc65_0.tar.bz2": {
+      "build": "h4acdc65_0",
+      "build_number": 0,
+      "constrains": [
+        "pypy3.9 ==99999999999",
+        "pypy3.6 ==99999999999",
+        "pypy3.5 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "python 3.8.* *_73_pypy"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=1.1.1n,<1.1.2a",
+        "sqlite >=3.37.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "118d1b566f5df02b2e1b9d916df47624",
+      "name": "pypy3.8",
+      "sha256": "ae0b7aefac5e3c062e70e47ab51695d99e234614ed5ebf21273591d45b9a3acd",
+      "size": 28796993,
+      "subdir": "win-64",
+      "timestamp": 1649128290325,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-h4acdc65_1.tar.bz2": {
+      "build": "h4acdc65_1",
+      "build_number": 1,
+      "constrains": [
+        "pypy3.5 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.6 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "pypy3.9 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=1.1.1n,<1.1.2a",
+        "sqlite >=3.37.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "758066da703fe27b9e9e93afea20e7fa",
+      "name": "pypy3.8",
+      "sha256": "af1aa88d9c8ed9a611990dd8f6d1027245688555c6fbb4872f08387b6b6b0fd8",
+      "size": 28712991,
+      "subdir": "win-64",
+      "timestamp": 1649350473729,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-h4acdc65_2.tar.bz2": {
+      "build": "h4acdc65_2",
+      "build_number": 2,
+      "constrains": [
+        "python 3.8.* *_73_pypy",
+        "pypy3.6 ==99999999999",
+        "pypy3.9 ==99999999999",
+        "pypy3.5 ==99999999999",
+        "pypy3.7 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=1.1.1n,<1.1.2a",
+        "sqlite >=3.38.2,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f426b8ce1056e8c1a1bef6c1278c23b2",
+      "name": "pypy3.8",
+      "sha256": "92f39e9074638deb76ba50be4a8ec8c1e0f4ffe51f8fc5c40d5c00f1814f3ae1",
+      "size": 28795523,
+      "subdir": "win-64",
+      "timestamp": 1649804348165,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-h4acdc65_3.tar.bz2": {
+      "build": "h4acdc65_3",
+      "build_number": 3,
+      "constrains": [
+        "pypy3.7 ==99999999999",
+        "pypy3.5 ==99999999999",
+        "pypy3.9 ==99999999999",
+        "pypy3.6 ==99999999999",
+        "python 3.8.* *_73_pypy"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.12,<1.3.0a0",
+        "openssl >=1.1.1q,<1.1.2a",
+        "sqlite >=3.39.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.12,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ae4f3a0bec52eb3119ba3dbcb8521d81",
+      "name": "pypy3.8",
+      "sha256": "f86c7cfdb4f543ccdf3c4ca3b792fdd3e106a1399878081c2357b9f829e76c2a",
+      "size": 28823709,
+      "subdir": "win-64",
+      "timestamp": 1658438306076,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-h4acdc65_4.tar.bz2": {
+      "build": "h4acdc65_4",
+      "build_number": 4,
+      "constrains": [
+        "pypy3.6 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.9 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "pypy3.5 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libsqlite >=3.39.2,<4.0a0",
+        "libzlib >=1.2.12,<1.3.0a0",
+        "openssl >=1.1.1q,<1.1.2a",
+        "sqlite >=3.39.2,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.6,<5.3.0a0",
+        "zlib >=1.2.12,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9b65d7f2752cd62d675775c519b4a149",
+      "name": "pypy3.8",
+      "sha256": "eb20a5857436729b3f4533b37788287d30d8840e64d0f76adafabf1aacf13c8d",
+      "size": 28817276,
+      "subdir": "win-64",
+      "timestamp": 1660562039525,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-hd58c836_0.tar.bz2": {
+      "build": "hd58c836_0",
+      "build_number": 0,
+      "constrains": [
+        "pypy3.9 ==99999999999",
+        "pypy3.6 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "pypy3.5 ==99999999999",
+        "python 3.8.* *_73_pypy"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=3.0.2,<4.0a0",
+        "sqlite >=3.37.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "5d635252a61de14218d6c5c4315cdd04",
+      "name": "pypy3.8",
+      "sha256": "6f468af6533189e55b8f73ed391ef970f5acaeb1c801986a4c2f0aeec147ad5a",
+      "size": 28848534,
+      "subdir": "win-64",
+      "timestamp": 1649128849266,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-hd58c836_1.tar.bz2": {
+      "build": "hd58c836_1",
+      "build_number": 1,
+      "constrains": [
+        "pypy3.6 ==99999999999",
+        "pypy3.9 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.5 ==99999999999",
+        "pypy3.7 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=3.0.2,<4.0a0",
+        "sqlite >=3.37.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9b01e193d7149ba249958de808da4061",
+      "name": "pypy3.8",
+      "sha256": "c2e2c2700ef851491b5f6906c4b2cd6911ecafc5e8110b88e15fab93f35f2cc2",
+      "size": 28711108,
+      "subdir": "win-64",
+      "timestamp": 1649350897987,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-hd58c836_2.tar.bz2": {
+      "build": "hd58c836_2",
+      "build_number": 2,
+      "constrains": [
+        "pypy3.9 ==99999999999",
+        "python 3.8.* *_73_pypy",
+        "pypy3.6 ==99999999999",
+        "pypy3.5 ==99999999999",
+        "pypy3.7 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.11,<1.3.0a0",
+        "openssl >=3.0.2,<4.0a0",
+        "sqlite >=3.38.2,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.11,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "e294c491b92d5e7aa8181cbb9a9ee6c1",
+      "name": "pypy3.8",
+      "sha256": "189a4653553c4f7b01f6a3db820394a7c641953f851068caeb2a669e9f55fab8",
+      "size": 28806983,
+      "subdir": "win-64",
+      "timestamp": 1649804398595,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-hd58c836_3.tar.bz2": {
+      "build": "hd58c836_3",
+      "build_number": 3,
+      "constrains": [
+        "pypy3.5 ==99999999999",
+        "pypy3.9 ==99999999999",
+        "pypy3.6 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "python 3.8.* *_73_pypy"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libzlib >=1.2.12,<1.3.0a0",
+        "openssl >=3.0.5,<4.0a0",
+        "sqlite >=3.39.1,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.5,<5.3.0a0",
+        "zlib >=1.2.12,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "741d01794e993f9cdb94b9bb3375e2a7",
+      "name": "pypy3.8",
+      "sha256": "95211b84fdbbbe7f9c65e037b7fff84fc974ae275aa1c982d60198d3b5c69657",
+      "size": 28786405,
+      "subdir": "win-64",
+      "timestamp": 1658437643185,
+      "version": "7.3.9"
+    },
+    "pypy3.8-7.3.9-hd58c836_4.tar.bz2": {
+      "build": "hd58c836_4",
+      "build_number": 4,
+      "constrains": [
+        "python 3.8.* *_73_pypy",
+        "pypy3.9 ==99999999999",
+        "pypy3.7 ==99999999999",
+        "pypy3.6 ==99999999999",
+        "pypy3.5 ==99999999999"
+      ],
+      "depends": [
+        "bzip2 >=1.0.8,<2.0a0",
+        "expat >=2.4.8,<3.0a0",
+        "libffi >=3.4.2,<3.5.0a0",
+        "libsqlite >=3.39.2,<4.0a0",
+        "libzlib >=1.2.12,<1.3.0a0",
+        "openssl >=3.0.5,<4.0a0",
+        "sqlite >=3.39.2,<4.0a0",
+        "tk >=8.6.12,<8.7.0a0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033",
+        "xz >=5.2.6,<5.3.0a0",
+        "zlib >=1.2.12,<1.3.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6435935975af1588c3f25bbb137ccf89",
+      "name": "pypy3.8",
+      "sha256": "2da04401b3280ea551eaca194e91c21742c922ebf092aeb551f5642dba81d217",
+      "size": 28884616,
+      "subdir": "win-64",
+      "timestamp": 1660562599218,
+      "version": "7.3.9"
+    },
+    "python_abi-3.8-0_cp38.tar.bz2": {
+      "build": "0_cp38",
+      "build_number": 0,
+      "constrains": [
+        "pypy <0a0",
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python 3.8.*"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "c3261f2eccd0c492e1692f71f410db25",
+      "name": "python_abi",
+      "sha256": "d9d446dfaa3b5510f49c7694ff658ec04c85aaf741742143e72b0d40937eecab",
+      "size": 3601,
+      "subdir": "win-64",
+      "timestamp": 1581443187020,
+      "version": "3.8"
+    },
+    "python_abi-3.8-1_cp38.tar.bz2": {
+      "build": "1_cp38",
+      "build_number": 1,
+      "constrains": [
+        "pypy <0a0",
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python 3.8.*"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "18ced0580562dca07ae039050748cc50",
+      "name": "python_abi",
+      "sha256": "e3084eb179bf66f7e0cc790d2c1210214d35af71ebc69d1015c2f7d2a2eb0ed9",
+      "size": 3731,
+      "subdir": "win-64",
+      "timestamp": 1583345115246,
+      "version": "3.8"
+    },
+    "python_abi-3.8-2_cp38.tar.bz2": {
+      "build": "2_cp38",
+      "build_number": 2,
+      "constrains": [
+        "pypy <0a0"
+      ],
+      "depends": [
+        "python 3.8.*"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "80b95487563108d4cf92ff6384050751",
+      "name": "python_abi",
+      "sha256": "0ffff169a39edff1701384e09d1af6116b23a569873df5ce32c4985c34cdc2c8",
+      "size": 4531,
+      "subdir": "win-64",
+      "timestamp": 1624472180884,
+      "version": "3.8"
+    },
+    "python_abi-3.8-2_pypy38_pp73.tar.bz2": {
+      "build": "2_pypy38_pp73",
+      "build_number": 2,
+      "constrains": [
+        "python 3.8.* *_73_pypy"
+      ],
+      "depends": [
+        "pypy3.8 7.3.*"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "4821c5ff5688a049c2db911936c17a18",
+      "name": "python_abi",
+      "sha256": "8938107b4708e1b4ac7c0e52893245ea03dca637ae19c16f54c0482e23dd9627",
+      "size": 4898,
+      "subdir": "win-64",
+      "timestamp": 1647846622013,
+      "track_features": "pypy",
+      "version": "3.8"
+    },
+    "setuptools-41.6.0-py38_1.tar.bz2": {
+      "build": "py38_1",
+      "build_number": 1,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f016b2698df615ddc7fb6a292189724c",
+      "name": "setuptools",
+      "sha256": "65a7abe626ad5c27833737f9a2bf0592617fd1e0127a8b7fbac9704754a4ad6d",
+      "size": 692458,
+      "subdir": "win-64",
+      "timestamp": 1572645615119,
+      "version": "41.6.0"
+    },
+    "setuptools-42.0.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "4b9144120ba5b8d4e4ff2fdf15ed907a",
+      "name": "setuptools",
+      "sha256": "f8fce04cfee3cee61303e26da51bde842948f9a3ac4bd686c398d89d9216238d",
+      "size": 673934,
+      "subdir": "win-64",
+      "timestamp": 1574597113417,
+      "version": "42.0.0"
+    },
+    "setuptools-42.0.1-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "69c2c0fa8a77710350ca891f0de431ae",
+      "name": "setuptools",
+      "sha256": "7bb19cd8f23ffb73640764fcbb8a8bb77d2dc561e1abcb622517f465f418cc78",
+      "size": 694992,
+      "subdir": "win-64",
+      "timestamp": 1574689132855,
+      "version": "42.0.1"
+    },
+    "setuptools-42.0.2-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ff692d7e1d670f98f7eeeb858edea083",
+      "name": "setuptools",
+      "sha256": "3f68d39e888b9fa4c3af9e9532823ba491d13fe60ab5294eeddb854e9583c43d",
+      "size": 699220,
+      "subdir": "win-64",
+      "timestamp": 1575225655597,
+      "version": "42.0.2"
+    },
+    "setuptools-44.0.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "4081e3626beae3a65698b8522aa5aadf",
+      "name": "setuptools",
+      "sha256": "e4474a512fb48daf10a8cde6f56287f000da832c11191771bc04df1715e10aaa",
+      "size": 687921,
+      "subdir": "win-64",
+      "timestamp": 1577961350094,
+      "version": "44.0.0"
+    },
+    "setuptools-45.0.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6e9ab17fc74c4bc71872b41cebad6c5d",
+      "name": "setuptools",
+      "sha256": "8b5c2db2e69fd774d02d1e8bea77d169919b01cf29ca039398517004e149adf0",
+      "size": 695594,
+      "subdir": "win-64",
+      "timestamp": 1578856464472,
+      "version": "45.0.0"
+    },
+    "setuptools-45.0.0-py38_1.tar.bz2": {
+      "build": "py38_1",
+      "build_number": 1,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "17dc3bfa7f8c5a104ebd624fe1b911ce",
+      "name": "setuptools",
+      "sha256": "237a82a3ebb7664490fa9e65ea3cd8f0877d65cb74af772a7ed1d9123a031aa3",
+      "size": 695376,
+      "subdir": "win-64",
+      "timestamp": 1578917253270,
+      "version": "45.0.0"
+    },
+    "setuptools-45.1.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "1732d45178f597e6a8ed60d6ca933977",
+      "name": "setuptools",
+      "sha256": "fa0fe835ee50cfd31736705c52f54a82ee11106c0470d4d613ccf8a483e0a105",
+      "size": 679542,
+      "subdir": "win-64",
+      "timestamp": 1579469857141,
+      "version": "45.1.0"
+    },
+    "setuptools-45.2.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "cf2b084730c671303f30b2bad1afa548",
+      "name": "setuptools",
+      "sha256": "c9ecc6ea931f0eaee4eb756fc905c8c7020eee4f4ee870b881bdc751bb78e18e",
+      "size": 694543,
+      "subdir": "win-64",
+      "timestamp": 1581290951516,
+      "version": "45.2.0"
+    },
+    "setuptools-45.3.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "509350c43dfc2dbd97316d90d55e7429",
+      "name": "setuptools",
+      "sha256": "e8fa4ae8000672ff7d3d1f1d162ce7bda717136147fc8050b6ddb7b38ca8a85e",
+      "size": 700162,
+      "subdir": "win-64",
+      "timestamp": 1583622270169,
+      "version": "45.3.0"
+    },
+    "setuptools-46.0.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "8c31199e1c422e3ce8c117fa31f1c3c7",
+      "name": "setuptools",
+      "sha256": "acb113077db496fa28a1b40872f35706029dd1ee1f3b6db3dd97b1e518121bd2",
+      "size": 677526,
+      "subdir": "win-64",
+      "timestamp": 1583710821898,
+      "version": "46.0.0"
+    },
+    "setuptools-46.0.0-py38h32f6830_1.tar.bz2": {
+      "build": "py38h32f6830_1",
+      "build_number": 1,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "d96c15a24899cc9711cf0c381f099b23",
+      "name": "setuptools",
+      "sha256": "588274d90b0c95379f1ded14fabc323c23fc68edd71c344dc42afeda988eb104",
+      "size": 682833,
+      "subdir": "win-64",
+      "timestamp": 1583853222677,
+      "version": "46.0.0"
+    },
+    "setuptools-46.0.0-py38h32f6830_2.tar.bz2": {
+      "build": "py38h32f6830_2",
+      "build_number": 2,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c54672570db1c71ded314813c70d03a2",
+      "name": "setuptools",
+      "sha256": "a3410db2114bb4ffba657054dd4ad69b08c53be6e5976d4700098bfa55f8fcac",
+      "size": 693061,
+      "subdir": "win-64",
+      "timestamp": 1583954645866,
+      "version": "46.0.0"
+    },
+    "setuptools-46.1.1-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "8158beb8f17d92a5b69b828f850beef0",
+      "name": "setuptools",
+      "sha256": "2290ca3f5cbfdd478248fc31bc13a6431423c4ce5748cd8bbe94077ac2e258d3",
+      "size": 675696,
+      "subdir": "win-64",
+      "timestamp": 1584881358385,
+      "version": "46.1.1"
+    },
+    "setuptools-46.1.3-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "b15906e825855d8b63b18471577ef9c0",
+      "name": "setuptools",
+      "sha256": "d76377776df01192dc1f4e30e4ce7fff3c51685c30460b74caa6eb249c7b3a86",
+      "size": 683619,
+      "subdir": "win-64",
+      "timestamp": 1585173645058,
+      "version": "46.1.3"
+    },
+    "setuptools-46.2.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "fa66925ea2c40eebbb0f1923a75b4f5c",
+      "name": "setuptools",
+      "sha256": "bd6edbe3720ae28daa22d6e79d43e3ea1f1b9ab3f5af091641b01db9da018f1d",
+      "size": 678765,
+      "subdir": "win-64",
+      "timestamp": 1589207265145,
+      "version": "46.2.0"
+    },
+    "setuptools-46.3.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "84738373c86cb3e66f7fe59cafaa6596",
+      "name": "setuptools",
+      "sha256": "df7d74933af840375539928135bc1fb2ab3ddba15041708d057a4cd04630a8d9",
+      "size": 678718,
+      "subdir": "win-64",
+      "timestamp": 1589388229227,
+      "version": "46.3.0"
+    },
+    "setuptools-46.3.1-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "d56d2b6505593d0847b6e852cc8ccdd2",
+      "name": "setuptools",
+      "sha256": "cb7a77b2a6064f0e94c9f3112d30e9a57e50887f13b44443f053cdca7d2acca0",
+      "size": 698375,
+      "subdir": "win-64",
+      "timestamp": 1589548673758,
+      "version": "46.3.1"
+    },
+    "setuptools-46.4.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "604ebb787a5e903fc820e657ffe3a300",
+      "name": "setuptools",
+      "sha256": "437f24e96344ad84cd6aee2b3f38a4cfe6c7781bad8ff2daf22cb9af10722cf4",
+      "size": 680511,
+      "subdir": "win-64",
+      "timestamp": 1589812701955,
+      "version": "46.4.0"
+    },
+    "setuptools-47.0.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6b7d9c1daca8e3c4eb66ae9e5bc955a0",
+      "name": "setuptools",
+      "sha256": "93015e1176321c628603fcde2884cacd82f1fa08f30dfbaa35c304ab3ad879b3",
+      "size": 678275,
+      "subdir": "win-64",
+      "timestamp": 1590672836344,
+      "version": "47.0.0"
+    },
+    "setuptools-47.1.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c0270c04eba16f2bac34fd0f296a0319",
+      "name": "setuptools",
+      "sha256": "ec192ae5d9673604ad6427a8757fc1e9208af261d2fd488a5a05bac93cd9c1d7",
+      "size": 690536,
+      "subdir": "win-64",
+      "timestamp": 1590673642583,
+      "version": "47.1.0"
+    },
+    "setuptools-47.1.1-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a93e11d6d8107e782ca24c8984e862e6",
+      "name": "setuptools",
+      "sha256": "6bfa4ac0d7f44157ee046615d8c02e34e7f12feeff042a0207b1890a41cef505",
+      "size": 676990,
+      "subdir": "win-64",
+      "timestamp": 1590759378989,
+      "version": "47.1.1"
+    },
+    "setuptools-47.2.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ad8491686fefa4d2b2db8d53d9d2e802",
+      "name": "setuptools",
+      "sha256": "f54ba29d5ca91437de34c3103076ed942bb022dc4b3b89d6488692a377f1c625",
+      "size": 679318,
+      "subdir": "win-64",
+      "timestamp": 1592256968424,
+      "version": "47.2.0"
+    },
+    "setuptools-47.3.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "5fb31647f158871d1780c776abf6c844",
+      "name": "setuptools",
+      "sha256": "d1f96bd74406f09c0ca02e5a9b01ab78addc6f3e2a7c7f5f7787b93dad4a5c10",
+      "size": 691393,
+      "subdir": "win-64",
+      "timestamp": 1592266671699,
+      "version": "47.3.0"
+    },
+    "setuptools-47.3.1-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "e7767240344c1e78c6bf1768196c62f1",
+      "name": "setuptools",
+      "sha256": "65a7f9ebca6cacfaf36785d9be7f68bda12f636ee9c8fd84d86930aa73b3fb91",
+      "size": 677126,
+      "subdir": "win-64",
+      "timestamp": 1592347086268,
+      "version": "47.3.1"
+    },
+    "setuptools-47.3.2-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c059d74c26d20da083d65f42517dbc02",
+      "name": "setuptools",
+      "sha256": "32bd382b91bcbbffbbc3b59e0afa0ad46424bf25191a584ffb19a40442ab9003",
+      "size": 686375,
+      "subdir": "win-64",
+      "timestamp": 1593770094805,
+      "version": "47.3.2"
+    },
+    "setuptools-48.0.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "2c9596c8c4d1834ce5c31762c2a01ee1",
+      "name": "setuptools",
+      "sha256": "a365f373a99c0cc6ef164f0f538498071bc7f795211fee2ce6f7641408d75a3b",
+      "size": 955979,
+      "subdir": "win-64",
+      "timestamp": 1593793027652,
+      "version": "48.0.0"
+    },
+    "setuptools-49.1.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7c825bceef545abb445b068420d87b7f",
+      "name": "setuptools",
+      "sha256": "7ea05f0c570a6ee0d8455c4daca83aefe1f3e3628c355d20397853f2abc87a33",
+      "size": 991682,
+      "subdir": "win-64",
+      "timestamp": 1593835202319,
+      "version": "49.1.0"
+    },
+    "setuptools-49.1.1-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "4168f5ae173a29abefeea2429984bff4",
+      "name": "setuptools",
+      "sha256": "b1bf9faf265a355fa3395da4461fc2be6b100cf56473cc04e7ef2b4d3221c81e",
+      "size": 968265,
+      "subdir": "win-64",
+      "timestamp": 1594408011145,
+      "version": "49.1.1"
+    },
+    "setuptools-49.1.2-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "475ccd4507f046a5a77c144dd4f60c15",
+      "name": "setuptools",
+      "sha256": "4091fd7e46406e8e362d20aff2adb7ecb40d11c1da96de79342d5eca290e9e05",
+      "size": 980939,
+      "subdir": "win-64",
+      "timestamp": 1594452394506,
+      "version": "49.1.2"
+    },
+    "setuptools-49.1.3-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "49dd606db1ae9d574c6baa88641b61e9",
+      "name": "setuptools",
+      "sha256": "ab5c16caae6b50986f1db741f94c54bf27de38d5adb9ca4856c27c43bf9a63bf",
+      "size": 989020,
+      "subdir": "win-64",
+      "timestamp": 1594550166413,
+      "version": "49.1.3"
+    },
+    "setuptools-49.2.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "3a6d38efcd0140672562ecd7fc5e1a03",
+      "name": "setuptools",
+      "sha256": "869cc79781c3f33f986acea81c338000e6a04466740de49a7ae80a0c34677954",
+      "size": 949081,
+      "subdir": "win-64",
+      "timestamp": 1594573592573,
+      "version": "49.2.0"
+    },
+    "setuptools-49.2.1-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c180eefd94006167ec3d67d5cf1f3aa9",
+      "name": "setuptools",
+      "sha256": "a0b0cb3e768abf7ddbf83164c595beb11d25a67639dfccfbe75327480431eece",
+      "size": 976080,
+      "subdir": "win-64",
+      "timestamp": 1596384360627,
+      "version": "49.2.1"
+    },
+    "setuptools-49.3.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ef872d18699f924bc04b1db06274ef2b",
+      "name": "setuptools",
+      "sha256": "847c594dedf014f681e08d2d51dea3cbafc8e3a30c9df46b3269d0a0ff8e30d9",
+      "size": 948255,
+      "subdir": "win-64",
+      "timestamp": 1597007169714,
+      "version": "49.3.0"
+    },
+    "setuptools-49.3.1-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9c0b23a1bbcda6769dfacdab0c988a33",
+      "name": "setuptools",
+      "sha256": "057257d2791c225adac4ad7abb1687008d4d42b276681c43570d7f1a4e04967e",
+      "size": 989484,
+      "subdir": "win-64",
+      "timestamp": 1597080913635,
+      "version": "49.3.1"
+    },
+    "setuptools-49.3.2-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "db168c4876ab6e616eddc38eac6af173",
+      "name": "setuptools",
+      "sha256": "20d05cb595cca7d4b3cbdb5deb7376f96edd1dff4f54c91859282ee45660b36c",
+      "size": 976616,
+      "subdir": "win-64",
+      "timestamp": 1597273738842,
+      "version": "49.3.2"
+    },
+    "setuptools-49.4.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c206826d4972fdf83303416c43c4904f",
+      "name": "setuptools",
+      "sha256": "97b2912ab246459fe2b8847ad3da044c9ecf70d3127505817aefb6f3745cb56b",
+      "size": 988435,
+      "subdir": "win-64",
+      "timestamp": 1597336024780,
+      "version": "49.4.0"
+    },
+    "setuptools-49.5.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f5b3cbaba7d7ec1a846ac78ec8972c69",
+      "name": "setuptools",
+      "sha256": "e2d399216348f65356f3776e36aead148a72e3e475bd901490f09f7b80d64fee",
+      "size": 984073,
+      "subdir": "win-64",
+      "timestamp": 1597367488334,
+      "version": "49.5.0"
+    },
+    "setuptools-49.6.0-py38h32f6830_0.tar.bz2": {
+      "build": "py38h32f6830_0",
+      "build_number": 0,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "831becf6cdcd684f029c90933da18186",
+      "name": "setuptools",
+      "sha256": "7a5344912ac3f894054882a0625aca4728ac11569cb1abdcdcd02b4142ce05b4",
+      "size": 991691,
+      "subdir": "win-64",
+      "timestamp": 1597377346672,
+      "version": "49.6.0"
+    },
+    "setuptools-49.6.0-py38h32f6830_1.tar.bz2": {
+      "build": "py38h32f6830_1",
+      "build_number": 1,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "b3bf2ffc6cee7603276271c06bd33128",
+      "name": "setuptools",
+      "sha256": "c46207ef6b5f37843ce2a3c934186574d01cd3f95f43a0109f5f28dbf446bc38",
+      "size": 973856,
+      "subdir": "win-64",
+      "timestamp": 1600353627626,
+      "version": "49.6.0"
+    },
+    "setuptools-49.6.0-py38h9bdc248_2.tar.bz2": {
+      "build": "py38h9bdc248_2",
+      "build_number": 2,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "98726e11607788e59c4135db810e8521",
+      "name": "setuptools",
+      "sha256": "955289877f024134583046fdd31f9ebc1cceff7b231120d15e789df220ccc9fb",
+      "size": 960273,
+      "subdir": "win-64",
+      "timestamp": 1602232014868,
+      "version": "49.6.0"
+    },
+    "setuptools-49.6.0-py38haa244fe_3.tar.bz2": {
+      "build": "py38haa244fe_3",
+      "build_number": 3,
+      "depends": [
+        "certifi >=2016.9.26",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38",
+        "wincertstore >=0.2"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c104ed0b1f9f55efcf872c4af2a6036a",
+      "name": "setuptools",
+      "sha256": "2a560c23d42ed66287ecf7a31e9ccd7ba6700610ba0d0e4a2a740a6647e4cdbd",
+      "size": 984827,
+      "subdir": "win-64",
+      "timestamp": 1610084290557,
+      "version": "49.6.0"
+    },
+    "setuptools-57.4.0-py38h32ec214_1.tar.bz2": {
+      "build": "py38h32ec214_1",
+      "build_number": 1,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7d1ad4686b2f5dca872e0a6ab76b936f",
+      "name": "setuptools",
+      "sha256": "9f5c4ea4c124cbd39406c0b86c7733f1ea71528e6f14afa2861560d6b768d271",
+      "size": 967327,
+      "subdir": "win-64",
+      "timestamp": 1659979838936,
+      "version": "57.4.0"
+    },
+    "setuptools-57.4.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7ee911d6254f9c143fcbec73c53982ea",
+      "name": "setuptools",
+      "sha256": "48db0a225ba05da2dc8faf7025bfa70d72d3e87d7b9f9ad561f7e236cca25213",
+      "size": 990865,
+      "subdir": "win-64",
+      "timestamp": 1629119554211,
+      "version": "57.4.0"
+    },
+    "setuptools-57.4.0-py38haa244fe_1.tar.bz2": {
+      "build": "py38haa244fe_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "fcce05a20abb05b00d55adb9fd43d26a",
+      "name": "setuptools",
+      "sha256": "692622f4512510aba7ea273340dbd9524642ad690db6665deacba4a080d84b83",
+      "size": 967995,
+      "subdir": "win-64",
+      "timestamp": 1659977693038,
+      "version": "57.4.0"
+    },
+    "setuptools-58.0.2-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "1c246ed6172c24018d0b6e6ccbb87757",
+      "name": "setuptools",
+      "sha256": "9e07549eb445f1c7db9a40eae7b65ac676b24b815a7e53e61c99d3bab8c22e7d",
+      "size": 982321,
+      "subdir": "win-64",
+      "timestamp": 1631043511652,
+      "version": "58.0.2"
+    },
+    "setuptools-58.0.3-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "675a4a3eda10462e4c5d5f25e6fbe983",
+      "name": "setuptools",
+      "sha256": "24dedbdd03fa0f5091c8dc7bab6c6e00039318edac695f648eee0ad9888c7230",
+      "size": 985036,
+      "subdir": "win-64",
+      "timestamp": 1631087445820,
+      "version": "58.0.3"
+    },
+    "setuptools-58.0.4-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "5279684aaeb8f326539d9781b91a6334",
+      "name": "setuptools",
+      "sha256": "663c4f4860fb9b6b931de216a9c72be4f4857b448b8e547a927701babdc5547c",
+      "size": 950757,
+      "subdir": "win-64",
+      "timestamp": 1631212138245,
+      "version": "58.0.4"
+    },
+    "setuptools-58.0.4-py38haa244fe_1.tar.bz2": {
+      "build": "py38haa244fe_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "cd9b34d54c88839c0a02890e4e8dc58e",
+      "name": "setuptools",
+      "sha256": "a0c3eabf69a50590e5e1ffbf156e4443768b26b22970350d3505ce267fd71a75",
+      "size": 950777,
+      "subdir": "win-64",
+      "timestamp": 1632156484128,
+      "version": "58.0.4"
+    },
+    "setuptools-58.0.4-py38haa244fe_2.tar.bz2": {
+      "build": "py38haa244fe_2",
+      "build_number": 2,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "8143e30c3481dea0108a0c54d26d778b",
+      "name": "setuptools",
+      "sha256": "c49f1a84967b6b89c3e6b83a3eb6d71b749dbb2b847f131ed5e998b62daace26",
+      "size": 951844,
+      "subdir": "win-64",
+      "timestamp": 1632599428981,
+      "version": "58.0.4"
+    },
+    "setuptools-58.2.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6c3f5f7859597995b48343d6f9f76f82",
+      "name": "setuptools",
+      "sha256": "3167daadcb9ffb81424d7b7a1b527c3993012d3786c78cf31e7c73601050e0db",
+      "size": 1031914,
+      "subdir": "win-64",
+      "timestamp": 1633478421944,
+      "version": "58.2.0"
+    },
+    "setuptools-58.3.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "b03b6d4ad5c7a0a4c25f87e3932c43e1",
+      "name": "setuptools",
+      "sha256": "51115895bed17a4751c60deadcd9c0d6a58b9d8eddbb7ae68ad032ed4db03efc",
+      "size": 1071440,
+      "subdir": "win-64",
+      "timestamp": 1635519431269,
+      "version": "58.3.0"
+    },
+    "setuptools-58.4.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a44fcbea2fe13b3be863ee6fc42439be",
+      "name": "setuptools",
+      "sha256": "8e2b99711ba69683ffcba9b60f9ee1d2695f8e2479118dadf512ff8b2906adca",
+      "size": 1037006,
+      "subdir": "win-64",
+      "timestamp": 1635781177748,
+      "version": "58.4.0"
+    },
+    "setuptools-58.4.0-py38haa244fe_1.tar.bz2": {
+      "build": "py38haa244fe_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "e80102bf6912c1e22a16a606de469c99",
+      "name": "setuptools",
+      "sha256": "7dea942fb1a6b3069ec447876156c95a56d4d0963c5aac815136d355144acb38",
+      "size": 1034530,
+      "subdir": "win-64",
+      "timestamp": 1635794378296,
+      "version": "58.4.0"
+    },
+    "setuptools-58.5.2-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "1479f755c5761ffaae40be0061e1f6e9",
+      "name": "setuptools",
+      "sha256": "d9737a8309e15c61fa9706df878dc4ccb8c221c1012681d49a5971a99c38cb17",
+      "size": 1073848,
+      "subdir": "win-64",
+      "timestamp": 1635999454448,
+      "version": "58.5.2"
+    },
+    "setuptools-58.5.3-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "505d61421cda3c1f067d325cd1c97be1",
+      "name": "setuptools",
+      "sha256": "0e55d7a5fa46cbcfa085ec1892ffb4e1dc1887de37a18a9185b5def20e601680",
+      "size": 1038211,
+      "subdir": "win-64",
+      "timestamp": 1636091552331,
+      "version": "58.5.3"
+    },
+    "setuptools-59.0.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f2dc5f9bf3f064e7fca3784205311e6b",
+      "name": "setuptools",
+      "sha256": "17ec868d2825410b0280e3242a9d564ba7cb2d7e059410255127631c943e2328",
+      "size": 1034253,
+      "subdir": "win-64",
+      "timestamp": 1636951944919,
+      "version": "59.0.1"
+    },
+    "setuptools-59.1.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ee27ead219e97001ea61f5f7bc952be1",
+      "name": "setuptools",
+      "sha256": "4c3d9d4a75bf77705de59dfcf34611b1d4ad41d6dbf4db74350b07e2ab357b83",
+      "size": 1075576,
+      "subdir": "win-64",
+      "timestamp": 1636953133501,
+      "version": "59.1.0"
+    },
+    "setuptools-59.1.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "992b63f6e23eb599d3754e5a308a51fa",
+      "name": "setuptools",
+      "sha256": "74411bfe650fe445a3b96eaf95270fcf64d8e4e92084d787a3641d3b005c7a6e",
+      "size": 1044193,
+      "subdir": "win-64",
+      "timestamp": 1637040468195,
+      "version": "59.1.1"
+    },
+    "setuptools-59.2.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "aa0c41eb033a3950ebae667c4fb474e5",
+      "name": "setuptools",
+      "sha256": "f7fa4ba75faa188bded35887d3e30e95ffb9cef0b6f7a401ba09283c731281b6",
+      "size": 1084722,
+      "subdir": "win-64",
+      "timestamp": 1637351316927,
+      "version": "59.2.0"
+    },
+    "setuptools-59.4.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "fa4809a763e17cd1ee5a3332dc1dd392",
+      "name": "setuptools",
+      "sha256": "e7f59c764ebb0dfa845f6c3b0c48d9345a73ece48c92a80472d9c16026774130",
+      "size": 1072529,
+      "subdir": "win-64",
+      "timestamp": 1638179803527,
+      "version": "59.4.0"
+    },
+    "setuptools-59.5.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "680dfefc65d6b5364b3d1bb1eb400ec3",
+      "name": "setuptools",
+      "sha256": "360db38345549eef25301cc9205b616d94f86eb86ef2bc710c98f831d35ed162",
+      "size": 1083758,
+      "subdir": "win-64",
+      "timestamp": 1639503817307,
+      "version": "59.5.0"
+    },
+    "setuptools-59.6.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "d11561cc6d48103eb1d52263ade28a28",
+      "name": "setuptools",
+      "sha256": "7ecdddc4983935fd2bcbdb4c474e69b76887ef8950a3c063f567f4c84be4a5ba",
+      "size": 1044450,
+      "subdir": "win-64",
+      "timestamp": 1639507197257,
+      "version": "59.6.0"
+    },
+    "setuptools-59.7.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c3b55411c9669f1fa0576c1dfc942898",
+      "name": "setuptools",
+      "sha256": "50a00e159d0019265d133308b907a923dc35b97ebc4a3ba825e6e5983e785dc5",
+      "size": 1043302,
+      "subdir": "win-64",
+      "timestamp": 1640026851500,
+      "version": "59.7.0"
+    },
+    "setuptools-59.8.0-py38h32ec214_1.tar.bz2": {
+      "build": "py38h32ec214_1",
+      "build_number": 1,
+      "depends": [
+        "pypy3.8 >=7.3.8",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "4fdd1089bc4558c8795a066d67624fb2",
+      "name": "setuptools",
+      "sha256": "f65ec266456cba0351310e2a12946476fe29f5c5c74a93d22b1bec154c70039e",
+      "size": 1113128,
+      "subdir": "win-64",
+      "timestamp": 1648693469803,
+      "version": "59.8.0"
+    },
+    "setuptools-59.8.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "b82dad776edbbcbd86f1cead1f950eca",
+      "name": "setuptools",
+      "sha256": "18bd082b15e51c063290e490d9fc10faaffac43dd14757ac83f6e850740d7a5f",
+      "size": 1084644,
+      "subdir": "win-64",
+      "timestamp": 1642337667939,
+      "version": "59.8.0"
+    },
+    "setuptools-59.8.0-py38haa244fe_1.tar.bz2": {
+      "build": "py38haa244fe_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c89d90f5f7fa0ee03c23bb0f3c9e42ec",
+      "name": "setuptools",
+      "sha256": "c5e247b894cee34faa1667099477a99f9e381653639d1eef62a88131837576aa",
+      "size": 1083461,
+      "subdir": "win-64",
+      "timestamp": 1648693121615,
+      "version": "59.8.0"
+    },
+    "setuptools-60.0.3-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "602212a36a46fc8766ddae8308bcd63b",
+      "name": "setuptools",
+      "sha256": "24835ebca46002e12c27f3165c3c17b961ccfe8ba34212122b2d7c197df23d3f",
+      "size": 1085207,
+      "subdir": "win-64",
+      "timestamp": 1640082288789,
+      "version": "60.0.3"
+    },
+    "setuptools-60.0.4-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6f3def86087f294f19f821c89c66105f",
+      "name": "setuptools",
+      "sha256": "69e4cbed18afc9c02d2e699c7f7dbd78cb5cf5a98c330198e75636459fdf9daf",
+      "size": 1050302,
+      "subdir": "win-64",
+      "timestamp": 1640197090937,
+      "version": "60.0.4"
+    },
+    "setuptools-60.0.5-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "49c965e9863a06a64553ddbb75d3a126",
+      "name": "setuptools",
+      "sha256": "a589e83fe30668e3d593834a5f7f56ca62e33b6907ac0b8ba4bd28ceebf1b021",
+      "size": 1045267,
+      "subdir": "win-64",
+      "timestamp": 1640306927692,
+      "version": "60.0.5"
+    },
+    "setuptools-60.1.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "59713cc771e66b56b9bddf6a8dedb741",
+      "name": "setuptools",
+      "sha256": "311068aa73c834b9a806bbb75ce9e52721301951f37d011b7e376951186343af",
+      "size": 1080097,
+      "subdir": "win-64",
+      "timestamp": 1640350920642,
+      "version": "60.1.0"
+    },
+    "setuptools-60.1.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "54303918848d37a7955db0e530d87ea7",
+      "name": "setuptools",
+      "sha256": "5fbcc7c1caa05e2d8aac784a88c69f6d2d699f35451624619cabbf6552785f2f",
+      "size": 1073944,
+      "subdir": "win-64",
+      "timestamp": 1640798573998,
+      "version": "60.1.1"
+    },
+    "setuptools-60.10.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7a360a2f36893cea79e7b04bc52f0c96",
+      "name": "setuptools",
+      "sha256": "58da54267052d523b9c02d785adcd2fbbf16f237e82c98667c2e30723431c957",
+      "size": 1238682,
+      "subdir": "win-64",
+      "timestamp": 1647479708687,
+      "version": "60.10.0"
+    },
+    "setuptools-60.2.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6bd9c7db40d9c3dea41e8c97d48c53bb",
+      "name": "setuptools",
+      "sha256": "1139a437cf13a3f3e1c431b91be66f489025fd74f6af979a8602adf23c63c7b3",
+      "size": 1075722,
+      "subdir": "win-64",
+      "timestamp": 1640887712486,
+      "version": "60.2.0"
+    },
+    "setuptools-60.3.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "28519b84f86f84a3088e2dfd5ea8adde",
+      "name": "setuptools",
+      "sha256": "5cc36036015396a9dacb258f1ce5275e54734e57e245b118e678f9486aa87989",
+      "size": 1056399,
+      "subdir": "win-64",
+      "timestamp": 1641580765187,
+      "version": "60.3.1"
+    },
+    "setuptools-60.5.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c4a564e308bb104eefe226872496d56c",
+      "name": "setuptools",
+      "sha256": "75050f77a7bff39bf18208a4c53b17fb6b0bf33dd47096168ea603139c033ffa",
+      "size": 1054644,
+      "subdir": "win-64",
+      "timestamp": 1641701286764,
+      "version": "60.5.0"
+    },
+    "setuptools-60.6.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "2761e9735b9710bb5627c3ba56610b6d",
+      "name": "setuptools",
+      "sha256": "34e0bf33dadebca0593cbb646fb3b2596e8917879700f315f76be8e2cdbc4f79",
+      "size": 1053753,
+      "subdir": "win-64",
+      "timestamp": 1643616724852,
+      "version": "60.6.0"
+    },
+    "setuptools-60.7.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "bbd2442a020f24409261fca1f23b709a",
+      "name": "setuptools",
+      "sha256": "d4f91a92ca5672d519c75a625183f8d15d09666363538a547892456e9bef7b5b",
+      "size": 1178455,
+      "subdir": "win-64",
+      "timestamp": 1643821671858,
+      "version": "60.7.0"
+    },
+    "setuptools-60.7.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "af22086da3af906ef5fbc1f7aaaa046d",
+      "name": "setuptools",
+      "sha256": "1ee79e44454f0f65e8f9d444fb8bfb146717256db077c76def302cb306624d53",
+      "size": 1192236,
+      "subdir": "win-64",
+      "timestamp": 1643878830861,
+      "version": "60.7.1"
+    },
+    "setuptools-60.8.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "24dc063ab934deeb4d13c4ce79a5401b",
+      "name": "setuptools",
+      "sha256": "247313f05c1ecd2915af73c5207931991a7977e3b2bdfac17add85354d83d760",
+      "size": 1222906,
+      "subdir": "win-64",
+      "timestamp": 1644283899607,
+      "version": "60.8.1"
+    },
+    "setuptools-60.8.2-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "bfc5c37547366e0ced9d0077026e124f",
+      "name": "setuptools",
+      "sha256": "53a081093dbcecfa23100205cccada2e834c21edd57f819c1415402843ccfcb7",
+      "size": 1202828,
+      "subdir": "win-64",
+      "timestamp": 1644594861944,
+      "version": "60.8.2"
+    },
+    "setuptools-60.9.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "cf459d6674d9ae80415b6ad2213fd701",
+      "name": "setuptools",
+      "sha256": "7afe8af59f18a0e004fd432453b75397bdddfe599f820826e382729e4f786516",
+      "size": 1196516,
+      "subdir": "win-64",
+      "timestamp": 1644848810276,
+      "version": "60.9.0"
+    },
+    "setuptools-60.9.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6cf32cfef2b9d0b35b58cd3ab99a7e03",
+      "name": "setuptools",
+      "sha256": "b06e9f0a17af9829d39bbb0b1588608919859fb52b78eb8ee5f474c16c5990e9",
+      "size": 1202182,
+      "subdir": "win-64",
+      "timestamp": 1644936740562,
+      "version": "60.9.1"
+    },
+    "setuptools-60.9.2-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f7310c1bc14153daa460b092d522236f",
+      "name": "setuptools",
+      "sha256": "fbe7de73f1e9183c686c0ced785ba788c566e9d2c060f800d2f4775acce740ea",
+      "size": 1204311,
+      "subdir": "win-64",
+      "timestamp": 1645035272320,
+      "version": "60.9.2"
+    },
+    "setuptools-60.9.3-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "66feddc4b76b9af224fad42c5d8dc33f",
+      "name": "setuptools",
+      "sha256": "40b3967aa67a11219f003a965d558bc9105661910975d3eb073abc29a02c0d2f",
+      "size": 1203855,
+      "subdir": "win-64",
+      "timestamp": 1645180008917,
+      "version": "60.9.3"
+    },
+    "setuptools-61.0.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "820ba277f12e037da1d3e69a59483394",
+      "name": "setuptools",
+      "sha256": "d66363da25e1697ccd22b57ee205c3ad4fc6cf08b8a665a77fba2cc76a8b95a0",
+      "size": 1321062,
+      "subdir": "win-64",
+      "timestamp": 1648244338119,
+      "version": "61.0.0"
+    },
+    "setuptools-61.1.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a38dcff27f735df4bebd7ce4ae1d48ff",
+      "name": "setuptools",
+      "sha256": "40b0a40687eae408c3d1bddec464f186ba5f3979bf47c708bb055ced919b7416",
+      "size": 1341052,
+      "subdir": "win-64",
+      "timestamp": 1648308205094,
+      "version": "61.1.0"
+    },
+    "setuptools-61.1.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9af277bd8f72705ef321aa9654da9f3e",
+      "name": "setuptools",
+      "sha256": "b9ae034db87df3c7ce5fcb4d22f7106187043ac850d8fb020cf33a90a29f6b84",
+      "size": 1336320,
+      "subdir": "win-64",
+      "timestamp": 1648324204325,
+      "version": "61.1.1"
+    },
+    "setuptools-61.2.0-py38h32ec214_1.tar.bz2": {
+      "build": "py38h32ec214_1",
+      "build_number": 1,
+      "depends": [
+        "pypy3.8 >=7.3.8",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "4d1f9053c5cee7623a1f9b9613704deb",
+      "name": "setuptools",
+      "sha256": "9574a51c5be252612137860fd8734d7bf8c725b972ea96c1e3b91d4a5314f0ea",
+      "size": 1367208,
+      "subdir": "win-64",
+      "timestamp": 1648529671260,
+      "version": "61.2.0"
+    },
+    "setuptools-61.2.0-py38h32ec214_2.tar.bz2": {
+      "build": "py38h32ec214_2",
+      "build_number": 2,
+      "depends": [
+        "pypy3.8 >=7.3.8",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "fd498d46aa3928a6f49826e5619579c0",
+      "name": "setuptools",
+      "sha256": "47eddb842ca96c1f5d3d560eadc370f5a9344fe925be91ec43a1698351fd260a",
+      "size": 1375499,
+      "subdir": "win-64",
+      "timestamp": 1648598126732,
+      "version": "61.2.0"
+    },
+    "setuptools-61.2.0-py38h32ec214_3.tar.bz2": {
+      "build": "py38h32ec214_3",
+      "build_number": 3,
+      "depends": [
+        "pypy3.8 >=7.3.8",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f6c26c828785ff883af495417c12f40d",
+      "name": "setuptools",
+      "sha256": "7a64ef628a467411ca3d859bbbe23999f74b1f07aec2051e032b9eef300839c4",
+      "size": 1337903,
+      "subdir": "win-64",
+      "timestamp": 1648620287276,
+      "version": "61.2.0"
+    },
+    "setuptools-61.2.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9f53ae8af52b6700ad5226e5bf832860",
+      "name": "setuptools",
+      "sha256": "6e5f8430ffe0e5d308a103d2e64c3fdb370d0435ec795001b109a04fdba27156",
+      "size": 1335997,
+      "subdir": "win-64",
+      "timestamp": 1648447848826,
+      "version": "61.2.0"
+    },
+    "setuptools-61.2.0-py38haa244fe_1.tar.bz2": {
+      "build": "py38haa244fe_1",
+      "build_number": 1,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "674caaf04ffc823fbb5a6ea4bdbf6bb1",
+      "name": "setuptools",
+      "sha256": "a3fbc3dfc1fddad1408c13ddc3d7b745bf3b0827ff4d8eb112fb4071b286efa8",
+      "size": 1336898,
+      "subdir": "win-64",
+      "timestamp": 1648528647760,
+      "version": "61.2.0"
+    },
+    "setuptools-61.2.0-py38haa244fe_2.tar.bz2": {
+      "build": "py38haa244fe_2",
+      "build_number": 2,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9189fd615099191a13d94211405813c7",
+      "name": "setuptools",
+      "sha256": "2f755b3360ef67c0d86ec62dcdcef409726cf1ce9d0a8449c4b65da2e2f0a4ee",
+      "size": 1327986,
+      "subdir": "win-64",
+      "timestamp": 1648598161489,
+      "version": "61.2.0"
+    },
+    "setuptools-61.2.0-py38haa244fe_3.tar.bz2": {
+      "build": "py38haa244fe_3",
+      "build_number": 3,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "cb6dba45393ced6d621992c87037a162",
+      "name": "setuptools",
+      "sha256": "8f106d42fea1e8e7c4e7cdc52ca8b51f9c0e4e41c9dc337b1e82ae5063785265",
+      "size": 1326015,
+      "subdir": "win-64",
+      "timestamp": 1648619772318,
+      "version": "61.2.0"
+    },
+    "setuptools-61.3.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.8",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "06e975aecc9bbe494e381369d92abe94",
+      "name": "setuptools",
+      "sha256": "9c9e4a4d3286b5b925ac82cb77824af4f6053f52b4fd532043933d3b4d3fdcf9",
+      "size": 1333567,
+      "subdir": "win-64",
+      "timestamp": 1648766554583,
+      "version": "61.3.0"
+    },
+    "setuptools-61.3.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "79536c21e0a623b0bbac5bdb3b983d4c",
+      "name": "setuptools",
+      "sha256": "3f52e969abf516aea1b51226c11d3d585ed1136443d54537bfc561af65e072e9",
+      "size": 1329393,
+      "subdir": "win-64",
+      "timestamp": 1648766860608,
+      "version": "61.3.0"
+    },
+    "setuptools-61.3.1-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.8",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9d43eb866973cda13575487c8099bb4b",
+      "name": "setuptools",
+      "sha256": "96a0a7516e57f6cff64eff982e0c13dc23a99dd922cb64ec28d14d07734bf485",
+      "size": 1324675,
+      "subdir": "win-64",
+      "timestamp": 1648925797596,
+      "version": "61.3.1"
+    },
+    "setuptools-61.3.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "32d2cd94f0894a2ff1d3c01a693e62ee",
+      "name": "setuptools",
+      "sha256": "248298730e39e1bed8a9f58683da7188e88db03df807565e4ff69238da2e8641",
+      "size": 1307998,
+      "subdir": "win-64",
+      "timestamp": 1648925697593,
+      "version": "61.3.1"
+    },
+    "setuptools-62.0.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.8",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "4967648e5b32280756a9a81b0d9aeb07",
+      "name": "setuptools",
+      "sha256": "9236f61aadacb9e0c4342dc72b42db19255fc5bec30f3929d5f93526e6b49ee9",
+      "size": 1392451,
+      "subdir": "win-64",
+      "timestamp": 1649095123395,
+      "version": "62.0.0"
+    },
+    "setuptools-62.0.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "b00e5316a5e02e489b1d4ee4b036448c",
+      "name": "setuptools",
+      "sha256": "580501418f65af2782c07705e8401fdf5f349222ca46ef461a47bcfbe9694c4d",
+      "size": 1339236,
+      "subdir": "win-64",
+      "timestamp": 1649094732777,
+      "version": "62.0.0"
+    },
+    "setuptools-62.1.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a38ed4627066094fecf5b52f093dc5cd",
+      "name": "setuptools",
+      "sha256": "13f630bd49d66ac0215aa45562c13a8452800297de66c5c955982abb6e758249",
+      "size": 1349686,
+      "subdir": "win-64",
+      "timestamp": 1649660596044,
+      "version": "62.1.0"
+    },
+    "setuptools-62.1.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "d1b94e8bcf796cb5002a893bd2f19f41",
+      "name": "setuptools",
+      "sha256": "5b9d26c5025c331204d137bc837f3e15868db81ce571537453c22b5f85dfce18",
+      "size": 1333934,
+      "subdir": "win-64",
+      "timestamp": 1649660646372,
+      "version": "62.1.0"
+    },
+    "setuptools-62.2.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6db20428ff77f74ef035ac4d93ef6ac1",
+      "name": "setuptools",
+      "sha256": "9d9b62e23a0c5b6712b30e3b622a6e0f33008af157f3c948b7c3afbf989beef0",
+      "size": 1382720,
+      "subdir": "win-64",
+      "timestamp": 1652213394601,
+      "version": "62.2.0"
+    },
+    "setuptools-62.2.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "fd90f8caa57c1d9fb69b596529b4f07c",
+      "name": "setuptools",
+      "sha256": "c764dec9ce91444324fc59706e61af66e29a802832a41601c00aaf1950bab31a",
+      "size": 1318680,
+      "subdir": "win-64",
+      "timestamp": 1652212481310,
+      "version": "62.2.0"
+    },
+    "setuptools-62.3.1-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "fbc4ea275a761a38b977903ef298418e",
+      "name": "setuptools",
+      "sha256": "ffd5d8f7bff0c0254d55b2f6ded2ef99ad19de1ead6ccca8919d9540108ee857",
+      "size": 1424823,
+      "subdir": "win-64",
+      "timestamp": 1652791075089,
+      "version": "62.3.1"
+    },
+    "setuptools-62.3.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "920449401ee73243bf2d4c8f9bc40892",
+      "name": "setuptools",
+      "sha256": "c8d8c459982530858f3a468415764452dd0f42c8255c434c7d58ca5bdadcde44",
+      "size": 1401139,
+      "subdir": "win-64",
+      "timestamp": 1652789604315,
+      "version": "62.3.1"
+    },
+    "setuptools-62.3.2-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "067db307d1653804c7e8ed7f8c5a8990",
+      "name": "setuptools",
+      "sha256": "c8fcea36ceafcd6464d10611c5411163204c8fca7104a856c3d1bfc6d8393050",
+      "size": 1433782,
+      "subdir": "win-64",
+      "timestamp": 1653003156857,
+      "version": "62.3.2"
+    },
+    "setuptools-62.3.2-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "febb3e2b2bba5e1e9b1d202d34c811c4",
+      "name": "setuptools",
+      "sha256": "b9152e428147e42d42fc53f79596604033a54252cf796eb30cab99ec4a8c5b7b",
+      "size": 1398894,
+      "subdir": "win-64",
+      "timestamp": 1653003866619,
+      "version": "62.3.2"
+    },
+    "setuptools-62.3.3-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f345084e70663c9e8aa7ddc1a8cc1300",
+      "name": "setuptools",
+      "sha256": "d34184a8b60e7843086c6f2bb24439c3f48ea8b3a1f789dd2a456d590a65bd77",
+      "size": 1428243,
+      "subdir": "win-64",
+      "timestamp": 1654646615321,
+      "version": "62.3.3"
+    },
+    "setuptools-62.3.3-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6e1e72e76d2ba5aa97d74b9ed74c64d3",
+      "name": "setuptools",
+      "sha256": "905a224891e5d378dd6f41e9893091a068811059ceafb12ae733eda9f6130e9f",
+      "size": 1400916,
+      "subdir": "win-64",
+      "timestamp": 1654647833340,
+      "version": "62.3.3"
+    },
+    "setuptools-62.3.4-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "0d4385e3fb158eded2fd01fb5650dad7",
+      "name": "setuptools",
+      "sha256": "2150e57adeca0687dc1f12bc9e7f2c684840894ba7d90ef665dd6607d0c5a1fc",
+      "size": 1426482,
+      "subdir": "win-64",
+      "timestamp": 1654961762498,
+      "version": "62.3.4"
+    },
+    "setuptools-62.3.4-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "67a601f4fb48e68fc42a9af4f9c98b05",
+      "name": "setuptools",
+      "sha256": "88c84d3a0ebd152a5e627e3c6e011b4ccaf195f4e4da9817e2ed29af54780355",
+      "size": 1403990,
+      "subdir": "win-64",
+      "timestamp": 1654961747084,
+      "version": "62.3.4"
+    },
+    "setuptools-62.5.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7e6fa7466a4d761fcb61ff70c7cc49ba",
+      "name": "setuptools",
+      "sha256": "b33cf74049ac2d2ba5fcb54894179f62b56519ef20d2200954ba004b71405a64",
+      "size": 1442057,
+      "subdir": "win-64",
+      "timestamp": 1655583749229,
+      "version": "62.5.0"
+    },
+    "setuptools-62.5.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "01aed7e9e898d9b221cbc8474f950f3c",
+      "name": "setuptools",
+      "sha256": "1b8836031aa72ada80e6bc1c1a187d1a20306ad10b9be0ef959592c6c2c489ea",
+      "size": 1404336,
+      "subdir": "win-64",
+      "timestamp": 1655583644064,
+      "version": "62.5.0"
+    },
+    "setuptools-62.6.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9ef31bbdabdb954f9d5c8f92f76c183b",
+      "name": "setuptools",
+      "sha256": "4e091421152d7541188a97c2b15147c676a1ee9bb01025d50676524f528c5fc0",
+      "size": 1447692,
+      "subdir": "win-64",
+      "timestamp": 1655717394576,
+      "version": "62.6.0"
+    },
+    "setuptools-62.6.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a39694c8a0a12b3ca1985628ae532e21",
+      "name": "setuptools",
+      "sha256": "b0725a4842c7aac732d502ce2ff96d089bf5367b5f5d6ed97c2a41314c2dd5cc",
+      "size": 1410512,
+      "subdir": "win-64",
+      "timestamp": 1655717292399,
+      "version": "62.6.0"
+    },
+    "setuptools-63.1.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c630545994101fc236a06067ca185c9b",
+      "name": "setuptools",
+      "sha256": "5c1008a6a036de435823a16589cfd47855ca428d723822fa8dbb50eca1dce0ec",
+      "size": 1412821,
+      "subdir": "win-64",
+      "timestamp": 1656925378704,
+      "version": "63.1.0"
+    },
+    "setuptools-63.1.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "3f9ecb2bc747e8e0ba18e557c1b0b8bf",
+      "name": "setuptools",
+      "sha256": "96660372956fa3af3c346e00f0c77158d362b6788bfcdbd226876c276b89288b",
+      "size": 1459846,
+      "subdir": "win-64",
+      "timestamp": 1656925409582,
+      "version": "63.1.0"
+    },
+    "setuptools-63.2.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "0ad14f0d96169d9340a6d826cd8092d1",
+      "name": "setuptools",
+      "sha256": "37e24ce890fcde0a5a142bd6b6d8e4f1b357d356bdaca2d6ce1db39f2abfc1af",
+      "size": 1441910,
+      "subdir": "win-64",
+      "timestamp": 1657809586697,
+      "version": "63.2.0"
+    },
+    "setuptools-63.2.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "33e8335b39ea25034dfd3328d5c3f3c5",
+      "name": "setuptools",
+      "sha256": "8605413c2336f3e25ded6ec40f756ee5a0e73d9ed64252a21f58b8aec4be2f3e",
+      "size": 1466376,
+      "subdir": "win-64",
+      "timestamp": 1657809432537,
+      "version": "63.2.0"
+    },
+    "setuptools-63.3.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "c7e5abbb0135f2b183a87a23d927b6ab",
+      "name": "setuptools",
+      "sha256": "429a56b248cde91ebf60f93fe41c00f0d73aa2d2b7a640917d8c129417e376f7",
+      "size": 1411838,
+      "subdir": "win-64",
+      "timestamp": 1659335970536,
+      "version": "63.3.0"
+    },
+    "setuptools-63.3.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7859f9473fce90da39ac6fc8dab5a4c5",
+      "name": "setuptools",
+      "sha256": "459eaacbae79f723b44b4e59bb340e9f86d0751c486a40ed37d6bc2b30cc73cc",
+      "size": 1405496,
+      "subdir": "win-64",
+      "timestamp": 1659335843863,
+      "version": "63.3.0"
+    },
+    "setuptools-63.4.1-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6e37a6272e7d2cf7c7b9310a556b76e6",
+      "name": "setuptools",
+      "sha256": "b0da281b5c6c6740bc9641c279ad30771390f7734a66e1654519139d250c6eb6",
+      "size": 1413159,
+      "subdir": "win-64",
+      "timestamp": 1659703710362,
+      "version": "63.4.1"
+    },
+    "setuptools-63.4.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ba9ee4f68057cf6123d9bb7f77136d5b",
+      "name": "setuptools",
+      "sha256": "de7280eb6b727782e971fdfa6eb4c128e7803158bf3d50128d145616b635ce2a",
+      "size": 1479160,
+      "subdir": "win-64",
+      "timestamp": 1659702749094,
+      "version": "63.4.1"
+    },
+    "setuptools-63.4.2-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "d430e6d3f656a9d7c2dd3ab85e2b70db",
+      "name": "setuptools",
+      "sha256": "aac663fc0241798007671ff3d74b23d0cf69a1be464d2e0481a741d283a9a6a4",
+      "size": 1422234,
+      "subdir": "win-64",
+      "timestamp": 1659879052256,
+      "version": "63.4.2"
+    },
+    "setuptools-63.4.2-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a42ec3ef2f8b982ef15680d7fdb283bb",
+      "name": "setuptools",
+      "sha256": "aa5ede3fc605a25c39d471d0941525fea3bb0ae8ae4efb460e1450c1f28dcaee",
+      "size": 1405926,
+      "subdir": "win-64",
+      "timestamp": 1659878807029,
+      "version": "63.4.2"
+    },
+    "setuptools-63.4.3-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "8d8acef474832f5219f222002bf76d4a",
+      "name": "setuptools",
+      "sha256": "d3d5827087d582d784237265293ee75414a843d71a612f60f1d824c6e5955e8f",
+      "size": 1437041,
+      "subdir": "win-64",
+      "timestamp": 1660167631060,
+      "version": "63.4.3"
+    },
+    "setuptools-63.4.3-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "9bb1d48c054b5f127a7c9214fda3f91d",
+      "name": "setuptools",
+      "sha256": "e66d027eedbbc70b2ff75fe910a3bf258a516396d0c5cc9b2fc8a47fe45ff386",
+      "size": 1422705,
+      "subdir": "win-64",
+      "timestamp": 1660168861409,
+      "version": "63.4.3"
+    },
+    "setuptools-64.0.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "902a55c21823261b8348611682d24a16",
+      "name": "setuptools",
+      "sha256": "abf0196b3a7ade7011d22ed3197d12aaecdb75862575918efad8dcc280126a84",
+      "size": 1497039,
+      "subdir": "win-64",
+      "timestamp": 1660240144625,
+      "version": "64.0.0"
+    },
+    "setuptools-64.0.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6a186cb840b2ee4378746d5dfb2a6c0c",
+      "name": "setuptools",
+      "sha256": "b9ba2931e7a8c4e87b1801d279ecfc8125d53d385f3879e019e35ea2a9e9b037",
+      "size": 1512975,
+      "subdir": "win-64",
+      "timestamp": 1660239296747,
+      "version": "64.0.0"
+    },
+    "setuptools-64.0.1-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "2dcef84e013f6982e2c663817907a0cb",
+      "name": "setuptools",
+      "sha256": "e1e989026f61c32967d0bbaf10763aefc0da647030d5c9d46d11fcffb3de81f5",
+      "size": 1511685,
+      "subdir": "win-64",
+      "timestamp": 1660318069199,
+      "version": "64.0.1"
+    },
+    "setuptools-64.0.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "da8f5491d9b2061b898a9b5c287055a3",
+      "name": "setuptools",
+      "sha256": "35fbd4582c0174ecc93690d5022247e40593d8098c9baf9b58667155de39a198",
+      "size": 1515389,
+      "subdir": "win-64",
+      "timestamp": 1660318053056,
+      "version": "64.0.1"
+    },
+    "setuptools-64.0.2-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "05b83019860907ba1143b555239045bd",
+      "name": "setuptools",
+      "sha256": "7462bfa872b30174c0ac59e1d9ef9acbbfa979c3953fa058a343b6654dfa0fc7",
+      "size": 1498768,
+      "subdir": "win-64",
+      "timestamp": 1660330202576,
+      "version": "64.0.2"
+    },
+    "setuptools-64.0.2-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "0f959bce6b8ef6182d60277fbc47b6fb",
+      "name": "setuptools",
+      "sha256": "339d3ffdae94f66ab2f3e425eda5f7bcfa0da019c640d91f385e6bc9efcd9ca7",
+      "size": 1518797,
+      "subdir": "win-64",
+      "timestamp": 1660330117147,
+      "version": "64.0.2"
+    },
+    "setuptools-64.0.3-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "bc4e311b5dd92ff526f6e6129fef4dd4",
+      "name": "setuptools",
+      "sha256": "2deda4b6657d6844da84a62b64542733827438debb38a0cf0f5a87d5b98bef05",
+      "size": 1451810,
+      "subdir": "win-64",
+      "timestamp": 1660348568229,
+      "version": "64.0.3"
+    },
+    "setuptools-64.0.3-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "66bfaf55b6c76c42634bfdf9446a7854",
+      "name": "setuptools",
+      "sha256": "29f0b48514a9589593311697b1bc2b6e301e73ad125fb12a78da6edade5a88cf",
+      "size": 1514196,
+      "subdir": "win-64",
+      "timestamp": 1660348360738,
+      "version": "64.0.3"
+    },
+    "setuptools-65.0.0-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "b0126b40672d051ce05c06bcd2ccfd2d",
+      "name": "setuptools",
+      "sha256": "8ff32a82e38b36c3cd62617773301d3268d2db3d6da958672ed936d91f503cba",
+      "size": 1402427,
+      "subdir": "win-64",
+      "timestamp": 1660561363493,
+      "version": "65.0.0"
+    },
+    "setuptools-65.0.0-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a39f18a5e0c11612d7ee1f5d90891871",
+      "name": "setuptools",
+      "sha256": "002906366a11057a6343f5af49c59b0ac963fdafb2077a9baf535ad443961fe4",
+      "size": 1469025,
+      "subdir": "win-64",
+      "timestamp": 1660561324343,
+      "version": "65.0.0"
+    },
+    "setuptools-65.0.1-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "ca77065de2286421dc227b3ebc6806d6",
+      "name": "setuptools",
+      "sha256": "8cbd4dcd4a3c89f30eb692db8b5ff5edc6989655c387a9ffdfe30660c007b8d5",
+      "size": 1417657,
+      "subdir": "win-64",
+      "timestamp": 1660620761037,
+      "version": "65.0.1"
+    },
+    "setuptools-65.0.1-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6a9fe5f8d040304bd6b547f39aff8363",
+      "name": "setuptools",
+      "sha256": "bbc3a40016b14c9bd5a156b838d0e007d0ef145e0c2a3dd175a4fd0c326ee511",
+      "size": 1470392,
+      "subdir": "win-64",
+      "timestamp": 1660620571207,
+      "version": "65.0.1"
+    },
+    "setuptools-65.0.2-py38h32ec214_0.tar.bz2": {
+      "build": "py38h32ec214_0",
+      "build_number": 0,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "5c42f4aa62cea65ecedae5d1df1c50a9",
+      "name": "setuptools",
+      "sha256": "6e124a20127c299664ed1731f30375279b52c3ff49549ec37985f7344683cf29",
+      "size": 1450955,
+      "subdir": "win-64",
+      "timestamp": 1660721011039,
+      "version": "65.0.2"
+    },
+    "setuptools-65.0.2-py38haa244fe_0.tar.bz2": {
+      "build": "py38haa244fe_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "b7b10abff7ebb6a8a4513b6896369039",
+      "name": "setuptools",
+      "sha256": "32ac125ee1626d85485b4e08ca99ace9f40134ad9cc35bcfd868c43cb47bdb81",
+      "size": 1417965,
+      "subdir": "win-64",
+      "timestamp": 1660720956678,
+      "version": "65.0.2"
+    },
+    "six-1.12.0-py38_1001.tar.bz2": {
+      "build": "py38_1001",
+      "build_number": 1001,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "aa4a6c02a1135f64359e33ab2d7f2b51",
+      "name": "six",
+      "sha256": "ba5f71fc7ed35819445200fdc066017bfe7dbf637f0afb94e1c571ec1ad0f4d4",
+      "size": 22610,
+      "subdir": "win-64",
+      "timestamp": 1572705009756,
+      "version": "1.12.0"
+    },
+    "six-1.13.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "f52dceeb7ae25b9b5391f44766989966",
+      "name": "six",
+      "sha256": "9c193737b3aaab1dcae705c66916d78a088c466a66d43ca54029d9d633375513",
+      "size": 22946,
+      "subdir": "win-64",
+      "timestamp": 1572980437888,
+      "version": "1.13.0"
+    },
+    "six-1.14.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "a93ee38b3fe912a37c0b82745094d81c",
+      "name": "six",
+      "sha256": "23de11be00ca5480a2a23addd082b47074f1cb8a16436c79493a2948ed04cbc8",
+      "size": 23222,
+      "subdir": "win-64",
+      "timestamp": 1579113914257,
+      "version": "1.14.0"
+    },
+    "sqlite-3.36.0-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Unlicense",
+      "md5": "b7e2a74bafb1c94b0ea7195ef2149f8e",
+      "name": "sqlite",
+      "sha256": "ba7aa05d33e188292ad62f4f4002d8f085a5cb835b11f53dca252f9da036c000",
+      "size": 1262382,
+      "subdir": "win-64",
+      "timestamp": 1624305517668,
+      "version": "3.36.0"
+    },
+    "sqlite-3.36.0-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Unlicense",
+      "md5": "c624e84730be43b8749535ff5b95db38",
+      "name": "sqlite",
+      "sha256": "3f669968419fea67893f8271dbb3e694c88faf0939292bea819165d37da8b8b1",
+      "size": 1261278,
+      "subdir": "win-64",
+      "timestamp": 1631212981299,
+      "version": "3.36.0"
+    },
+    "sqlite-3.36.0-h8ffe710_2.tar.bz2": {
+      "build": "h8ffe710_2",
+      "build_number": 2,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Unlicense",
+      "md5": "f1ac18aa58268ab10d1b7b4d640243c0",
+      "name": "sqlite",
+      "sha256": "6fcda0b00853bc7028d27b54ce4ff0c39e5680e29334f5c43f09ecc8cf03dc07",
+      "size": 1248668,
+      "subdir": "win-64",
+      "timestamp": 1632599451505,
+      "version": "3.36.0"
+    },
+    "sqlite-3.37.0-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Unlicense",
+      "md5": "cc2d704449f994c1aa422a5a1cd8a64e",
+      "name": "sqlite",
+      "sha256": "bdb31c911d194a2d62a090316c3e67c92858eb81acb8a853e70e76c585708aff",
+      "size": 1272553,
+      "subdir": "win-64",
+      "timestamp": 1638108669921,
+      "version": "3.37.0"
+    },
+    "sqlite-3.37.1-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "c71d9a73f2e6c1e18cc9fa30bef906f5",
+      "name": "sqlite",
+      "sha256": "a34b6d1473ddd5ef1621ad28aab69d0e6015ffca535612243a9d9f71b5c5b711",
+      "size": 1295374,
+      "subdir": "win-64",
+      "timestamp": 1647374382783,
+      "version": "3.37.1"
+    },
+    "sqlite-3.38.2-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "dd6683d0095934d1635bada2aca053e3",
+      "name": "sqlite",
+      "sha256": "4099a15253a1796e6e0a9da92f007566aa06706bd2ee43e8977bf73315d887c5",
+      "size": 1313317,
+      "subdir": "win-64",
+      "timestamp": 1649683301411,
+      "version": "3.38.2"
+    },
+    "sqlite-3.38.3-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "4f5ed8455aaaa4005d49ac6d45346f88",
+      "name": "sqlite",
+      "sha256": "5447ac285628a7e60ec668a2ed6ea8730a9a40145d149c6eb5ab2110bce7eeef",
+      "size": 1318499,
+      "subdir": "win-64",
+      "timestamp": 1651154199309,
+      "version": "3.38.3"
+    },
+    "sqlite-3.38.4-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "308d66884ee58c6dba3a973f08bbfb3a",
+      "name": "sqlite",
+      "sha256": "53a007d32cbfd26a9d8eb1ba38fa69be93f027c10a69c9afd4030d868e0a7af1",
+      "size": 1323715,
+      "subdir": "win-64",
+      "timestamp": 1651694831545,
+      "version": "3.38.4"
+    },
+    "sqlite-3.38.5-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "9f9c961fc099c7c91a27f38890c42498",
+      "name": "sqlite",
+      "sha256": "7e949e4ca0546d0d52538f984003b66b6f3ced085d7b025ce40c48f0757febc6",
+      "size": 1321181,
+      "subdir": "win-64",
+      "timestamp": 1651863506344,
+      "version": "3.38.5"
+    },
+    "sqlite-3.39.0-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "c76b39a7a74df1875e7b2b3fb5549632",
+      "name": "sqlite",
+      "sha256": "d06c558347db79d2fb60c17e78d768004493563ad36bc619c62fd7e24cd10553",
+      "size": 1333850,
+      "subdir": "win-64",
+      "timestamp": 1656331106492,
+      "version": "3.39.0"
+    },
+    "sqlite-3.39.1-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "c78517cc232400e9901399a387b8210c",
+      "name": "sqlite",
+      "sha256": "314e1441edd8f39d87767304373fbab0b8e903423037cee63ca5d9ef25e483e5",
+      "size": 1326620,
+      "subdir": "win-64",
+      "timestamp": 1657806599159,
+      "version": "3.39.1"
+    },
+    "sqlite-3.39.2-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "902c57a6f2f2e0b837a004004cd2ca57",
+      "name": "sqlite",
+      "sha256": "ff4522ccfed5453dd773a935cf034b307872eba6814aa2798bef1cd4cc5e67df",
+      "size": 1327505,
+      "subdir": "win-64",
+      "timestamp": 1658499257406,
+      "version": "3.39.2"
+    },
+    "sqlite-3.39.2-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "libsqlite 3.39.2 h8ffe710_1",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "27c7467eec7d73001ccc1435cc2225d3",
+      "name": "sqlite",
+      "sha256": "6cc29ff3208f800c5d242d6ed2a3d9d4cee60618116ce568fdda6930be087ae7",
+      "size": 675640,
+      "subdir": "win-64",
+      "timestamp": 1660346811947,
+      "version": "3.39.2"
+    },
+    "tk-8.6.11-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "TCL",
+      "license_family": "BSD",
+      "md5": "f7f8c13fe850a115ccd34dd1c5119272",
+      "name": "tk",
+      "sha256": "eb19b2dd15e72315577acb6f954608b48086d07360e8982128fd6e865e5dd170",
+      "size": 3986898,
+      "subdir": "win-64",
+      "timestamp": 1629653576404,
+      "version": "8.6.11"
+    },
+    "tk-8.6.11-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "TCL",
+      "license_family": "BSD",
+      "md5": "fd3c141a1ed5a77e5813795950fb7395",
+      "name": "tk",
+      "sha256": "6ff2266f251352cfed4cde4072423ab0fdec7bc8f7976ecb44f9f003aa6bacd5",
+      "size": 3997044,
+      "subdir": "win-64",
+      "timestamp": 1630564356846,
+      "version": "8.6.11"
+    },
+    "tk-8.6.12-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "TCL",
+      "license_family": "BSD",
+      "md5": "c69a5047cc9291ae40afd4a1ad6f0c0f",
+      "name": "tk",
+      "sha256": "087795090a99a1d397ef1ed80b4a01fabfb0122efb141562c168e3c0a76edba6",
+      "size": 3681762,
+      "subdir": "win-64",
+      "timestamp": 1645033031535,
+      "version": "8.6.12"
+    },
+    "ucrt-10.0.20348.0-h57928b3_0.tar.bz2": {
+      "build": "h57928b3_0",
+      "build_number": 0,
+      "constrains": [
+        "vs2015_runtime >=14.29.30037"
+      ],
+      "depends": [],
+      "license": "LicenseRef-Proprietary",
+      "license_family": "PROPRIETARY",
+      "md5": "6d666b6ea8251231ff508062d1e41f9c",
+      "name": "ucrt",
+      "sha256": "e5a8634df6ee84745dfe27f40ace7b6e45646a4b7bc7dbeb1efe1bb6128e44b9",
+      "size": 1233285,
+      "subdir": "win-64",
+      "timestamp": 1624476303271,
+      "version": "10.0.20348.0"
+    },
+    "vc-14.1-h21ff451_1.tar.bz2": {
+      "build": "h21ff451_1",
+      "build_number": 1,
+      "depends": [
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "5c42e9fea0c7e54c04a35b46b57ea93c",
+      "name": "vc",
+      "sha256": "40f98351fd1eda20fcbd5d412009872f87aadd3324c388ef3515c473e5f31169",
+      "size": 6314,
+      "subdir": "win-64",
+      "timestamp": 1585583208197,
+      "track_features": "vc14",
+      "version": "14.1"
+    },
+    "vc-14.1-h6d1b3ff_2.tar.bz2": {
+      "build": "h6d1b3ff_2",
+      "build_number": 2,
+      "depends": [
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "53942f2584ceb570ed28e337acdac70f",
+      "name": "vc",
+      "sha256": "7db083eb010f5372f53065631676feb5054dc4dfba05133ed49f7b6ecf9384c1",
+      "size": 12420,
+      "subdir": "win-64",
+      "timestamp": 1608609108018,
+      "track_features": "vc14",
+      "version": "14.1"
+    },
+    "vc-14.1-h6d1b3ff_3.tar.bz2": {
+      "build": "h6d1b3ff_3",
+      "build_number": 3,
+      "depends": [
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "fb505fc7f7cc3fe127fc791ecd13e1d0",
+      "name": "vc",
+      "sha256": "4ae398911922fbab1ff50fdebe1dfb1dfa5ea0ea8a2c53accf4c406b83e5d4c8",
+      "size": 12961,
+      "subdir": "win-64",
+      "timestamp": 1612988366733,
+      "track_features": "vc14",
+      "version": "14.1"
+    },
+    "vc-14.1-h6d1b3ff_4.tar.bz2": {
+      "build": "h6d1b3ff_4",
+      "build_number": 4,
+      "depends": [
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "ae46bd573d406b6fb05d44d521ba8b1e",
+      "name": "vc",
+      "sha256": "b71ad7d57579df22126fae9a78ba29f1b96b5f1957082fd68fce027d7b24c0ae",
+      "size": 13108,
+      "subdir": "win-64",
+      "timestamp": 1614879342562,
+      "track_features": "vc14",
+      "version": "14.1"
+    },
+    "vc-14.1-h6d1b3ff_5.tar.bz2": {
+      "build": "h6d1b3ff_5",
+      "build_number": 5,
+      "depends": [
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "77f10f7d2c36a8f5d608e7615060e9c4",
+      "name": "vc",
+      "sha256": "8641d6f531c376e78d1ac81b49e5680ecbacaadf99461ffd697944b79bcd6040",
+      "size": 13275,
+      "subdir": "win-64",
+      "timestamp": 1624484068933,
+      "track_features": "vc14",
+      "version": "14.1"
+    },
+    "vc-14.1-h6d1b3ff_6.tar.bz2": {
+      "build": "h6d1b3ff_6",
+      "build_number": 6,
+      "depends": [
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "612b8959dc01933fae8f0db805568474",
+      "name": "vc",
+      "sha256": "023aeffdd947c13ab4c88c432a25c64e5c3a41e5150d2630bc0a28c0d6c49e05",
+      "size": 13720,
+      "subdir": "win-64",
+      "timestamp": 1641830856414,
+      "track_features": "vc14",
+      "version": "14.1"
+    },
+    "vc-14.1-h869be7e_1.tar.bz2": {
+      "build": "h869be7e_1",
+      "build_number": 1,
+      "depends": [
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "4fae57303daa91367eca263374e4a638",
+      "name": "vc",
+      "sha256": "a502679562eb11b92520a331ab3a0e7344b4e0bc26f2f977f15c9033712c57ed",
+      "size": 6305,
+      "subdir": "win-64",
+      "timestamp": 1585657804217,
+      "track_features": "vc14",
+      "version": "14.1"
+    },
+    "vc-14.2-hb210afc_2.tar.bz2": {
+      "build": "hb210afc_2",
+      "build_number": 2,
+      "depends": [
+        "vs2015_runtime >=14.28.29325"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "6852e7ea3601522ab1d4fa60fec8c4fe",
+      "name": "vc",
+      "sha256": "69993f10d3cab02713c652fca4dfe4e983a010ed3d9a7b9090276a7c0006dd46",
+      "size": 12420,
+      "subdir": "win-64",
+      "timestamp": 1608609146555,
+      "track_features": "vc14",
+      "version": "14.2"
+    },
+    "vc-14.2-hb210afc_3.tar.bz2": {
+      "build": "hb210afc_3",
+      "build_number": 3,
+      "depends": [
+        "vs2015_runtime >=14.28.29325"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "0c6a9fb1b4de5694ab5d7e41c84fb596",
+      "name": "vc",
+      "sha256": "08a47b6d57343111319d2437de389989b882190a2b500f91025451ba23efe5ef",
+      "size": 12966,
+      "subdir": "win-64",
+      "timestamp": 1612988761961,
+      "track_features": "vc14",
+      "version": "14.2"
+    },
+    "vc-14.2-hb210afc_4.tar.bz2": {
+      "build": "hb210afc_4",
+      "build_number": 4,
+      "depends": [
+        "vs2015_runtime >=14.28.29325"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "45ddc2c65ad6c200120db1a682803462",
+      "name": "vc",
+      "sha256": "a6cdc9514854413112a7ded32ae113807f40352d671ad081065e0408a9fb1f19",
+      "size": 13100,
+      "subdir": "win-64",
+      "timestamp": 1614879310724,
+      "track_features": "vc14",
+      "version": "14.2"
+    },
+    "vc-14.2-hb210afc_5.tar.bz2": {
+      "build": "hb210afc_5",
+      "build_number": 5,
+      "depends": [
+        "vs2015_runtime >=14.28.29325"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "ee42529d57c3b455d9fec61e912aa2a6",
+      "name": "vc",
+      "sha256": "7fb893fe02a3605910b5bf97296d1b8a3e5372a09cd3189f8a534c85b8b437a0",
+      "size": 13244,
+      "subdir": "win-64",
+      "timestamp": 1624484173187,
+      "track_features": "vc14",
+      "version": "14.2"
+    },
+    "vc-14.2-hb210afc_6.tar.bz2": {
+      "build": "hb210afc_6",
+      "build_number": 6,
+      "depends": [
+        "vs2015_runtime >=14.28.29325"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "c2aecbc9b00ba6f352e27d3d61fd31fb",
+      "name": "vc",
+      "sha256": "c6e7d2b9ceafe2cc302fb8fce1dfcc46b49c5333757424a34294bffdfb5569be",
+      "size": 13699,
+      "subdir": "win-64",
+      "timestamp": 1641832058226,
+      "track_features": "vc14",
+      "version": "14.2"
+    },
+    "vc-14.2-hc4473a8_5.tar.bz2": {
+      "build": "hc4473a8_5",
+      "build_number": 5,
+      "depends": [
+        "vs2015_runtime >=14.29.30037"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "0cf882da3076af737ce26e216b85fdf0",
+      "name": "vc",
+      "sha256": "0a0d9af03556b7bc3752e083f62a088a778bc7b479bcdda4b791dde65bd0f876",
+      "size": 13249,
+      "subdir": "win-64",
+      "timestamp": 1624484048351,
+      "track_features": "vc14",
+      "version": "14.2"
+    },
+    "vc-14.2-hc4473a8_6.tar.bz2": {
+      "build": "hc4473a8_6",
+      "build_number": 6,
+      "depends": [
+        "vs2015_runtime >=14.29.30037"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "b0e429ed7d8d8fb54af7849ff0aeff5e",
+      "name": "vc",
+      "sha256": "a607fa31321556f98b69b6582ea2233759f89229e25eb87b26a0ef7d0254cf96",
+      "size": 13709,
+      "subdir": "win-64",
+      "timestamp": 1641830265681,
+      "track_features": "vc14",
+      "version": "14.2"
+    },
+    "vs2015_runtime-14.16.27012-h30e32a0_1.tar.bz2": {
+      "build": "h30e32a0_1",
+      "build_number": 1,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "md5": "47d15c16b8292218c05ad0222fc6ba45",
+      "name": "vs2015_runtime",
+      "sha256": "fd126857acb7ea361fdddec63acf6f8564e2b4ff7615457eb0b60a0fbd5b0e81",
+      "size": 2334221,
+      "subdir": "win-64",
+      "timestamp": 1585657787409,
+      "version": "14.16.27012"
+    },
+    "vs2015_runtime-14.16.27012-h30e32a0_2.tar.bz2": {
+      "build": "h30e32a0_2",
+      "build_number": 2,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "md5": "37a0bcc72c5e97f5602dca37eb3f8314",
+      "name": "vs2015_runtime",
+      "sha256": "b11f504130edde374f086b4a79f298b2948ec6055ee5d29bde0ede2bbbbf2e41",
+      "size": 2339253,
+      "subdir": "win-64",
+      "timestamp": 1586889728468,
+      "version": "14.16.27012"
+    },
+    "vs2015_runtime-14.16.27012-hf0eaf9b_0.tar.bz2": {
+      "build": "hf0eaf9b_0",
+      "build_number": 0,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "md5": "993d83b8e6c14ffad132e3dc64256a4e",
+      "name": "vs2015_runtime",
+      "sha256": "ac95fd4847ac984f1e2b46b3214081eb5e6a53aeba02293c52da18dfa00d14e5",
+      "size": 2333217,
+      "subdir": "win-64",
+      "timestamp": 1585583192193,
+      "version": "14.16.27012"
+    },
+    "vs2015_runtime-14.16.27033-h024ed77_0.tar.bz2": {
+      "build": "h024ed77_0",
+      "build_number": 0,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "8abb7131f2a3ee93e7dff2ae5bea81e5",
+      "name": "vs2015_runtime",
+      "sha256": "2869afd9b2365bda8b651daf4b6ddcd7b80c33c2e4dd4ca6f2533c5c1bb96c7c",
+      "size": 1523695,
+      "subdir": "win-64",
+      "timestamp": 1608609099376,
+      "version": "14.16.27033"
+    },
+    "vs2015_runtime-14.16.27033-h024ed77_3.tar.bz2": {
+      "build": "h024ed77_3",
+      "build_number": 3,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "15175ebc6404ffa5a457bf2bb5421817",
+      "name": "vs2015_runtime",
+      "sha256": "192547689df3c98fd5e8fb171368bf58353723f7e98c9f4dfa80271d34e9915a",
+      "size": 2557172,
+      "subdir": "win-64",
+      "timestamp": 1612988355175,
+      "version": "14.16.27033"
+    },
+    "vs2015_runtime-14.16.27033-h024ed77_4.tar.bz2": {
+      "build": "h024ed77_4",
+      "build_number": 4,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "f87fc607bcf3400a64717c0ce49c35b7",
+      "name": "vs2015_runtime",
+      "sha256": "cc70ebb274c79bce79b1f235f3a55658719474e44ff7e7a6898f05eb944bd59d",
+      "size": 2593266,
+      "subdir": "win-64",
+      "timestamp": 1614879332603,
+      "version": "14.16.27033"
+    },
+    "vs2015_runtime-14.16.27033-hcf11a7e_5.tar.bz2": {
+      "build": "hcf11a7e_5",
+      "build_number": 5,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "77c288425cce0220ee23fb6749a51a39",
+      "name": "vs2015_runtime",
+      "sha256": "67230853f63197c5faabc4d60b554135f562a6f955c14d302638f6ef6fd27d2c",
+      "size": 2551986,
+      "subdir": "win-64",
+      "timestamp": 1624484059163,
+      "version": "14.16.27033"
+    },
+    "vs2015_runtime-14.16.27033-hcf11a7e_6.tar.bz2": {
+      "build": "hcf11a7e_6",
+      "build_number": 6,
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "dc9f8c60e4358c4f53c93e097a01c232",
+      "name": "vs2015_runtime",
+      "sha256": "5d50d37c188823cdc3629badbbd62af4408c4315005b83bac944d7730892ee75",
+      "size": 2599332,
+      "subdir": "win-64",
+      "timestamp": 1641830843633,
+      "version": "14.16.27033"
+    },
+    "vs2015_runtime-14.28.29325-h5e1d092_0.tar.bz2": {
+      "build": "h5e1d092_0",
+      "build_number": 0,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "4e4fc486090f90e00edfa9c7730e2771",
+      "name": "vs2015_runtime",
+      "sha256": "307e96b72e3838c1b73f7fa31af25727a58f963470e9409ebcf0ef192f01205c",
+      "size": 1430524,
+      "subdir": "win-64",
+      "timestamp": 1608609137498,
+      "version": "14.28.29325"
+    },
+    "vs2015_runtime-14.28.29325-h5e1d092_3.tar.bz2": {
+      "build": "h5e1d092_3",
+      "build_number": 3,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "23678152b829fcf69cdf5e7c5510120d",
+      "name": "vs2015_runtime",
+      "sha256": "5cb2c44add4af12bd614972504399600a5808c54556101e41dd47ff12fbd1a49",
+      "size": 2344059,
+      "subdir": "win-64",
+      "timestamp": 1612988753210,
+      "version": "14.28.29325"
+    },
+    "vs2015_runtime-14.28.29325-h5e1d092_4.tar.bz2": {
+      "build": "h5e1d092_4",
+      "build_number": 4,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "e89bf06003c46c09ee8628eb76aa9520",
+      "name": "vs2015_runtime",
+      "sha256": "40ed75573455a1756ed1a346e54a1ed8af56f5c60b951491de511c65699eb662",
+      "size": 2370118,
+      "subdir": "win-64",
+      "timestamp": 1614879302840,
+      "version": "14.28.29325"
+    },
+    "vs2015_runtime-14.28.29325-h8ebdc22_5.tar.bz2": {
+      "build": "h8ebdc22_5",
+      "build_number": 5,
+      "constrains": [
+        "ucrt <0a0"
+      ],
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "8d47eaf1c77e8599c1663d475998c396",
+      "name": "vs2015_runtime",
+      "sha256": "656af0600abcce3369f90efd2942276a84354fa02ce0dcac56cc07cfef01dbd3",
+      "size": 2370611,
+      "subdir": "win-64",
+      "timestamp": 1624484163852,
+      "version": "14.28.29325"
+    },
+    "vs2015_runtime-14.28.29325-h8ebdc22_6.tar.bz2": {
+      "build": "h8ebdc22_6",
+      "build_number": 6,
+      "depends": [],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "28f6c757e61e473d4683877837195af4",
+      "name": "vs2015_runtime",
+      "sha256": "3ee0e706b704fc620c956f9f9b7d8be4e8c076631b7a825f5b51b02f121070af",
+      "size": 2345442,
+      "subdir": "win-64",
+      "timestamp": 1641832048511,
+      "version": "14.28.29325"
+    },
+    "vs2015_runtime-14.29.30037-h902a5da_5.tar.bz2": {
+      "build": "h902a5da_5",
+      "build_number": 5,
+      "depends": [
+        "ucrt >=10.0.20348.0"
+      ],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "9d806b41066c34981a5da22bfeffd8e8",
+      "name": "vs2015_runtime",
+      "sha256": "ee3814dce968d0009fcbfb01853f1d142dfeebc72811ac285fdb740eaa965912",
+      "size": 1338991,
+      "subdir": "win-64",
+      "timestamp": 1624484040160,
+      "version": "14.29.30037"
+    },
+    "vs2015_runtime-14.29.30037-h902a5da_6.tar.bz2": {
+      "build": "h902a5da_6",
+      "build_number": 6,
+      "depends": [
+        "ucrt >=10.0.20348.0"
+      ],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "33d07ebe91062743eabc9e53a60d18e1",
+      "name": "vs2015_runtime",
+      "sha256": "f2efbbe3465a34b195edd218d5572c998d94c5964d4e495c3d7f95c8bb5fcaac",
+      "size": 1343642,
+      "subdir": "win-64",
+      "timestamp": 1641830254130,
+      "version": "14.29.30037"
+    },
+    "wheel-0.33.6-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "setuptools"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "43e131c388d2fcc859897f553bc70a66",
+      "name": "wheel",
+      "sha256": "8f6b83ecad720fa76ffb2feb585f0004f2bf83ef3b391e5183817bc77e860b34",
+      "size": 53513,
+      "subdir": "win-64",
+      "timestamp": 1572648296442,
+      "version": "0.33.6"
+    },
+    "wheel-0.34.0-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "setuptools"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "6473290ae73895965ec7ab9cc5b0def4",
+      "name": "wheel",
+      "sha256": "62535879bde3f891325a369a7c037ed17fe7f59e1bf901c4f95b5381ee3aeba4",
+      "size": 61671,
+      "subdir": "win-64",
+      "timestamp": 1580154130631,
+      "version": "0.34.0"
+    },
+    "wheel-0.34.1-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "setuptools"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "d58054340fc88dd0eb044acad67ebf42",
+      "name": "wheel",
+      "sha256": "cfcc3dbd02de4d2dea0e7440bb9eed8080fc96db73b1ef62a3f1c8a3e7258f37",
+      "size": 61537,
+      "subdir": "win-64",
+      "timestamp": 1580161678315,
+      "version": "0.34.1"
+    },
+    "wheel-0.34.2-py38_0.tar.bz2": {
+      "build": "py38_0",
+      "build_number": 0,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "setuptools"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "7d74e05159e4e591834581a02adffbb4",
+      "name": "wheel",
+      "sha256": "e7bcffe3bf2d94b16e6bd76556ff1eafaea66f18a7369c4085a9fdef6d15e1f8",
+      "size": 61981,
+      "subdir": "win-64",
+      "timestamp": 1580427297819,
+      "version": "0.34.2"
+    },
+    "wincertstore-0.2-py38_1003.tar.bz2": {
+      "build": "py38_1003",
+      "build_number": 1003,
+      "constrains": [
+        "python_abi * *_cp38"
+      ],
+      "depends": [
+        "python >=3.8,<3.9.0a0"
+      ],
+      "license": "PSF 2",
+      "md5": "121788810b4fd722fea7689e5e89e552",
+      "name": "wincertstore",
+      "sha256": "d90d1b70f5070e98166fdb57d3b42b03b85f444a8463d13c5efa067651fc03a8",
+      "size": 13521,
+      "subdir": "win-64",
+      "timestamp": 1572619823136,
+      "version": "0.2"
+    },
+    "wincertstore-0.2-py38h32ec214_1008.tar.bz2": {
+      "build": "py38h32ec214_1008",
+      "build_number": 1008,
+      "depends": [
+        "pypy3.8 >=7.3.9",
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8 *_pypy38_pp73"
+      ],
+      "license": "PSF-2.0",
+      "license_family": "PSF",
+      "md5": "567c62d66270d25ffaf35d605a24a6f4",
+      "name": "wincertstore",
+      "sha256": "d1935463fdec5adab7bda96de97449d2b637a3cc2f892a63d10aa717a5f067f6",
+      "size": 15821,
+      "subdir": "win-64",
+      "timestamp": 1649771665825,
+      "version": "0.2"
+    },
+    "wincertstore-0.2-py38h32f6830_1005.tar.bz2": {
+      "build": "py38h32f6830_1005",
+      "build_number": 1005,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "PSF-2.0",
+      "license_family": "PSF",
+      "md5": "8c253621e1f3121360b00b5ffe4626ff",
+      "name": "wincertstore",
+      "sha256": "0649b58a503ce756a8d54350eaacef06ad715e347de089c3c9bb5474deae12c5",
+      "size": 15223,
+      "subdir": "win-64",
+      "timestamp": 1602246477581,
+      "version": "0.2"
+    },
+    "wincertstore-0.2-py38haa244fe_1006.tar.bz2": {
+      "build": "py38haa244fe_1006",
+      "build_number": 1006,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "PSF-2.0",
+      "license_family": "PSF",
+      "md5": "3d25df9e81ec24db2d91b7b477860a01",
+      "name": "wincertstore",
+      "sha256": "b0de203e8b38a694be0a1e2e6f7687660b907c7ef13f09e92b3e98ffaae63ed9",
+      "size": 15281,
+      "subdir": "win-64",
+      "timestamp": 1609961315369,
+      "version": "0.2"
+    },
+    "wincertstore-0.2-py38haa244fe_1007.tar.bz2": {
+      "build": "py38haa244fe_1007",
+      "build_number": 1007,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "PSF-2.0",
+      "license_family": "PSF",
+      "md5": "3370e1c3998f1335d213fc5a03656f40",
+      "name": "wincertstore",
+      "sha256": "5b7b456e520df885ac4ea53f502822c2034382f8f1f5fb35068e39da96de1cfb",
+      "size": 15583,
+      "subdir": "win-64",
+      "timestamp": 1635762910142,
+      "version": "0.2"
+    },
+    "wincertstore-0.2-py38haa244fe_1008.tar.bz2": {
+      "build": "py38haa244fe_1008",
+      "build_number": 1008,
+      "depends": [
+        "python >=3.8,<3.9.0a0",
+        "python_abi 3.8.* *_cp38"
+      ],
+      "license": "PSF-2.0",
+      "license_family": "PSF",
+      "md5": "62b7c1b21ef3cb39d8694bba7a5c0a6a",
+      "name": "wincertstore",
+      "sha256": "b310a1be07e56a74d472f127d9aa30f5e9f3d5d17d7f807ab278a3a99a843676",
+      "size": 15729,
+      "subdir": "win-64",
+      "timestamp": 1649771733124,
+      "version": "0.2"
+    },
+    "xz-5.2.5-h2fa13f4_0.tar.bz2": {
+      "build": "h2fa13f4_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15.0a0"
+      ],
+      "license": "LGPL-2.1 and GPL-2.0",
+      "md5": "71354126cff122de017113008ff92674",
+      "name": "xz",
+      "sha256": "ca996fdfab69baa73a841172a11c9032be12f584943b7d2fd81bf4f5b35fd893",
+      "size": 912186,
+      "subdir": "win-64",
+      "timestamp": 1586251768795,
+      "version": "5.2.5"
+    },
+    "xz-5.2.5-h62dcd97_1.tar.bz2": {
+      "build": "h62dcd97_1",
+      "build_number": 1,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "LGPL-2.1 and GPL-2.0",
+      "md5": "eabcbfedd14d7c18a514afca09ea0ebb",
+      "name": "xz",
+      "sha256": "6a1dbc89071137b73ca7dcb709521cb51d3a5c795668f24942c1113c29f64737",
+      "size": 216136,
+      "subdir": "win-64",
+      "timestamp": 1594310154574,
+      "version": "5.2.5"
+    },
+    "xz-5.2.6-h8d14728_0.tar.bz2": {
+      "build": "h8d14728_0",
+      "build_number": 0,
+      "depends": [
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "LGPL-2.1 and GPL-2.0",
+      "md5": "515d77642eaa3639413c6b1bc3f94219",
+      "name": "xz",
+      "sha256": "54d9778f75a02723784dc63aff4126ff6e6749ba21d11a6d03c1f4775f269fe0",
+      "size": 217804,
+      "subdir": "win-64",
+      "timestamp": 1660346976440,
+      "version": "5.2.6"
+    },
+    "zlib-1.2.11-h2fa13f4_1003.tar.bz2": {
+      "build": "h2fa13f4_1003",
+      "build_number": 1003,
+      "depends": [
+        "vc >=14,<15.0a0"
+      ],
+      "license": "zlib",
+      "license_family": "Other",
+      "md5": "aa3cf44a6d625cc4a292248cd02b26e7",
+      "name": "zlib",
+      "sha256": "99e632389942144ad6b0185a5f15f22688850b495eb1309a391b19cc496695a8",
+      "size": 241370,
+      "subdir": "win-64",
+      "timestamp": 1535594173945,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h2fa13f4_1004.tar.bz2": {
+      "build": "h2fa13f4_1004",
+      "build_number": 1004,
+      "depends": [
+        "vc >=14,<15.0a0"
+      ],
+      "license": "zlib",
+      "license_family": "Other",
+      "md5": "ded13addbb481e758ee71d2a7968c9d7",
+      "name": "zlib",
+      "sha256": "9f74e1df2db702abbc207acbd5c4992ade7d5248299d77fe124faddd62aafc89",
+      "size": 241315,
+      "subdir": "win-64",
+      "timestamp": 1546896799009,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h2fa13f4_1006.tar.bz2": {
+      "build": "h2fa13f4_1006",
+      "build_number": 1006,
+      "depends": [
+        "vc >=14.1,<15.0a0"
+      ],
+      "license": "zlib",
+      "license_family": "Other",
+      "md5": "2fa915c77ff33dd7048e984123f0b619",
+      "name": "zlib",
+      "sha256": "d9c62d9e795e7ce7bb31ab52b9b512fa264010ad09f12c5c78e8bf76239ab2a1",
+      "size": 241593,
+      "subdir": "win-64",
+      "timestamp": 1568071612156,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h2fa13f4_2.tar.bz2": {
+      "build": "h2fa13f4_2",
+      "build_number": 2,
+      "depends": [
+        "vc >=14,<15.0a0"
+      ],
+      "license": "zlib",
+      "license_family": "Other",
+      "md5": "0670ce52c1e1a4b6d5be42f1b00752a4",
+      "name": "zlib",
+      "sha256": "0fa6b473d1ff4664d74f1ce744317b152a2ab2e41e279161327ed1e82de4c53b",
+      "size": 240637,
+      "subdir": "win-64",
+      "timestamp": 1527371740529,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h2fa13f4_3.tar.bz2": {
+      "build": "h2fa13f4_3",
+      "build_number": 3,
+      "depends": [
+        "vc >=14,<15.0a0"
+      ],
+      "license": "zlib",
+      "license_family": "Other",
+      "md5": "bd3ef4f1fc2572d9dcc01b86ecb6033a",
+      "name": "zlib",
+      "sha256": "d985ccdc4c5ca0b80da1eb119fab95fb4621f4640b7c29b5006f431ae3db41ad",
+      "size": 241080,
+      "subdir": "win-64",
+      "timestamp": 1527658782652,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h62dcd97_1007.tar.bz2": {
+      "build": "h62dcd97_1007",
+      "build_number": 1007,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "zlib",
+      "license_family": "Other",
+      "md5": "25ab7b128d676a7ccd2f01d69a947896",
+      "name": "zlib",
+      "sha256": "ff6cbe0adc8ca3ccb3073c0cecdfb3257f245739728befefb53ddaff1cbadf48",
+      "size": 128648,
+      "subdir": "win-64",
+      "timestamp": 1597014466358,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h62dcd97_1008.tar.bz2": {
+      "build": "h62dcd97_1008",
+      "build_number": 1008,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "34c737ef40f04b5ee55bae9d3ed0993b",
+      "name": "zlib",
+      "sha256": "674ac65630706f37591902d1fc3d574de9949957f1929aceefa79287ba507ff2",
+      "size": 128685,
+      "subdir": "win-64",
+      "timestamp": 1598658526155,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h62dcd97_1009.tar.bz2": {
+      "build": "h62dcd97_1009",
+      "build_number": 1009,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "60df404ef18f148b39353459a4125fdb",
+      "name": "zlib",
+      "sha256": "7c882c70b7dcd7b563714ef83c54ea92a1fb15f8d7896162fac544b51522ce85",
+      "size": 128659,
+      "subdir": "win-64",
+      "timestamp": 1598700989341,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h62dcd97_1010.tar.bz2": {
+      "build": "h62dcd97_1010",
+      "build_number": 1010,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "a4cdf389c5f73e60a0ca121ff77c22a9",
+      "name": "zlib",
+      "sha256": "1a10fecab0f1e4f1815fefafb38e2c68aa3407491dd84a0610400d5e179b27e1",
+      "size": 128659,
+      "subdir": "win-64",
+      "timestamp": 1602670590951,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h8d14728_1011.tar.bz2": {
+      "build": "h8d14728_1011",
+      "build_number": 1011,
+      "depends": [
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "0b376ded7881ec9169b15c98b1c65f91",
+      "name": "zlib",
+      "sha256": "96fc1c67d3d9145bb49c72edccc27b661dc422b581c06a2e3ec5df3891b6b7ae",
+      "size": 135160,
+      "subdir": "win-64",
+      "timestamp": 1633026823875,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h8ffe710_1012.tar.bz2": {
+      "build": "h8ffe710_1012",
+      "build_number": 1012,
+      "depends": [
+        "libzlib 1.2.11 h8ffe710_1012",
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "2c4970e1a58f68a3ef150f9f3cba07dc",
+      "name": "zlib",
+      "sha256": "314f0b22c3cea309ff95ff97bac1756dab70f1bf03d615b283258d0cff50efff",
+      "size": 108419,
+      "subdir": "win-64",
+      "timestamp": 1633105406207,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h8ffe710_1013.tar.bz2": {
+      "build": "h8ffe710_1013",
+      "build_number": 1013,
+      "depends": [
+        "libzlib 1.2.11 h8ffe710_1013",
+        "vc >=14.1,<15.0a0",
+        "vs2015_runtime >=14.16.27012"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "866517df4fd8bb813bc20c24cf7b8f05",
+      "name": "zlib",
+      "sha256": "5b5db5ec4c2eb51a2bb8c5e22df9938703fd292da8a41c1e8355d5972f9fe12c",
+      "size": 108435,
+      "subdir": "win-64",
+      "timestamp": 1633227254149,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-h8ffe710_1014.tar.bz2": {
+      "build": "h8ffe710_1014",
+      "build_number": 1014,
+      "depends": [
+        "libzlib 1.2.11 h8ffe710_1014",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "8f3f8b243814bddb2898c314ed024e03",
+      "name": "zlib",
+      "sha256": "21c83bb04be3a0137ea240fd0ef4762481373eb5c402d065272a32a23c9b1c29",
+      "size": 108769,
+      "subdir": "win-64",
+      "timestamp": 1648307824491,
+      "version": "1.2.11"
+    },
+    "zlib-1.2.11-vc14_0.tar.bz2": {
+      "build": "vc14_0",
+      "build_number": 0,
+      "depends": [
+        "vc 14.*"
+      ],
+      "license": "zlib",
+      "license_family": "Other",
+      "md5": "6633fda3af7ef750def72e3ec5f5014d",
+      "name": "zlib",
+      "sha256": "ca1574c6cb629d84ba198ad0218cceeb37fb4b9d9a703332d21d3fc60808ba42",
+      "size": 121888,
+      "subdir": "win-64",
+      "version": "1.2.11"
+    },
+    "zlib-1.2.12-h8ffe710_0.tar.bz2": {
+      "build": "h8ffe710_0",
+      "build_number": 0,
+      "depends": [
+        "libzlib 1.2.12 h8ffe710_0",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "d512bc564ba90eb83c4ae178d8c6fc72",
+      "name": "zlib",
+      "sha256": "96aa4164760e3943bf3aec85c565c098e9ccd655aad05f6a795309b515293b41",
+      "size": 112137,
+      "subdir": "win-64",
+      "timestamp": 1653673970102,
+      "version": "1.2.12"
+    },
+    "zlib-1.2.12-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "libzlib 1.2.12 h8ffe710_1",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "852c4716604f74676b90e62df4b52d36",
+      "name": "zlib",
+      "sha256": "ee64f52268f3106d4a1bd3ab5fab418f881cd0cdcbe18c1cda92608fcf86055d",
+      "size": 114708,
+      "subdir": "win-64",
+      "timestamp": 1655244214250,
+      "version": "1.2.12"
+    },
+    "zlib-1.2.12-h8ffe710_2.tar.bz2": {
+      "build": "h8ffe710_2",
+      "build_number": 2,
+      "depends": [
+        "libzlib 1.2.12 h8ffe710_2",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Zlib",
+      "license_family": "Other",
+      "md5": "d6f4eeb62da2ad90c31082cc7178776a",
+      "name": "zlib",
+      "sha256": "a1a4c6997ba96debd345d5d3fdf6109340ce4bf08c25d86e3db33b08e371937d",
+      "size": 114724,
+      "subdir": "win-64",
+      "timestamp": 1657717448758,
+      "version": "1.2.12"
+    }
+  },
+  "conda.packages": {},
+  "removed": [],
+  "repodata_version": 1
+}

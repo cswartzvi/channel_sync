@@ -1,2 +1,0 @@
-class CondaLocalException(Exception):
-    pass

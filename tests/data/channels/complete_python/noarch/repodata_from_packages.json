@@ -1,0 +1,95 @@
+{
+  "info": {
+    "subdir": "noarch"
+  },
+  "packages": {
+    "packaging-21.3-pyhd8ed1ab_0.tar.bz2": {
+      "build": "pyhd8ed1ab_0",
+      "build_number": 0,
+      "depends": [
+        "pyparsing >=2.0.2,!=3.0.5",
+        "python >=3.6"
+      ],
+      "license": "Apache-2.0",
+      "md5": "71f1ab2de48613876becddd496371c85",
+      "name": "packaging",
+      "noarch": "python",
+      "sha256": "8322a9e93e2e09fbf2103f0d37c9287b7b97387125abadd6db26686084893540",
+      "size": 36373,
+      "subdir": "noarch",
+      "timestamp": 1637239780091,
+      "version": "21.3"
+    },
+    "pip-22.2.2-pyhd8ed1ab_0.tar.bz2": {
+      "build": "pyhd8ed1ab_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.7",
+        "setuptools",
+        "wheel"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "0b43abe4d3ee93e82742d37def53a836",
+      "name": "pip",
+      "noarch": "python",
+      "sha256": "507ae896a2f9ccc7bbedc2f7fd10dc2ac666575769b55b5e94ca44b86db193e0",
+      "size": 1566504,
+      "subdir": "noarch",
+      "timestamp": 1659575601683,
+      "version": "22.2.2"
+    },
+    "pyparsing-3.0.9-pyhd8ed1ab_0.tar.bz2": {
+      "build": "pyhd8ed1ab_0",
+      "build_number": 0,
+      "depends": [
+        "python >=3.6"
+      ],
+      "license": "MIT",
+      "md5": "e8fbc1b54b25f4b08281467bc13b70cc",
+      "name": "pyparsing",
+      "noarch": "python",
+      "sha256": "4acc7151cef5920d130f2e0a7615559cce8bfb037aeecb14d4d359ae3d9bc51b",
+      "size": 81321,
+      "subdir": "noarch",
+      "timestamp": 1652235496915,
+      "version": "3.0.9"
+    },
+    "six-1.16.0-pyh6c4a22f_0.tar.bz2": {
+      "build": "pyh6c4a22f_0",
+      "build_number": 0,
+      "depends": [
+        "python"
+      ],
+      "license": "MIT",
+      "license_family": "MIT",
+      "md5": "e5f25f8dbc060e9a8d912e432202afc2",
+      "name": "six",
+      "noarch": "python",
+      "sha256": "a85c38227b446f42c5b90d9b642f2c0567880c15d72492d8da074a59c8f91dd6",
+      "size": 14259,
+      "subdir": "noarch",
+      "timestamp": 1620240338595,
+      "version": "1.16.0"
+    },
+    "wheel-0.37.1-pyhd8ed1ab_0.tar.bz2": {
+      "build": "pyhd8ed1ab_0",
+      "build_number": 0,
+      "depends": [
+        "python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4"
+      ],
+      "license": "MIT",
+      "md5": "1ca02aaf78d9c70d9a81a3bed5752022",
+      "name": "wheel",
+      "noarch": "python",
+      "sha256": "aede66e6370f3b936164a703e48362f9080d7162234058fb2ee63cc84d528afc",
+      "size": 32022,
+      "subdir": "noarch",
+      "timestamp": 1640197340002,
+      "version": "0.37.1"
+    }
+  },
+  "packages.conda": {},
+  "removed": [],
+  "repodata_version": 1
+}

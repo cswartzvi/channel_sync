@@ -5,17 +5,35 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: query",
+            "name": "Python: Debug Tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "purpose": ["debug-test"],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Python: help",
             "type": "python",
             "request": "launch",
             "module": "conda_local",
             "args": [
-                "query",
-                "--channel",
-                "conda-forge",
-                "python",
+                "search",
+                "--help"
             ],
-            "justMyCode": true
+            "justMyCode": false
+        },
+        {
+            "name": "Python: search",
+            "type": "python",
+            "request": "launch",
+            "module": "conda_local",
+            "args": [
+                "search",
+                "python==3.8.12",
+            ],
+            "justMyCode": false
         },
         {
             "name": "Python: fetch",

@@ -6,6 +6,7 @@ dependencies:
   - networkx
   - rich
   - click
+  - rich-click
   - fsspec
   - requests
   - aiohttp

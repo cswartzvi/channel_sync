@@ -1,0 +1,983 @@
+{
+  "channeldata_version": 1,
+  "packages": {
+    "bzip2": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "Bzip2 is a freely available high-quality data compressor. It typically compresses files to within 10% to 15% of the best available techniques, whilst being around twice as fast at compression and six times faster at decompression.",
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": "http://www.bzip.org/docs.html",
+      "home": "http://www.bzip.org/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "bzip2-1.0.6",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "1.0.8": {
+          "weak": [
+            "bzip2 >=1.0.8,<2.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": "https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "high-quality data compressor",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1606605223,
+      "version": "1.0.8"
+    },
+    "ca-certificates": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "https://github.com/conda-forge/ca-certificates-feedstock",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "ISC",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": "https://pypi.io/packages/source/c/certifi/certifi-2022.6.15.tar.gz",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Certificates for use with other packages.",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1655341115,
+      "version": "2022.6.15"
+    },
+    "certifi": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "Certifi is a curated collection of Root Certificates for validating the trustworthiness of SSL certificates while verifying the identity of TLS hosts.",
+      "dev_url": "https://github.com/certifi/python-certifi",
+      "doc_source_url": "https://github.com/certifi/certifi.io/blob/master/README.rst",
+      "doc_url": "https://pypi.python.org/pypi/certifi",
+      "home": "http://certifi.io/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "ISC",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": null,
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Python package for providing Mozilla's CA Bundle.",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1655324139,
+      "version": "2022.6.15"
+    },
+    "expat": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "http://expat.sourceforge.net/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "MIT",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "2.4.1": {
+          "weak": [
+            "expat >=2.4.1,<3.0a0"
+          ]
+        },
+        "2.4.2": {
+          "weak": [
+            "expat >=2.4.2,<3.0a0"
+          ]
+        },
+        "2.4.3": {
+          "weak": [
+            "expat >=2.4.3,<3.0a0"
+          ]
+        },
+        "2.4.4": {
+          "weak": [
+            "expat >=2.4.4,<3.0a0"
+          ]
+        },
+        "2.4.5": {
+          "weak": [
+            "expat >=2.4.5,<3.0a0"
+          ]
+        },
+        "2.4.6": {
+          "weak": [
+            "expat >=2.4.6,<3.0a0"
+          ]
+        },
+        "2.4.7": {
+          "weak": [
+            "expat >=2.4.7,<3.0a0"
+          ]
+        },
+        "2.4.8": {
+          "weak": [
+            "expat >=2.4.8,<3.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": "https://github.com/libexpat/libexpat/releases/download/R_2_4_8/expat-2.4.8.tar.bz2",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Expat XML parser library in C",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1648619033,
+      "version": "2.4.8"
+    },
+    "libffi": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "The libffi library provides a portable, high level programming interface to various calling conventions. This allows a programmer to call any function specified by a call interface description at run-time.",
+      "dev_url": "https://github.com/libffi/libffi",
+      "doc_source_url": null,
+      "doc_url": "https://sourceware.org/libffi/",
+      "home": "https://sourceware.org/libffi/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "MIT",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "3.4.2": {
+          "weak": [
+            "libffi >=3.4,<4.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": "https://github.com/libffi/libffi/releases/download/v3.4.2/libffi-3.4.2.tar.gz",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "A Portable Foreign Function Interface Library.",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1636489106,
+      "version": "3.4.2"
+    },
+    "libsqlite": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "SQLite is a self-contained, high-reliability, embedded, full-featured, public-domain, SQL database engine.It is the most used database engine in the world.",
+      "dev_url": "https://github.com/mackyle/sqlite",
+      "doc_source_url": "https://github.com/mackyle/sqlite/tree/master/doc",
+      "doc_url": "http://www.sqlite.org/docs.html",
+      "home": "http://www.sqlite.org/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "Unlicense",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "3.39.2": {
+          "weak": [
+            "libsqlite >=3.39.2,<4.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": "https://www.sqlite.org/2022/sqlite-autoconf-3390200.tar.gz",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Implements a self-contained, zero-configuration, SQL database engine",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1660346796,
+      "version": "3.39.2"
+    },
+    "libzlib": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "zlib is designed to be a free, general-purpose, lossless data-compression library for use on virtually any computer hardware and operating system.",
+      "dev_url": "https://github.com/madler/zlib",
+      "doc_source_url": null,
+      "doc_url": "http://zlib.net/manual.html",
+      "home": "http://zlib.net/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "Zlib",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "1.2.11": {
+          "weak": [
+            "libzlib >=1.2.11,<1.3.0a0"
+          ]
+        },
+        "1.2.12": {
+          "weak": [
+            "libzlib >=1.2.12,<1.3.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": [
+        "http://zlib.net/zlib-1.2.12.tar.gz",
+        "https://gnupg.org/ftp/gcrypt/zlib/zlib-1.2.12.tar.gz"
+      ],
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Massively spiffy yet delicately unobtrusive compression library",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1657717421,
+      "version": "1.2.12"
+    },
+    "openssl": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": "https://github.com/openssl/openssl",
+      "doc_source_url": null,
+      "doc_url": "https://www.openssl.org/docs/man3.0/",
+      "home": "http://www.openssl.org/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "Apache-2.0",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "1.1.1l": {
+          "weak": [
+            "openssl >=1.1.1l,<1.1.2a"
+          ]
+        },
+        "1.1.1n": {
+          "weak": [
+            "openssl >=1.1.1n,<1.1.2a"
+          ]
+        },
+        "1.1.1o": {
+          "weak": [
+            "openssl >=1.1.1o,<1.1.2a"
+          ]
+        },
+        "1.1.1p": {
+          "weak": [
+            "openssl >=1.1.1p,<1.1.2a"
+          ]
+        },
+        "1.1.1q": {
+          "weak": [
+            "openssl >=1.1.1q,<1.1.2a"
+          ]
+        },
+        "3.0.0": {
+          "weak": [
+            "openssl >=3.0.0,<4.0a0"
+          ]
+        },
+        "3.0.2": {
+          "weak": [
+            "openssl >=3.0.2,<4.0a0"
+          ]
+        },
+        "3.0.3": {
+          "weak": [
+            "openssl >=3.0.3,<4.0a0"
+          ]
+        },
+        "3.0.4": {
+          "weak": [
+            "openssl >=3.0.4,<4.0a0"
+          ]
+        },
+        "3.0.5": {
+          "weak": [
+            "openssl >=3.0.5,<4.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": "http://www.openssl.org/source/openssl-3.0.5.tar.gz",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "OpenSSL is an open-source implementation of the SSL and TLS protocols",
+      "tags": null,
+      "text_prefix": true,
+      "timestamp": 1659400210,
+      "version": "3.0.5"
+    },
+    "packaging": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "https://github.com/pypa/packaging",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "Apache-2.0",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": "https://pypi.io/packages/source/p/packaging/packaging-21.3.tar.gz",
+      "subdirs": [
+        "noarch"
+      ],
+      "summary": "Core utilities for Python packages",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1637239780,
+      "version": "21.3"
+    },
+    "pip": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": "https://github.com/pypa/pip",
+      "doc_source_url": null,
+      "doc_url": "https://pip.pypa.io/en/stable/",
+      "home": "https://pip.pypa.io/en/stable/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "MIT",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": "https://pypi.io/packages/source/p/pip/pip-22.2.2.tar.gz",
+      "subdirs": [
+        "noarch",
+        "win-64"
+      ],
+      "summary": "PyPA recommended tool for installing Python packages",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1659575601,
+      "version": "22.2.2"
+    },
+    "pyparsing": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "The pyparsing module is an alternative approach to creating and executing simple grammars, vs. the traditional lex/yacc approach, or the use of regular expressions. The pyparsing module provides a library of classes that client code uses to construct the grammar directly in Python code.",
+      "dev_url": "https://svn.code.sf.net/p/pyparsing/code/",
+      "doc_source_url": null,
+      "doc_url": "http://pyparsing.wikispaces.com/Documentation",
+      "home": "http://pyparsing.wikispaces.com/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "MIT",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": "https://pypi.io/packages/source/p/pyparsing/pyparsing-3.0.9.tar.gz",
+      "subdirs": [
+        "noarch"
+      ],
+      "summary": "Create and execute simple grammars",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1652235496,
+      "version": "3.0.9"
+    },
+    "pypy3.8": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "http://pypy.org/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "MIT",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": null,
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "PyPy is a Python interpreter and just-in-time compiler. See https://conda-forge.org/blog/posts/2020-03-10-pypy for more information about using PyPy in conda",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1648887233,
+      "version": "7.3.9"
+    },
+    "python": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "https://github.com/conda-forge/pypy-meta-feedstock",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "BSD-3-Clause",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "3.8.12": {
+          "noarch": [
+            "python >=3.8,<3.9.0a0"
+          ],
+          "weak": [
+            "pypy3.8 >=7.3.8",
+            "python_abi 3.8 *_pypy38_pp73"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": null,
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Metapackage to select pypy as python implementation",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1647893004,
+      "version": "3.8.12"
+    },
+    "python_abi": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "https://github.com/conda-forge/python_abi-feedstock",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "BSD-3-Clause",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": null,
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Metapackage to select python implementation",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1647846622,
+      "version": "3.8"
+    },
+    "setuptools": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "Setuptools is a fully-featured, actively-maintained, and stable library designed to facilitate packaging Python projects.",
+      "dev_url": "https://github.com/pypa/setuptools",
+      "doc_source_url": "https://github.com/pypa/setuptools/tree/master/docs",
+      "doc_url": "http://pythonhosted.org/setuptools/",
+      "home": "https://github.com/pypa/setuptools",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "MIT",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": "https://pypi.io/packages/source/s/setuptools/setuptools-65.1.1.tar.gz",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Download, build, install, upgrade, and uninstall Python packages",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1661095226,
+      "version": "65.1.1"
+    },
+    "six": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "Six provides simple utilities for wrapping over differences between Python 2 and Python 3. It is intended to support codebases that work on both Python 2 and 3 without modification. six consists of only one Python file, so it is painless to copy into a project.",
+      "dev_url": "https://github.com/benjaminp/six",
+      "doc_source_url": null,
+      "doc_url": "https://six.readthedocs.io/",
+      "home": "https://six.readthedocs.io/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "MIT",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": "https://pypi.io/packages/source/s/six/six-1.16.0.tar.gz",
+      "subdirs": [
+        "noarch",
+        "win-64"
+      ],
+      "summary": "Python 2 and 3 compatibility utilities",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1620240338,
+      "version": "1.16.0"
+    },
+    "sqlite": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "SQLite is a self-contained, high-reliability, embedded, full-featured, public-domain, SQL database engine.It is the most used database engine in the world.",
+      "dev_url": "https://github.com/mackyle/sqlite",
+      "doc_source_url": "https://github.com/mackyle/sqlite/tree/master/doc",
+      "doc_url": "http://www.sqlite.org/docs.html",
+      "home": "http://www.sqlite.org/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "Unlicense",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "3.36.0": {
+          "weak": [
+            "sqlite >=3.36.0,<4.0a0"
+          ]
+        },
+        "3.37.0": {
+          "weak": [
+            "sqlite >=3.37.0,<4.0a0"
+          ]
+        },
+        "3.37.1": {
+          "weak": [
+            "sqlite >=3.37.1,<4.0a0"
+          ]
+        },
+        "3.38.2": {
+          "weak": [
+            "sqlite >=3.38.2,<4.0a0"
+          ]
+        },
+        "3.38.3": {
+          "weak": [
+            "sqlite >=3.38.3,<4.0a0"
+          ]
+        },
+        "3.38.4": {
+          "weak": [
+            "sqlite >=3.38.4,<4.0a0"
+          ]
+        },
+        "3.38.5": {
+          "weak": [
+            "sqlite >=3.38.5,<4.0a0"
+          ]
+        },
+        "3.39.0": {
+          "weak": [
+            "sqlite >=3.39.0,<4.0a0"
+          ]
+        },
+        "3.39.1": {
+          "weak": [
+            "sqlite >=3.39.1,<4.0a0"
+          ]
+        },
+        "3.39.2": {
+          "weak": [
+            "libsqlite >=3.39.2,<4.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": "https://www.sqlite.org/2022/sqlite-autoconf-3390200.tar.gz",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Implements a self-contained, zero-configuration, SQL database engine",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1660346811,
+      "version": "3.39.2"
+    },
+    "tk": {
+      "activate.d": false,
+      "binary_prefix": true,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": "https://github.com/tcltk/tk",
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "http://www.tcl.tk/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "TCL",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "8.6.11": {
+          "weak": [
+            "tk >=8.6.11,<8.7.0a0"
+          ]
+        },
+        "8.6.12": {
+          "weak": [
+            "tk >=8.6.12,<8.7.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": null,
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "A dynamic programming language with GUI support.  Bundles Tcl and Tk.",
+      "tags": null,
+      "text_prefix": true,
+      "timestamp": 1645033031,
+      "version": "8.6.12"
+    },
+    "ucrt": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "LicenseRef-Proprietary",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": "https://software-download.microsoft.com/download/sg/20348.1.210507-1500.fe_release_WindowsSDK.iso",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Redistributable files for Windows SDK. This is only needed Windows <10",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1624476303,
+      "version": "10.0.20348.0"
+    },
+    "vc": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "This metapackage is used to enforce consistency of runtime dependencies within an environment",
+      "dev_url": "https://github.com/conda/conda/wiki/VC-features",
+      "doc_source_url": null,
+      "doc_url": "https://github.com/conda/conda/wiki/VC-features",
+      "home": "https://github.com/conda/conda/wiki/VC-features",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "BSD-3-Clause",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": null,
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "A meta-package to impose mutual exclusivity among software built with different VS versions",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1641832058,
+      "version": "14.2"
+    },
+    "vs2015_runtime": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "https://visualstudio.microsoft.com/downloads/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": null,
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "MSVC runtimes associated with cl.exe version 19.29.30037 (VS 2019 update 10)",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1641830254,
+      "version": "14.29.30037"
+    },
+    "wheel": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "https://github.com/pypa/wheel",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "MIT",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": "https://pypi.io/packages/source/w/wheel/wheel-0.37.1.tar.gz",
+      "subdirs": [
+        "noarch",
+        "win-64"
+      ],
+      "summary": "A built-package format for Python.",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1640197340,
+      "version": "0.37.1"
+    },
+    "wincertstore": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": null,
+      "dev_url": null,
+      "doc_source_url": null,
+      "doc_url": null,
+      "home": "https://pypi.org/project/wincertstore/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "PSF-2.0",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {},
+      "source_git_url": null,
+      "source_url": null,
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Python module to extract CA and CRL certs from Windows' cert store (ctypes based).",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1649771733,
+      "version": "0.2"
+    },
+    "xz": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "XZ Utils is free general-purpose data compression software with a high compression ratio. XZ Utils were written for POSIX-like systems, but also work on some not-so-POSIX systems.",
+      "dev_url": "http://git.tukaani.org/",
+      "doc_source_url": "https://github.com/xz-mirror/xz/blob/master/README",
+      "doc_url": "http://tukaani.org/xz/",
+      "home": "http://tukaani.org/xz/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "LGPL-2.1 and GPL-2.0",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "5.2.5": {
+          "weak": [
+            "xz >=5.2.5,<6.0a0"
+          ]
+        },
+        "5.2.6": {
+          "weak": [
+            "xz >=5.2.6,<6.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": "http://downloads.sourceforge.net/project/lzmautils/xz-5.2.6.tar.bz2",
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Data compression software with high compression ratio",
+      "tags": null,
+      "text_prefix": false,
+      "timestamp": 1660346976,
+      "version": "5.2.6"
+    },
+    "zlib": {
+      "activate.d": false,
+      "binary_prefix": false,
+      "deactivate.d": false,
+      "description": "zlib is designed to be a free, general-purpose, lossless data-compression library for use on virtually any computer hardware and operating system.",
+      "dev_url": "https://github.com/madler/zlib",
+      "doc_source_url": null,
+      "doc_url": "http://zlib.net/manual.html",
+      "home": "http://zlib.net/",
+      "icon_hash": null,
+      "icon_url": null,
+      "identifiers": null,
+      "keywords": null,
+      "license": "Zlib",
+      "post_link": false,
+      "pre_link": false,
+      "pre_unlink": false,
+      "recipe_origin": null,
+      "run_exports": {
+        "1.2.11": {
+          "weak": [
+            "libzlib >=1.2.11,<1.3.0a0"
+          ]
+        },
+        "1.2.12": {
+          "weak": [
+            "libzlib >=1.2.12,<1.3.0a0"
+          ]
+        }
+      },
+      "source_git_url": null,
+      "source_url": [
+        "http://zlib.net/zlib-1.2.12.tar.gz",
+        "https://gnupg.org/ftp/gcrypt/zlib/zlib-1.2.12.tar.gz"
+      ],
+      "subdirs": [
+        "win-64"
+      ],
+      "summary": "Massively spiffy yet delicately unobtrusive compression library",
+      "tags": null,
+      "text_prefix": true,
+      "timestamp": 1657717448,
+      "version": "1.2.12"
+    }
+  },
+  "subdirs": [
+    "noarch",
+    "win-64"
+  ]
+}
