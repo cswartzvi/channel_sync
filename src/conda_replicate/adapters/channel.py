@@ -14,7 +14,7 @@ import fsspec
 from pydantic import BaseModel
 from pydantic import Field
 
-from conda_replicate import CondaLocalException
+from conda_replicate import CondaReplicateException
 from conda_replicate.adapters.package import CondaPackage
 from conda_replicate.adapters.subdir import get_known_subdirs
 
@@ -347,7 +347,7 @@ class CondaFilesystem:
         return f"<{class_name}: url={self.url!r}>"
 
 
-class BadPackageDownload(CondaLocalException):
+class BadPackageDownload(CondaReplicateException):
     """Downloaded package does not match advertised specifications."""
 
     pass

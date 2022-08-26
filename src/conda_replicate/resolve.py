@@ -5,7 +5,7 @@ from typing import Any, Iterable, Iterator, Set, Tuple
 
 import networkx as nx
 
-from conda_replicate import CondaLocalException
+from conda_replicate import CondaReplicateException
 from conda_replicate.adapters.channel import CondaChannel
 from conda_replicate.adapters.package import CondaPackage
 from conda_replicate.adapters.specification import CondaSpecification
@@ -209,7 +209,9 @@ class Parameters:
         return any(disposable.match(package) for disposable in disposables)
 
 
-class UnsatisfiedRequirementsError(CondaLocalException):
+class UnsatisfiedRequirementsError(CondaReplicateException):
+    """Exception raised when required specifications could not be satisfied."""
+
     def __init__(self, missing: Iterable[str]) -> None:
         self.missing = sorted(missing)
         message = f"Missing required packages: {missing!r}"

@@ -8,6 +8,7 @@ from pydantic import BaseSettings
 from pydantic import Field
 
 from conda_replicate import __version__
+from conda_replicate import CondaReplicateException
 from conda_replicate.adapters.subdir import get_default_subdirs
 from conda_replicate.adapters.subdir import get_known_subdirs
 from conda_replicate.core import run_index
@@ -290,16 +291,19 @@ def search(
     configuration file
 
     """  # noqa: E501
-    run_search(
-        channel_url=channel,
-        requirements=requirements,
-        exclusions=exclusions,
-        disposables=disposables,
-        subdirs=subdirs,
-        target_url=target,
-        output=output,
-        quiet=state.quiet,
-    )
+    try:
+        run_search(
+            channel_url=channel,
+            requirements=requirements,
+            exclusions=exclusions,
+            disposables=disposables,
+            subdirs=subdirs,
+            target_url=target,
+            output=output,
+            quiet=state.quiet,
+        )
+    except CondaReplicateException as exception:
+        _process_application_exception(exception)
 
 
 # Sub-command: update
@@ -358,15 +362,18 @@ def update(
     - Requirements specified on the command line *augment* those specified in a
     configuration file
     """  # noqa: E501
-    run_update(
-        channel_url=channel,
-        requirements=requirements,
-        exclusions=exclusions,
-        disposables=disposables,
-        subdirs=subdirs,
-        target_url=target,
-        quiet=state.quiet,
-    )
+    try:
+        run_update(
+            channel_url=channel,
+            requirements=requirements,
+            exclusions=exclusions,
+            disposables=disposables,
+            subdirs=subdirs,
+            target_url=target,
+            quiet=state.quiet,
+        )
+    except CondaReplicateException as exception:
+        _process_application_exception(exception)
 
 
 # Sub-command: patch
@@ -441,17 +448,20 @@ def patch(
     - Requirements specified on the command line *augment* those specified in a
     configuration file
     """  # noqa: E501
-    run_patch(
-        channel_url=channel,
-        requirements=requirements,
-        exclusions=exclusions,
-        disposables=disposables,
-        subdirs=subdirs,
-        name=name,
-        parent=parent,
-        target_url=target,
-        quiet=state.quiet,
-    )
+    try:
+        run_patch(
+            channel_url=channel,
+            requirements=requirements,
+            exclusions=exclusions,
+            disposables=disposables,
+            subdirs=subdirs,
+            name=name,
+            parent=parent,
+            target_url=target,
+            quiet=state.quiet,
+        )
+    except CondaReplicateException as exception:
+        _process_application_exception(exception)
 
 
 # Sub-command: merge
@@ -472,7 +482,10 @@ def patch(
 @pydantic.validate_arguments
 def merge(state: AppState, patch: str, channel: str):
     """Merge a PATCH into a local CHANNEL and update the local package index."""
-    run_merge(patch, channel, quiet=state.quiet)
+    try:
+        run_merge(patch, channel, quiet=state.quiet)
+    except CondaReplicateException as exception:
+        _process_application_exception(exception)
 
 
 # Sub-command: index
@@ -488,4 +501,12 @@ def merge(state: AppState, patch: str, channel: str):
 @pydantic.validate_arguments
 def index(state: AppState, channel: str):
     """Update the package index of a local CHANNEL."""
-    run_index(channel_url=channel, quiet=state.quiet)
+    try:
+        run_index(channel_url=channel, quiet=state.quiet)
+    except CondaReplicateException as exception:
+        _process_application_exception(exception)
+
+
+def _process_application_exception(exception: CondaReplicateException) -> None:
+    click.secho("\n\n ERROR: ", fg="red", bold=True, nl=False)
+    click.secho(exception.args[0])
