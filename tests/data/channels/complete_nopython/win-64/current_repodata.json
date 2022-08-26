@@ -1,0 +1,60 @@
+{
+  "info": {
+    "subdir": "win-64"
+  },
+  "packages": {
+    "sqlite-3.39.2-h8ffe710_1.tar.bz2": {
+      "build": "h8ffe710_1",
+      "build_number": 1,
+      "depends": [
+        "libsqlite 3.39.2 h8ffe710_1",
+        "vc >=14.1,<15",
+        "vs2015_runtime >=14.16.27033"
+      ],
+      "license": "Unlicense",
+      "md5": "27c7467eec7d73001ccc1435cc2225d3",
+      "name": "sqlite",
+      "sha256": "6cc29ff3208f800c5d242d6ed2a3d9d4cee60618116ce568fdda6930be087ae7",
+      "size": 675640,
+      "subdir": "win-64",
+      "timestamp": 1660346811947,
+      "version": "3.39.2"
+    },
+    "vc-14.2-hc4473a8_6.tar.bz2": {
+      "build": "hc4473a8_6",
+      "build_number": 6,
+      "depends": [
+        "vs2015_runtime >=14.29.30037"
+      ],
+      "license": "BSD-3-Clause",
+      "license_family": "BSD",
+      "md5": "b0e429ed7d8d8fb54af7849ff0aeff5e",
+      "name": "vc",
+      "sha256": "a607fa31321556f98b69b6582ea2233759f89229e25eb87b26a0ef7d0254cf96",
+      "size": 13709,
+      "subdir": "win-64",
+      "timestamp": 1641830265681,
+      "track_features": "vc14",
+      "version": "14.2"
+    },
+    "vs2015_runtime-14.29.30037-h902a5da_6.tar.bz2": {
+      "build": "h902a5da_6",
+      "build_number": 6,
+      "depends": [
+        "ucrt >=10.0.20348.0"
+      ],
+      "license": "LicenseRef-ProprietaryMicrosoft",
+      "license_family": "Proprietary",
+      "md5": "33d07ebe91062743eabc9e53a60d18e1",
+      "name": "vs2015_runtime",
+      "sha256": "f2efbbe3465a34b195edd218d5572c998d94c5964d4e495c3d7f95c8bb5fcaac",
+      "size": 1343642,
+      "subdir": "win-64",
+      "timestamp": 1641830254130,
+      "version": "14.29.30037"
+    }
+  },
+  "packages.conda": {},
+  "removed": [],
+  "repodata_version": 1
+}

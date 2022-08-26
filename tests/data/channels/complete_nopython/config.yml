@@ -1,0 +1,3 @@
+subdirs:
+  - noarch
+  - win-64

@@ -1,0 +1,37 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "conda_local"
+authors = [
+    { name = "Charles W. Swartz VI, Ph.D.", email = "charles.w.swartz.vi@gmail.com" },
+]
+license = { "file" = "LICENSE" }
+readme = "README.md"
+dynamic = ["version", "description"]
+requires-python = ">=3.8"
+dependencies = [
+    "aiohttp",
+    "click >=8",
+    "conda >=4.12.0",
+    "conda-build >=3.21.0",
+    "fsspec",
+    "networkx",
+    "pydantic",
+    "PyYAML >=6",
+    "requests",
+    "rich",
+    "rich-click",
+]
+
+[project.optional-dependencies]
+test = [
+    "conda-build >=3.21.0",
+    "coverage[toml]",
+    "pytest >=7",
+    "pytest-cov",
+]
+
+[project.scripts]
+conda-replicate = "conda_index.cli:cli"

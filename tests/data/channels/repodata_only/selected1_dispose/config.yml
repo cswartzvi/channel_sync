@@ -1,0 +1,8 @@
+channel: conda-forge
+subdirs:
+  - noarch
+  - win-64
+requirements:
+  - python=3.8.12
+disposables:
+  - python

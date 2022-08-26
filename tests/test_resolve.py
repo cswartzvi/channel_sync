@@ -1,20 +1,19 @@
-from itertools import chain
-import json
 from pathlib import Path
 from typing import Dict
 
 import pytest
 
-from conda_local.adapters.channel import CondaChannel, LocalCondaChannel
-from conda_local.adapters.channel import RepoData
-from conda_local.resolve import resolve_packages
-from conda_local.resolve import UnsatisfiedRequirementsError
+from conda_replicate.adapters.channel import CondaChannel, LocalCondaChannel
+from conda_replicate.adapters.channel import RepoData
+from conda_replicate.resolve import Parameters
+from conda_replicate.resolve import Resolver
+from conda_replicate.resolve import UnsatisfiedRequirementsError
 
 
 def make_temp_local_channel(path: Path, packages: Dict) -> CondaChannel:
     """Returns a test local channel based on a temporary directory."""
 
-    channel = LocalCondaChannel(path.resolve())
+    channel = LocalCondaChannel(str(path.resolve()))
     channel.setup()
     repodata = RepoData(packages=packages)
     channel.write_repodata("noarch", repodata)
@@ -152,7 +151,6 @@ VALID_QUERIES = {
         "initial": {
             "a-1.0.tar.bz2": {
                 "build": "",
-                "subdir": "linux-64",
                 "version": "1.0",
                 "build_number": 0,
                 "depends": ["b >=1.0,<2.0"],
@@ -174,7 +172,6 @@ VALID_QUERIES = {
             },
             "b-1.0.tar.bz2": {
                 "build": "",
-                "subdir": "linux-64",
                 "version": "1.0",
                 "build_number": 0,
                 "depends": [],
@@ -531,6 +528,143 @@ VALID_QUERIES = {
             },
         },
     },
+    "valid10-disposable": {
+        "requirements": ["a"],
+        "exclusions": [],
+        "disposables": ["a"],
+        "initial": {
+            "a-1.0.tar.bz2": {
+                "build": "",
+                "version": "1.0",
+                "build_number": 0,
+                "depends": ["b >=1.0,<2.0"],
+                "name": "a",
+            },
+            "a-2.0.tar.bz2": {
+                "name": "a",
+                "version": "2.0",
+                "build": "",
+                "build_number": 0,
+                "depends": ["b >=2.0,<3.0"],
+            },
+            "a-3.0.tar.bz2": {
+                "name": "a",
+                "version": "3.0",
+                "build": "",
+                "build_number": 0,
+                "depends": ["b >=3.0"],
+            },
+            "b-1.0.tar.bz2": {
+                "build": "",
+                "version": "1.0",
+                "build_number": 0,
+                "depends": [],
+                "name": "b",
+            },
+            "b-2.0.tar.bz2": {
+                "name": "b",
+                "version": "2.0",
+                "build": "",
+                "build_number": 0,
+                "depends": [],
+            },
+            "b-3.0.tar.bz2": {
+                "name": "b",
+                "version": "3.0",
+                "build": "",
+                "build_number": 0,
+                "depends": [],
+            },
+        },
+        "final": {
+            "b-1.0.tar.bz2": {
+                "name": "b",
+                "version": "1.0",
+                "build": "",
+                "build_number": 0,
+                "depends": [],
+            },
+            "b-2.0.tar.bz2": {
+                "name": "b",
+                "version": "2.0",
+                "build": "",
+                "build_number": 0,
+                "depends": [],
+            },
+            "b-3.0.tar.bz2": {
+                "name": "b",
+                "version": "3.0",
+                "build": "",
+                "build_number": 0,
+                "depends": [],
+            },
+        },
+    },
+    "valid10-disconnected": {
+        "requirements": ["a"],
+        "exclusions": [],
+        "disposables": [],
+        "initial": {
+            "a-1.0.tar.bz2": {
+                "name": "a",
+                "version": "1.0",
+                "build": "",
+                "build_number": 0,
+                "depends": ["b >=1.0,<2.0"],
+            },
+            "a-2.0.tar.bz2": {
+                "name": "a",
+                "version": "2.0",
+                "build": "",
+                "build_number": 0,
+                "depends": ["b >=2.0,<3.0", "x"],
+            },
+            "b-1.0.tar.bz2": {
+                "name": "b",
+                "version": "1.0",
+                "build": "",
+                "build_number": 0,
+                "depends": [],
+            },
+            "x-1.0.tar.bz2": {
+                "name": "x",
+                "version": "1.0",
+                "build": "",
+                "build_number": 0,
+                "depends": ["y"],
+            },
+            "y-1.0.tar.bz2": {
+                "name": "y",
+                "version": "1.0",
+                "build": "",
+                "build_number": 0,
+                "depends": ["z"],
+            },
+            "z-1.0.tar.bz2": {
+                "name": "z",
+                "version": "1.0",
+                "build": "",
+                "build_number": 0,
+                "depends": ["x"],
+            },
+        },
+        "final": {
+            "a-1.0.tar.bz2": {
+                "name": "a",
+                "version": "1.0",
+                "build": "",
+                "build_number": 0,
+                "depends": ["b >=1.0,<2.0"],
+            },
+            "b-1.0.tar.bz2": {
+                "name": "b",
+                "version": "1.0",
+                "build": "",
+                "build_number": 0,
+                "depends": [],
+            },
+        },
+    },
 }
 
 INVALID_QUERIES = {
@@ -682,22 +816,19 @@ def test_package_resolution_for_valid_queries(tmp_path_factory, data):
     initial_channel = make_temp_local_channel(
         tmp_path_factory.mktemp("initial"), data["initial"]
     )
-    results = resolve_packages(
-            channel=initial_channel,
-            requirements=data["requirements"],
-            exclusions=data["exclusions"],
-            disposables=data["disposables"],
-            subdirs=["noarch"],
-            target=None,
-            latest=True,
-            validate=True
-        )
 
-    actual = results.to_add
+    requirements = data["requirements"]
+    exclusions = data["exclusions"]
+    disposables = data["disposables"]
+    subdirs = ["noarch"]
+    parameters = Parameters(requirements, exclusions, disposables, subdirs)
+    resolver = Resolver(initial_channel)
+    actual = set(resolver.resolve(parameters))
 
     final_channel = make_temp_local_channel(
         tmp_path_factory.mktemp("final"), data["final"]
     )
+
     expected = set(final_channel.iter_packages(["noarch"]))
 
     assert set(expected) == set(actual)
@@ -707,28 +838,10 @@ def test_package_resolution_for_valid_queries(tmp_path_factory, data):
 def test_package_resolution_for_invalid_queries(tmp_path, data):
     channel = make_temp_local_channel(tmp_path, data["packages"])
     with pytest.raises(UnsatisfiedRequirementsError):
-        _ = resolve_packages(
-                channel=channel,
-                requirements=data["requirements"],
-                exclusions=data["exclusions"],
-                disposables=data["disposables"],
-                subdirs=["noarch"],
-                target=None,
-                latest=True,
-                validate=True
-            )
-
-
-@pytest.mark.parametrize("data", INVALID_QUERIES.values())
-def test_package_resolution_for_invalid_queries_without_validate(tmp_path, data):
-    channel = make_temp_local_channel(tmp_path, data["packages"])
-    _ = resolve_packages(
-            channel=channel,
-            requirements=data["requirements"],
-            exclusions=data["exclusions"],
-            disposables=data["disposables"],
-            subdirs=["noarch"],
-            target=None,
-            latest=True,
-            validate=False
-        )
+        requirements = data["requirements"]
+        exclusions = data["exclusions"]
+        disposables = data["disposables"]
+        subdirs = ["noarch"]
+        parameters = Parameters(requirements, exclusions, disposables, subdirs)
+        resolver = Resolver(channel)
+        _ = set(resolver.resolve(parameters))
