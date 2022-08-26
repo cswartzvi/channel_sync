@@ -1,7 +1,7 @@
 from hashlib import sha256
-import pytest
 from typing import Dict
 
+import pytest
 from conda.exports import PackageRecord
 
 from conda_replicate.adapters.package import CondaPackage
@@ -187,9 +187,11 @@ def test_conda_package_hash_with_different_channels():
 def test_conda_package_repr_method(record):
     package = CondaPackage(record)
     class_name = package.__class__.__name__
-    expected = f"<{class_name}: " + ", ".join(
-        f"{key}: {value}" for key, value in sorted(DATA.items())
-    ) + ">"
+    expected = (
+        f"<{class_name}: "
+        + ", ".join(f"{key}: {value}" for key, value in sorted(DATA.items()))
+        + ">"
+    )
     assert repr(package) == expected
 
 

@@ -3,7 +3,8 @@ from typing import Dict
 
 import pytest
 
-from conda_replicate.adapters.channel import CondaChannel, LocalCondaChannel
+from conda_replicate.adapters.channel import CondaChannel
+from conda_replicate.adapters.channel import LocalCondaChannel
 from conda_replicate.adapters.channel import RepoData
 from conda_replicate.resolve import Parameters
 from conda_replicate.resolve import Resolver

@@ -7,8 +7,8 @@ import yaml
 from pydantic import BaseSettings
 from pydantic import Field
 
-from conda_replicate import __version__
 from conda_replicate import CondaReplicateException
+from conda_replicate import __version__
 from conda_replicate.adapters.subdir import get_default_subdirs
 from conda_replicate.adapters.subdir import get_known_subdirs
 from conda_replicate.core import run_index

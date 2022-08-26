@@ -1,5 +1,10 @@
 repos:
-
+# - repo: https://github.com/pre-commit/mirrors-mypy
+#   rev: v0.971
+#   hooks:
+#     - id: mypy
+#       language: conda
+#       types: [python]
 - repo: local
   hooks:
   - id: black
@@ -24,6 +29,8 @@ repos:
       - click
       - types-requests
       - pytest
+      - rich
+      - pydantic
 
   - id: flake8
     name: flake8
