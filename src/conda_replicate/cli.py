@@ -14,7 +14,7 @@ from conda_replicate.adapters.subdir import get_known_subdirs
 from conda_replicate.core import run_index
 from conda_replicate.core import run_merge
 from conda_replicate.core import run_patch
-from conda_replicate.core import run_search
+from conda_replicate.core import run_query
 from conda_replicate.core import run_update
 
 # mypy has issues with the dynamic nature of rich-click
@@ -222,7 +222,7 @@ def app():
     pass
 
 
-# Sub-command: search
+# Sub-command: query
 @app.command(short_help="Search an upstream channel for packages and report results.")
 @click.argument(
     "requirements",
@@ -263,7 +263,7 @@ def app():
 @implicit_debug_option
 @pass_state
 @pydantic.validate_arguments
-def search(
+def query(
     state: AppState,
     requirements: List[str],
     channel: str,
@@ -292,7 +292,7 @@ def search(
 
     """  # noqa: E501
     try:
-        run_search(
+        run_query(
             channel_url=channel,
             requirements=requirements,
             exclusions=exclusions,

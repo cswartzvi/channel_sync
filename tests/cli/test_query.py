@@ -11,7 +11,7 @@ import pytest
 import yaml
 from click.testing import CliRunner
 
-from conda_replicate.cli import search
+from conda_replicate.cli import query
 from tests.utils import get_test_data_path
 from tests.utils import make_arguments
 from tests.utils import make_options
@@ -19,25 +19,25 @@ from tests.utils import make_options
 
 @pytest.fixture(scope="module")
 def lookup():
-    return SearchDataLookup(get_test_data_path() / "channels" / "repodata_only")
+    return QueryDataLookup(get_test_data_path() / "channels" / "repodata_only")
 
 
-class SearchDataLookup:
-    """Provides a lookup of test data for the search sub-command."""
+class QueryDataLookup:
+    """Provides a lookup of test data for the query sub-command."""
 
     __test__ = False
 
     def __init__(self, path: Path) -> None:
         self.path = path
 
-    def get(self, name: str) -> SearchData:
+    def get(self, name: str) -> QueryData:
         path = self.path / name
 
         config = path / "config.yml"
         with config.open("rt") as file:
             contents = yaml.load(file, Loader=yaml.CLoader)
 
-        return SearchData(
+        return QueryData(
             path=path,
             subdirs=contents["subdirs"],
             requirements=contents["requirements"],
@@ -47,8 +47,8 @@ class SearchDataLookup:
 
 
 @dataclass(frozen=True)
-class SearchData:
-    """Encapsulates test data for the search sub-command."""
+class QueryData:
+    """Encapsulates test data for the query sub-command."""
 
     __test__ = False
 
@@ -77,8 +77,8 @@ class SearchData:
         "selected1_exclude",
     ],
 )
-def test_search_round_trips_channel_contents(
-    runner: CliRunner, lookup: SearchDataLookup, name: str
+def test_query_round_trips_channel_contents(
+    runner: CliRunner, lookup: QueryDataLookup, name: str
 ):
     data = lookup.get(name)
 
@@ -93,7 +93,7 @@ def test_search_round_trips_channel_contents(
         --quiet
         """
     )
-    result = runner.invoke(search, parameters)
+    result = runner.invoke(query, parameters)
     contents = json.loads(result.output, strict=False)
     actual = set(record["fn"] for record in contents["add"])
 
@@ -112,8 +112,8 @@ def test_search_round_trips_channel_contents(
         ("original", "selected1_dispose"),
     ],
 )
-def test_search_selects_correct_subset_of_a_channel(
-    runner: CliRunner, lookup: SearchDataLookup, baseline: str, subset: str
+def test_query_selects_correct_subset_of_a_channel(
+    runner: CliRunner, lookup: QueryDataLookup, baseline: str, subset: str
 ):
     baseline_data = lookup.get(baseline)
     subset_data = lookup.get(subset)
@@ -130,7 +130,7 @@ def test_search_selects_correct_subset_of_a_channel(
         """
     )
 
-    result = runner.invoke(search, parameters)
+    result = runner.invoke(query, parameters)
     contents = json.loads(result.output, strict=False)
     actual = set(record["fn"] for record in contents["add"])
 
@@ -148,8 +148,8 @@ def test_search_selects_correct_subset_of_a_channel(
         ("original", "selected1", "selected1_dispose"),
     ],
 )
-def test_search_selects_correct_subset_with_target(
-    runner: CliRunner, lookup: SearchDataLookup, baseline: str, target: str, subset: str
+def test_query_selects_correct_subset_with_target(
+    runner: CliRunner, lookup: QueryDataLookup, baseline: str, target: str, subset: str
 ):
     baseline_data = lookup.get(baseline)
     target_data = lookup.get(target)
@@ -168,7 +168,7 @@ def test_search_selects_correct_subset_with_target(
         """
     )
 
-    result = runner.invoke(search, parameters)
+    result = runner.invoke(query, parameters)
     contents = json.loads(result.output, strict=False)
     actual = set(record["fn"] for record in contents["remove"])
 
