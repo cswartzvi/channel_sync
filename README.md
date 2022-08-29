@@ -13,6 +13,13 @@
 ### Does this violate Anaconda's terms-of-service?
 Disclaimer: I am an analyst, not a lawyer. The Anaconda [terms-of-service](https://legal.anaconda.com/policies/en/?name=terms-of-service) expressly forbids mirroring of the default anaconda repository on [repo.anaconda.com](https://repo.anaconda.com/). However, as explained in a [post](https://conda-forge.org/blog/posts/2020-11-20-anaconda-tos/#:~:text=The%20TOS%20change%20does%20not,on%20repo.anaconda.com.) on the conda-forge blog, this does not apply to conda-forge or any other channel hosted on [anaconda.org](https://anaconda.org/). Therefore, `conda-replicate` uses conda-forge as it's default upstream channel. You are of course welcome to specify another channel, but please be respectful of Anaconda's terms-of-service and do not mirror the default anaconda repository.
 
+# Installation
+Due to dependencies on modern versions of `conda` (for searching) and `conda-build` (for indexing), `conda-replicate` is currently only available on conda-forge:
+
+```
+conda install conda-replicate --channel conda-forge --override-channels
+```
+
 # Usage
 1. [Creating a local channel](#1-creating-a-local-channel)
 2. [Updating an existing local channel](#2-updating-an-existing-local-channel)
