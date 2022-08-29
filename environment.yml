@@ -2,7 +2,8 @@ channels:
   - conda-forge
 dependencies:
   - python>=3.8
-  - conda
+  - conda >=4.12
+  - conda-build >=3.19
   - networkx
   - rich
   - click
