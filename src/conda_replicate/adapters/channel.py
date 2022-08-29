@@ -37,12 +37,6 @@ class CondaChannel:
         self._internal = conda.exports.Channel(source)
         self._filesystem = CondaFilesystem(self._internal.base_url)
 
-    @classmethod
-    def from_string(cls, value: str) -> CondaChannel:
-        # value = value.replace("\\", "/")
-        # return cls(conda.exports.Channel(value))
-        pass
-
     @property
     def name(self) -> str:
         """Returns the canonical name of the anaconda channel."""

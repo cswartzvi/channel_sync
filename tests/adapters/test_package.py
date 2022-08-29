@@ -140,6 +140,21 @@ def test_conda_package_equality_with_different_channels():
     assert package1 == package2
 
 
+def test_conda_package_equality_with_different_objects():
+    record = PackageRecord(
+        name="python",
+        version="3.8.12",
+        build="001_0",
+        build_number=0,
+        channel="conda-forge",
+    )
+    package = CondaPackage(record)
+
+    fake_package = "fake-package"
+
+    assert package != fake_package
+
+
 def test_conda_package_hash():
     record1 = PackageRecord(
         name="python",

@@ -14,11 +14,6 @@ class CondaSpecification:
         except conda.exceptions.InvalidVersionSpec as exception:
             raise InvalidCondaSpecification(exception)
 
-    @classmethod
-    def from_string(cls, value: str) -> CondaSpecification:
-        # return cls(conda.exports.MatchSpec(value))
-        pass
-
     @property
     def name(self) -> str:
         return self._internal.name
@@ -34,6 +29,9 @@ class CondaSpecification:
     def __repr__(self):
         class_name = self.__class__.__name__
         return f"<{class_name}: value={self.value!r}>"
+
+    def __str__(self) -> str:
+        return self.value
 
 
 class InvalidCondaSpecification(CondaReplicateException):

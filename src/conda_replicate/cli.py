@@ -1,6 +1,6 @@
 import logging
 import sys
-from typing import TYPE_CHECKING, Any, Iterable, List
+from typing import TYPE_CHECKING, Any, Callable, Set
 
 import pydantic
 import yaml
@@ -18,7 +18,7 @@ from conda_replicate.core import run_query
 from conda_replicate.core import run_update
 
 # mypy has issues with the dynamic nature of rich-click
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     import click
 else:
     import rich_click as click
@@ -40,10 +40,16 @@ _ALLOWED_SUBDIRS = [subdir for subdir in sorted(_KNOWN_SUBDIRS)]
 
 
 class AppState(BaseSettings):
-    """Persistent application state (valid for all sub-commands)."""
+    """Persistent application state."""
 
-    debug: int = 0
-    quiet: bool = True
+    channel: str = "conda-forge"
+    target: str = ""
+    debug: bool = False
+    quiet: bool = False
+    requirements: Set[str] = Field(default_factory=set)
+    exclusions: Set[str] = Field(default_factory=set)
+    disposables: Set[str] = Field(default_factory=set)
+    subdirs: Set[str] = Field(default_factory=set)
 
 
 pass_state = click.make_pass_decorator(AppState, ensure=True)
@@ -54,124 +60,51 @@ class Configuration(BaseSettings):
 
     channel: str = ""
     target: str = ""
-    requirements: List[str] = Field(default_factory=list)
-    exclusions: List[str] = Field(default_factory=list)
-    disposables: List[str] = Field(default_factory=list)
-    subdirs: List[str] = Field(default_factory=list)
+    requirements: Set[str] = Field(default_factory=set)
+    exclusions: Set[str] = Field(default_factory=set)
+    disposables: Set[str] = Field(default_factory=set)
+    subdirs: Set[str] = Field(default_factory=set)
+    quiet: bool = False
 
 
-def check_configuration(name: str):
-    """Returns a parameter callback function that checks configuration settings.
+def channel_option(function: Callable):
+    """Decorator for the `channel` option. Not exposed to the underlying command."""
 
-    When a configuration setting exists it is generally only used when the associated
-    command line value is not specified. However, if the configuration setting is
-    a list, the command line value is added to the end of the configuration setting,
-    which is then returned the the calling site.
-    """
-
-    def callback(context: click.Context, parameter: click.Parameter, value: Any):
-        configuration = context.find_object(Configuration)
-        if configuration:
-            setting = getattr(configuration, name)
-            if isinstance(setting, list):
-                assert isinstance(value, Iterable) and not isinstance(
-                    value, str
-                ), "command line value is not iterable"
-                setting = setting[:]  # copy
-                setting.extend(value)
-                value = setting
-            elif not value:
-                value = setting
-        return value
-
-    return callback
-
-
-channel_option = click.option(
-    "-c",
-    "--channel",
-    "channel",
-    default="conda-forge",
-    type=click.types.STRING,
-    callback=check_configuration("channel"),
-    show_default=True,
-    is_eager=False,
-    help=(
-        "Upstream anaconda channel. Can be specified using the canonical channel "
-        "name on anaconda.org (conda-forge), a fully qualified URL "
-        "(https://conda.anaconda.org/conda-forge/), or a local directory path."
-    ),
-)
-
-
-exclusions_option = click.option(
-    "--exclude",
-    "exclusions",
-    multiple=True,
-    type=click.types.STRING,
-    callback=check_configuration("exclusions"),
-    is_eager=False,
-    help=(
-        "Packages excluded from the search process. Specified using the anaconda "
-        "package query syntax. Multiple options may be passed at one time. "
-    ),
-)
-
-
-disposables_option = click.option(
-    "--dispose",
-    "disposables",
-    multiple=True,
-    type=click.types.STRING,
-    callback=check_configuration("disposables"),
-    is_eager=False,
-    help=(
-        "Packages that are used in the search process but not included in the "
-        "final results. Specified using the anaconda package query syntax. "
-        "Multiple options may be passed at one time. "
-    ),
-)
-
-subdirs_option = click.option(
-    "--subdir",
-    "subdirs",
-    multiple=True,
-    type=click.types.Choice(_KNOWN_SUBDIRS),
-    callback=check_configuration("disposables"),
-    default=_DEFAULT_SUBDIRS,
-    metavar="SUBDIR",
-    show_default=True,
-    is_eager=False,
-    help=(
-        "Selected platform sub-directories. Multiple options may be passed at "
-        f"one time. Allowed values: {{{', '.join(_ALLOWED_SUBDIRS)}}}."
-    ),
-)
-
-
-def implicit_quiet_option(function):
     def callback(context: click.Context, parameter: click.Parameter, value: Any):
         state = context.ensure_object(AppState)
-        state.quiet = True if state.debug > 1 else value
-        return value
+        if value:
+            state.channel = value
+        return state.channel
 
     return click.option(
-        "--quiet",
-        is_flag=True,
-        default=False,
-        type=click.types.BOOL,
+        "-c",
+        "--channel",
+        "channel",
+        type=click.types.STRING,
         callback=callback,
-        expose_value=False,  # Must be False!
-        help="Quite mode. suppress all superfluous output.",
+        show_default=True,
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help=(
+            "Upstream anaconda channel. Can be specified using the canonical channel "
+            "name on anaconda.org (conda-forge), a fully qualified URL "
+            "(https://conda.anaconda.org/conda-forge/), or a local directory path."
+        ),
     )(function)
 
 
-def implicit_configuration_option(function):
+def configuration_option(function):
+    """Decorator for the `config` option. Not exposed to the underlying command."""
+
     def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
         if value:
             with open(value, "rt") as file:
                 contents = yaml.load(file, Loader=yaml.CLoader)
-            context.obj = Configuration.parse_obj(contents)
+                configuration = Configuration.parse_obj(contents)
+
+            for name in configuration.__fields_set__:
+                setattr(state, name, getattr(configuration, name))
         return value
 
     return click.option(
@@ -179,39 +112,180 @@ def implicit_configuration_option(function):
         default=None,
         type=click.types.Path(exists=True, file_okay=True, dir_okay=False),
         callback=callback,
-        expose_value=False,  # Must be False!
-        is_eager=True,  # Must be True!
+        expose_value=False,  # Must be False
+        is_eager=True,  # Must be True
         help="Path to the yaml configuration file.",
     )(function)
 
 
-def implicit_debug_option(function):
+def debug_option(function: Callable):
+    """
+    Decorator for the `quiet` command line option.  Not exposed underlying command.
+
+    The `debug` option prints debugging information to stdout. Should force the
+    quiet command to a matching value.
+    """
+
     def callback(context: click.Context, parameter: click.Parameter, value: Any):
         state = context.ensure_object(AppState)
-        state.debug = value
-
-        log_format = "%(filename)s: %(message)s"
-        if state.debug == 1:
+        if value is not None:
+            state.debug = value
+        if state.debug:
             logging.basicConfig(
-                format=log_format, stream=sys.stdout, level=logging.INFO
+                format="%(filename)s: %(message)s",
+                stream=sys.stdout,
+                level=logging.DEBUG,
             )
-        elif state.debug >= 1:
-            logging.basicConfig(
-                format=log_format, stream=sys.stdout, level=logging.DEBUG
-            )
-
-        state.quiet = True if state.debug > 1 else state.quiet
-        return value
+            state.quiet = True  # no animation / progress in debug mode
+        return state.debug
 
     return click.option(
         "-d",
         "--debug",
-        count=True,
+        is_flag=True,
+        default=None,  # Must be None
         callback=callback,
-        metavar="",
-        expose_value=False,  # Must be False!
-        help="Enable debugging logs. Can be repeated to increase log level",
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help="Enable debugging output. Automatically enters quiet mode.",
     )(function)
+
+
+def exclusions_option(function: Callable):
+    """Decorator for the `exclude` option. Not exposed to the underlying command.
+
+    Options specified on the command line are added to 'exclusions` list in the
+    configuration file.
+    """
+
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value:
+            state.exclusions.update(value)
+        return state.exclusions
+
+    return click.option(
+        "--exclude",
+        "exclusions",
+        multiple=True,
+        type=click.types.STRING,
+        callback=callback,
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help=(
+            "Packages excluded from the search process. Specified using the anaconda "
+            "package query syntax. Multiple options may be passed at one time. "
+        ),
+    )(function)
+
+
+def disposables_option(function: Callable):
+    """Decorator for the `dispose` option. Not exposed to the underlying command.
+
+    Options specified on the command line are added to 'disposables` list in the
+    configuration file.
+    """
+
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value:
+            state.disposables.update(value)
+        return state.disposables
+
+    return click.option(
+        "--dispose",
+        "disposables",
+        multiple=True,
+        type=click.types.STRING,
+        callback=callback,
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help=(
+            "Packages that are used in the search process but not included in the "
+            "final results. Specified using the anaconda package query syntax. "
+            "Multiple options may be passed at one time. "
+        ),
+    )(function)
+
+
+def quiet_option(function: Callable):
+    """Decorator for the `quiet` option. Not exposed to the underlying command."""
+
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value is not None:
+            state.quiet = value
+        if state.debug:
+            state.quiet = False
+        return state.quiet
+
+    return click.option(
+        "--quiet",
+        is_flag=True,
+        default=None,  # Must be None
+        callback=callback,
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help="Quite mode. Suppresses all animations and status related output.",
+    )(function)
+
+
+def requirements_argument(function: Callable):
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value:
+            state.requirements.update(value)
+        if not state.requirements:
+            raise click.BadParameter("Missing option")
+        return state.requirements
+
+    return click.argument(
+        "requirements",
+        nargs=-1,
+        type=click.types.STRING,
+        callback=callback,
+        is_eager=False,  # Must be False
+        expose_value=False,  # Must be False
+    )(function)
+
+
+def subdirs_option(function: Callable):
+    """Decorator for the `subdirs` option. Not exposed to the underlying command.
+
+    Options specified on the command line are added to 'subdirs` list in the
+    configuration file.
+    """
+
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value:
+            state.subdirs.update(value)
+        return state.subdirs
+
+    return click.option(
+        "--subdir",
+        "subdirs",
+        multiple=True,
+        type=click.types.Choice(_KNOWN_SUBDIRS),
+        callback=callback,
+        default=_DEFAULT_SUBDIRS,
+        metavar="SUBDIR",
+        show_default=True,
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help=(
+            "Selected platform sub-directories. Multiple options may be passed at "
+            f"one time. Allowed values: {{{', '.join(_ALLOWED_SUBDIRS)}}}."
+        ),
+    )(function)
+
+
+def target_callback(context: click.Context, parameter: click.Parameter, value: Any):
+    """Callback function for `target` options."""
+    state = context.ensure_object(AppState)
+    if value:
+        state.target = value
+    return state.target
 
 
 # Root command
@@ -224,21 +298,16 @@ def app():
 
 # Sub-command: query
 @app.command(short_help="Search an upstream channel for packages and report results.")
-@click.argument(
-    "requirements",
-    nargs=-1,
-    type=click.types.STRING,
-    callback=check_configuration("requirements"),
-    is_eager=False,
-)
+@requirements_argument
 @channel_option
 @click.option(
     "-t",
     "--target",
     default="",
     type=click.types.STRING,
-    callback=check_configuration("target"),
+    callback=target_callback,
     is_eager=False,
+    expose_value=False,  # handled in callback
     help=(
         "Target anaconda channel. When specified, this channel will act as a "
         "baseline for the package search process - only package differences "
@@ -258,21 +327,12 @@ def app():
         "{table, list, json}."
     ),
 )
-@implicit_configuration_option
-@implicit_quiet_option
-@implicit_debug_option
+@configuration_option
+@quiet_option
+@debug_option
 @pass_state
 @pydantic.validate_arguments
-def query(
-    state: AppState,
-    requirements: List[str],
-    channel: str,
-    target: str,
-    exclusions: List[str],
-    disposables: List[str],
-    subdirs: List[str],
-    output: str,
-):
+def query(state: AppState, output: str):
     """
     Search an upstream channel for the specified package REQUIREMENTS and report
     results.
@@ -293,12 +353,12 @@ def query(
     """  # noqa: E501
     try:
         run_query(
-            channel_url=channel,
-            requirements=requirements,
-            exclusions=exclusions,
-            disposables=disposables,
-            subdirs=subdirs,
-            target_url=target,
+            channel_url=state.channel,
+            requirements=sorted(state.requirements),
+            exclusions=sorted(state.exclusions),
+            disposables=sorted(state.disposables),
+            subdirs=sorted(state.subdirs),
+            target_url=state.target,
             output=output,
             quiet=state.quiet,
         )
@@ -308,20 +368,15 @@ def query(
 
 # Sub-command: update
 @app.command(short_help="Update a local channel from an upstream channel.")
-@click.argument(
-    "requirements",
-    nargs=-1,
-    type=click.types.STRING,
-    callback=check_configuration("requirements"),
-    is_eager=False,
-)
+@requirements_argument
 @click.option(
     "-t",
     "--target",
     required=True,
     type=click.types.STRING,
-    callback=check_configuration("target"),
+    callback=target_callback,
     is_eager=False,
+    expose_value=False,  # handled in callback
     help=(
         "Local anaconda channel where the update will occur. If this local channel "
         "already exists it will act as a baseline for the package search process - "
@@ -332,20 +387,12 @@ def query(
 @exclusions_option
 @disposables_option
 @subdirs_option
-@implicit_configuration_option
-@implicit_quiet_option
-@implicit_debug_option
+@configuration_option
+@quiet_option
+@debug_option
 @pass_state
 @pydantic.validate_arguments
-def update(
-    state: AppState,
-    requirements: List[str],
-    channel: str,
-    target: str,
-    exclusions: List[str],
-    disposables: List[str],
-    subdirs: List[str],
-):
+def update(state: AppState):
     """Update a local channel based on specified upstream package REQUIREMENTS.
 
     - Packages are downloaded or removed from the local channel prior to re-indexing
@@ -364,12 +411,12 @@ def update(
     """  # noqa: E501
     try:
         run_update(
-            channel_url=channel,
-            requirements=requirements,
-            exclusions=exclusions,
-            disposables=disposables,
-            subdirs=subdirs,
-            target_url=target,
+            channel_url=state.channel,
+            requirements=sorted(state.requirements),
+            exclusions=sorted(state.exclusions),
+            disposables=sorted(state.disposables),
+            subdirs=sorted(state.subdirs),
+            target_url=state.target,
             quiet=state.quiet,
         )
     except CondaReplicateException as exception:
@@ -378,20 +425,15 @@ def update(
 
 # Sub-command: patch
 @app.command(short_help="Create a patch from an upstream channel.")
-@click.argument(
-    "requirements",
-    nargs=-1,
-    type=click.types.STRING,
-    callback=check_configuration("requirements"),
-    is_eager=False,
-)
+@requirements_argument
 @click.option(
     "-t",
     "--target",
     default="",
     type=click.types.STRING,
-    callback=check_configuration("target"),
+    callback=target_callback,
     is_eager=False,
+    expose_value=False,  # handled in callback
     help=(
         "Target anaconda channel. When specified, this channel will act as a "
         "baseline for the package search process - only package differences "
@@ -414,22 +456,12 @@ def update(
 @exclusions_option
 @disposables_option
 @subdirs_option
-@implicit_configuration_option
-@implicit_quiet_option
-@implicit_debug_option
+@configuration_option
+@quiet_option
+@debug_option
 @pass_state
 @pydantic.validate_arguments
-def patch(
-    state: AppState,
-    requirements: List[str],
-    target: str,
-    name: str,
-    parent: str,
-    channel: str,
-    exclusions: List[str],
-    disposables: List[str],
-    subdirs: List[str],
-):
+def patch(state: AppState, name: str, parent: str):
     """Create a patch from an upstream channel based on specified package REQUIREMENTS.
 
     - Packages are downloaded to a local patch directory (see --name and --parent)
@@ -450,14 +482,14 @@ def patch(
     """  # noqa: E501
     try:
         run_patch(
-            channel_url=channel,
-            requirements=requirements,
-            exclusions=exclusions,
-            disposables=disposables,
-            subdirs=subdirs,
+            channel_url=state.channel,
+            requirements=sorted(state.requirements),
+            exclusions=sorted(state.exclusions),
+            disposables=sorted(state.disposables),
+            subdirs=sorted(state.subdirs),
             name=name,
             parent=parent,
-            target_url=target,
+            target_url=state.target,
             quiet=state.quiet,
         )
     except CondaReplicateException as exception:
@@ -476,8 +508,8 @@ def patch(
     nargs=1,
     type=click.types.Path(exists=True, dir_okay=True, resolve_path=True),
 )
-@implicit_quiet_option
-@implicit_debug_option
+@quiet_option
+@debug_option
 @pass_state
 @pydantic.validate_arguments
 def merge(state: AppState, patch: str, channel: str):
@@ -495,8 +527,8 @@ def merge(state: AppState, patch: str, channel: str):
     nargs=1,
     type=click.types.Path(exists=True, dir_okay=True, resolve_path=True),
 )
-@implicit_quiet_option
-@implicit_debug_option
+@quiet_option
+@debug_option
 @pass_state
 @pydantic.validate_arguments
 def index(state: AppState, channel: str):

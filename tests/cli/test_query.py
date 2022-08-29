@@ -14,6 +14,7 @@ from click.testing import CliRunner
 from conda_replicate.cli import query
 from tests.utils import get_test_data_path
 from tests.utils import make_arguments
+from tests.utils import make_configuration_file
 from tests.utils import make_options
 
 
@@ -104,6 +105,48 @@ def test_query_round_trips_channel_contents(
 
 
 @pytest.mark.parametrize(
+    "name",
+    [
+        "original",
+        "selected1",
+        "selected2",
+        "selected1_exclude",
+    ],
+)
+def test_query_round_trips_channel_contents_from_configuration_file(
+    runner: CliRunner, lookup: QueryDataLookup, name: str, tmp_path: Path
+):
+    data = lookup.get(name)
+
+    configuration = tmp_path / "config.yml"
+    make_configuration_file(
+        configuration,
+        channel=data.path.as_uri(),
+        requirements=data.requirements,
+        exclusions=data.exclusions,
+        disposables=data.disposables,
+        subdirs=data.subdirs,
+    )
+
+    parameters = shlex.split(
+        f"""
+        --config {configuration.resolve().as_posix()}
+        --output json
+        --quiet
+        """
+    )
+
+    result = runner.invoke(query, parameters)
+    contents = json.loads(result.output, strict=False)
+    actual = set(record["fn"] for record in contents["add"])
+
+    expected = data.get_package_filenames()
+
+    assert result.exit_code == 0
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
     ("baseline", "subset"),
     [
         ("original", "selected1"),
@@ -141,6 +184,53 @@ def test_query_selects_correct_subset_of_a_channel(
 
 
 @pytest.mark.parametrize(
+    ("baseline", "subset"),
+    [
+        ("original", "selected1"),
+        ("original", "selected2"),
+        ("original", "selected1_exclude"),
+        ("original", "selected1_dispose"),
+    ],
+)
+def test_query_selects_correct_subset_of_a_channel_with_configuration_file(
+    runner: CliRunner,
+    lookup: QueryDataLookup,
+    baseline: str,
+    subset: str,
+    tmp_path: Path,
+):
+    baseline_data = lookup.get(baseline)
+    subset_data = lookup.get(subset)
+
+    configuration = tmp_path / "config.yml"
+    make_configuration_file(
+        configuration,
+        channel=baseline_data.path.as_uri(),
+        requirements=subset_data.requirements,
+        exclusions=subset_data.exclusions,
+        disposables=subset_data.disposables,
+        subdirs=subset_data.subdirs,
+    )
+
+    parameters = shlex.split(
+        f"""
+        --config {configuration.resolve().as_posix()}
+        --output json
+        --quiet
+        """
+    )
+
+    result = runner.invoke(query, parameters)
+    contents = json.loads(result.output, strict=False)
+    actual = set(record["fn"] for record in contents["add"])
+
+    expected = subset_data.get_package_filenames()
+
+    assert result.exit_code == 0
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
     ("baseline", "target", "subset"),
     [
         ("original", "selected2", "selected1"),
@@ -162,7 +252,7 @@ def test_query_selects_correct_subset_with_target(
         {make_options("exclude", *subset_data.exclusions)}
         {make_options("dispose", *subset_data.disposables)}
         {make_options("subdir", *subset_data.subdirs)}
-        {make_options("target", target_data.path)}
+        {make_options("target", target_data.path.as_posix())}
         --output json
         --quiet
         """
@@ -170,7 +260,58 @@ def test_query_selects_correct_subset_with_target(
 
     result = runner.invoke(query, parameters)
     contents = json.loads(result.output, strict=False)
-    actual = set(record["fn"] for record in contents["remove"])
+    actual = set(record["fn"] for record in contents["add"])
+
+    subset_filenames = subset_data.get_package_filenames()
+    target_filenames = target_data.get_package_filenames()
+    expected = subset_filenames - target_filenames
+
+    assert result.exit_code == 0
+    assert actual == expected
+
+
+@pytest.mark.parametrize(
+    ("baseline", "target", "subset"),
+    [
+        ("original", "selected2", "selected1"),
+        ("original", "selected1", "selected1_exclude"),
+        ("original", "selected1", "selected1_dispose"),
+    ],
+)
+def test_query_selects_correct_subset_with_target_with_configuration_file(
+    runner: CliRunner,
+    lookup: QueryDataLookup,
+    baseline: str,
+    target: str,
+    subset: str,
+    tmp_path: Path,
+):
+    baseline_data = lookup.get(baseline)
+    target_data = lookup.get(target)
+    subset_data = lookup.get(subset)
+
+    configuration = tmp_path / "config.yml"
+    make_configuration_file(
+        configuration,
+        channel=baseline_data.path.as_uri(),
+        requirements=subset_data.requirements,
+        exclusions=subset_data.exclusions,
+        disposables=subset_data.disposables,
+        subdirs=subset_data.subdirs,
+        target=target_data.path.resolve().as_posix(),
+    )
+
+    parameters = shlex.split(
+        f"""
+        --config {configuration.resolve().as_posix()}
+        --output json
+        --quiet
+        """
+    )
+
+    result = runner.invoke(query, parameters)
+    contents = json.loads(result.output, strict=False)
+    actual = set(record["fn"] for record in contents["add"])
 
     subset_filenames = subset_data.get_package_filenames()
     target_filenames = target_data.get_package_filenames()
