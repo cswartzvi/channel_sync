@@ -4,7 +4,7 @@
 `conda-replicate` is a command line tool for creating and updating local mirrored anaconda channels.
 
 ### Notable features
-* Uses the standard [match specification syntax](https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications) to specify packages
+* Uses the standard [match specification syntax](https://docs.conda.io/projects/conda-build/en/latest/resources/package-spec.html#package-match-specifications) to identify packages
 * Resolves all necessary dependencies of specified packages
 * Allows for channel evolution via direct updates or transferable patches
 * Synchronizes upstream package hotfixes with local channels
@@ -15,7 +15,7 @@ Disclaimer: I am an analyst, not a lawyer. The Anaconda [terms-of-service](https
 
 # Usage
 1. [Creating a local channel](#1-creating-a-local-channel)
-2. [Updating an exsiting local channel](#2-updating-an-existing-local-channel)
+2. [Updating an existing local channel](#2-updating-an-existing-local-channel)
 
 ### 1. Creating a local channel
 Suppose that you want to mirror all of the conda-forge python 3.9 micro releases (3.9.1, 3.9.2, ...) in a local channel called `my-custom-channel`, this can be accomplished by simply running the `update` sub-command:
@@ -73,50 +73,50 @@ wheel                     0.37.1             pyhd8ed1ab_0    file:///path/to/my-
 xz                        5.2.6                h8d14728_0    file:///path/to/my-custom-channel
 ```
 
-Notice that it appears our local channel has all of the direct and transitive dependencies for python 3.9.13. In fact, it has the direct and transitive dependencies for **all of the micro versions of python 3.9**. We can see a summary of these dependencies by using the `search` sub-command, which will query conda-forge and determine what packages are needed to satisfy the python 3.9 specification.
+Notice that it appears our local channel has all of the direct and transitive dependencies for python 3.9.13. In fact, it has the direct and transitive dependencies for **all of the micro versions of python 3.9**. We can see a summary of these dependencies by using the `query` sub-command, which will query conda-forge and determine what packages are needed to satisfy the python 3.9 specification.
 
 ```
-> conda-replicate search --config ./config.yaml
+> conda-replicate query --config ./config.yaml
 
-  Packages to add    (26)   Number   Size [MB]  
- ────────────────────────────────────────────── 
-  python                    35          659.94  
-  pypy3.9                   16          469.51  
-  openssl                   19          147.41  
-  setuptools                111         141.61  
-  pip                       38           48.08  
-  vs2015_runtime            15           32.38  
-  sqlite                    20           24.89  
-  tk                        3            11.67  
-  ca-certificates           30            5.73  
-  zlib                      17            2.64  
-  certifi                   15            2.28  
-  tzdata                    15            1.91  
-  pyparsing                 24            1.58  
-  xz                        3             1.35  
-  ucrt                      1             1.23  
-  bzip2                     5             0.76  
-  expat                     2             0.74  
-  libsqlite                 1             0.65  
-  libzlib                   6             0.40  
-  packaging                 8             0.28  
-  wheel                     9             0.27  
-  libffi                    6             0.25  
-  vc                        14            0.17  
-  wincertstore              6             0.09  
-  six                       3             0.04  
-  python_abi                3             0.01  
+  Packages to add    (26)   Number   Size [MB]
+ ──────────────────────────────────────────────
+  python                    35          659.94
+  pypy3.9                   16          469.51
+  openssl                   19          147.41
+  setuptools                111         141.61
+  pip                       38           48.08
+  vs2015_runtime            15           32.38
+  sqlite                    20           24.89
+  tk                        3            11.67
+  ca-certificates           30            5.73
+  zlib                      17            2.64
+  certifi                   15            2.28
+  tzdata                    15            1.91
+  pyparsing                 24            1.58
+  xz                        3             1.35
+  ucrt                      1             1.23
+  bzip2                     5             0.76
+  expat                     2             0.74
+  libsqlite                 1             0.65
+  libzlib                   6             0.40
+  packaging                 8             0.28
+  wheel                     9             0.27
+  libffi                    6             0.25
+  vc                        14            0.17
+  wincertstore              6             0.09
+  six                       3             0.04
+  python_abi                3             0.01
   Total                     425        1555.88
 ```
 
-Note that the `search` sub-command is most commonly used with `target` in the configuration file (or `--target` on the command line option), to display the results of the query *relative* a given target channel. We will make use of this when we update our local channel below, but for now we want the complete results of the `search` query.
+Note that the `query` sub-command is most commonly used when a  `target` is included in the configuration file (or on the command line via `--target`). When a `target` is specified, the `query` sub-command *will calculate results relative the given target channel*. This also applies to other `conda-replicate` sub-commands such as `update` and `patch`. We will make use of this when we update our local channel below, but for now, we want the examine the complete, non-relative, results of `query`.
 
 As you can see the original update installed quite a few packages, and they take up quite a bit of space! This result may prompt a few questions.
 
 #### How are dependencies determined?
-`conda-replicate` uses the `conda.api` to recursively examine the dependencies of user-supplied "root" specifications (like `python>=3.9,<3.10` given above) and constructs a directed dependency graph. After this graph is completed, unsatisfied nodes (specifications that have no connected packages) are pruned. Additionally, nodes that have no possible connecting path to at least one of the root specifications are pruned as well. What is left are packages that satisfy either a root specification, a direct dependency of a root specification, or a transative dependency further down the graph. Note that if a root specification is unsatisfied an `UnsatisfiedRequirementsError` exception is raised.
+`conda-replicate` uses the `conda.api` to recursively examine the dependencies of user-supplied "root" specifications (like `python>=3.9,<3.10` given above) and constructs a directed dependency graph. After this graph is completed, unsatisfied nodes (specifications that have no connected packages) are pruned. Additionally, nodes that have no possible connecting path to at least one of the root specifications are pruned as well. What is left are packages that satisfy either a root specification, a direct dependency of a root specification, or a transitive dependency further down the graph. Note that if a root specification is unsatisfied an `UnsatisfiedRequirementsError` exception is raised.
 
-As a quick aside, you can use the `conda search --info` command to look at the dependencies of individual conda packages (where ⋮ indicates hidden output):
+As a quick aside, you can use the `conda query --info` command to look at the dependencies of individual conda packages (where ⋮ indicates hidden output):
 
 ```
 > conda search python==3.9.13 --info --channel conda-forge  --override-channels
@@ -159,17 +159,17 @@ Predominantly, board specifications are the usual the culprit for "extra" packag
 #### Can we exclude these "extra" packages?
 Yes, by using `exclusions` in the configuration file (or `--exclude` on the command line option) . Let's assume that you are repeating the process of creating `my-custom-channel` from above. However instead of jumping right to the `update` sub-command you do the following:
 
-1. Run the `search` sub-command in _summary_ mode (the default mode used above) to see the overall package distribution
+1. Run the `query` sub-command in _summary_ mode (the default mode used above) to see the overall package distribution
 
       ```
-      > conda-replicate search --config ./config.yaml
+      > conda-replicate query --config ./config.yaml
       ```
 
-2. If we find some unexpected packages we can re-run `search` in _list_ mode to zero in on the individual version of those packages. As you can see below there is a wide range of package versions for python, pip, setuptools, pyp3.9.
+2. If we find some unexpected packages we can re-run `query` in _list_ mode to zero in on the individual version of those packages. As you can see below there is a wide range of package versions for python, pip, setuptools, pyp3.9.
 
     ```
-    > python -m conda_local search --config ./config.yaml --output list
-      
+    > python -m conda_local query --config ./config.yaml --output list
+
     Packages to add:
     ⋮
     pip-20.0.2-py_2.tar.bz2
@@ -213,7 +213,7 @@ Yes, by using `exclusions` in the configuration file (or `--exclude` on the comm
     ⋮
     ```
 
-3. Having identified the version ranges of theses packages we can refine our call to the `update` sub-command by tightening our root specification and making use of `exclusions` in the configuration file. The entire process is updateable, so we don't need to loss sleep over our ranges right now:
+3. Having identified the version ranges of theses packages we can refine our call to the `update` sub-command by tightening our root specification and making use of `exclusions` in the configuration file. The entire process is updatable, so we don't need to loss sleep over our ranges right now:
 
       ```yaml
       # config.yml
@@ -225,10 +225,10 @@ Yes, by using `exclusions` in the configuration file (or `--exclude` on the comm
         - pip <=21.0            # new line
         - pypy3.9               # new line
       ```
-      
+
       ```
-       > conda-replicate search --config ./config.yml
-          
+       > conda-replicate query --config ./config.yml
+
        Packages to add    (21)   Number   Size [MB]
        ──────────────────────────────────────────────
        python                    14          258.60
@@ -253,10 +253,10 @@ Yes, by using `exclusions` in the configuration file (or `--exclude` on the comm
        six                       3             0.04
        python_abi                2             0.01
        Total                     230         546.38
-       
+
       ```
-   This brings the number of packages and overall size down to a more reasonable level. 
-      
+   This brings the number of packages and overall size down to a more reasonable level.
+
 4. Finally we can re-run the `update` sub-command (as we did above):
 
    ```
@@ -264,7 +264,7 @@ Yes, by using `exclusions` in the configuration file (or `--exclude` on the comm
    ```
 
 
-It should be mentioned that sometimes the reasons for _why_ a package was included require a more detailed dependency investigation. In those cases calls to `conda search --info`,  `conda-replicate search --output json`, or as a last resort `conda-replicate search --debug`, are very useful.
+It should be mentioned that sometimes the reasons for _why_ a package was included require a more detailed dependency investigation. In those cases calls to `conda search --info`,  `conda-replicate query --output json`, or as a last resort `conda-replicate query --debug`, are very useful.
 
 ### 2. Updating an existing local channel
 
@@ -275,7 +275,7 @@ Once a local channel has been created it can be updated at any time. Updates pre
 
 3. Refresh the package index in response to package and/or hotfix changes (via `conda_build.api`)
 
-There are two ways that local channels can be updated, either *directly* or through *patches*. Lets examine both options starting from `my-custom-channel` in the previous section. We ended up with a configuration file that looked like the follwoing:
+There are two ways that local channels can be updated, either *directly* or through *patches*. Lets examine both options starting from `my-custom-channel` in the previous section. We ended up with a configuration file that looked like the following:
 
 ```yaml
 # config.yml
@@ -303,15 +303,15 @@ exclusions:
   - pypy3.9
 ```
 
-Remembering the lessons from the last section, we first run the `search` sub-command. Because our new configuration file defines a `target`, we we will see the results of the query *relative* `my-custom-channel`. This effectively describes what packages will be added and removed when we run the update:
+Remembering the lessons from the last section, we first run the `query` sub-command. Because our new configuration file defines a `target`, we we will see the results of the query *relative* `my-custom-channel`. This effectively describes what packages will be added and removed when we run the update:
 
 ```
-> conda-replicate search --config ./config.yml
+> conda-replicate query --config ./config.yml
 
-  Packages to add    (4)   Number   Size [MB]  
- ───────────────────────────────────────────── 
-  pydantic                 17           11.87  
-  typing_extensions        10            0.28  
+  Packages to add    (4)   Number   Size [MB]
+ ─────────────────────────────────────────────
+  pydantic                 17           11.87
+  typing_extensions        10            0.28
   typing-extensions        10            0.08
   dataclasses              3             0.02
   Total                    40           12.25
@@ -321,7 +321,7 @@ Remembering the lessons from the last section, we first run the `search` sub-com
  ─────────────────────────────────────────────
   python                   2            36.44
   setuptools               28           33.54
-  Total                    30           69.98  
+  Total                    30           69.98
 ```
 
 #### How do we perform a direct update?
@@ -350,15 +350,15 @@ The `patch` and `merge` commands are particularly well suited for updating air-g
 
 1. You must be able to transfer files to the air-gapped system from a network facing system (via a bridge or manual drive).
 2. You need to maintain a parallel channel on your network facing system that is used generate the patches.
-3. The very first transfer to the air-gapped system *must be an indexed conda channel*. This means that you need to use the `update` sub-command to create a channel on your network facing system and then transfer the entire channel to the air gapped system. All subsequent transfers can be updated via the `patch` and `merge` sub-commands. 
+3. The very first transfer to the air-gapped system *must be an indexed conda channel*. This means that you need to use the `update` sub-command to create a channel on your network facing system and then transfer the entire channel to the air gapped system. All subsequent transfers can be updated via the `patch` and `merge` sub-commands.
 4. Your configuration needs to include `conda-replicate` as a requirement. If not, you will not be able install `conda-replicate` on the air-gapped system, which means you cannot run the `merge` sub-command.
 
 ## Commands
 The following commands are available in `conda-replicate`:
 
-#### search
+#### query
 ```
- Usage: conda-replicate search [OPTIONS] [REQUIREMENTS]...
+ Usage: conda-replicate query [OPTIONS] [REQUIREMENTS]...
 
  Search an upstream channel for the specified package REQUIREMENTS and report results.
 

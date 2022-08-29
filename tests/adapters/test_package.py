@@ -1,7 +1,7 @@
 from hashlib import sha256
-import pytest
 from typing import Dict
 
+import pytest
 from conda.exports import PackageRecord
 
 from conda_replicate.adapters.package import CondaPackage
@@ -140,6 +140,21 @@ def test_conda_package_equality_with_different_channels():
     assert package1 == package2
 
 
+def test_conda_package_equality_with_different_objects():
+    record = PackageRecord(
+        name="python",
+        version="3.8.12",
+        build="001_0",
+        build_number=0,
+        channel="conda-forge",
+    )
+    package = CondaPackage(record)
+
+    fake_package = "fake-package"
+
+    assert package != fake_package
+
+
 def test_conda_package_hash():
     record1 = PackageRecord(
         name="python",
@@ -187,9 +202,11 @@ def test_conda_package_hash_with_different_channels():
 def test_conda_package_repr_method(record):
     package = CondaPackage(record)
     class_name = package.__class__.__name__
-    expected = f"<{class_name}: " + ", ".join(
-        f"{key}: {value}" for key, value in sorted(DATA.items())
-    ) + ">"
+    expected = (
+        f"<{class_name}: "
+        + ", ".join(f"{key}: {value}" for key, value in sorted(DATA.items()))
+        + ">"
+    )
     assert repr(package) == expected
 
 

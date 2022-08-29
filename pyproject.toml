@@ -1,37 +1,26 @@
-[build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
-
 [project]
-name = "conda_local"
+name = "conda-replicate"
+version = "0.1"
 authors = [
-    { name = "Charles W. Swartz VI, Ph.D.", email = "charles.w.swartz.vi@gmail.com" },
+  { name="Charles Swartz", email="charles.w.swartz.vi@gmail.com" },
 ]
-license = { "file" = "LICENSE" }
+description = "Manage local mirrored anaconda channels."
 readme = "README.md"
-dynamic = ["version", "description"]
-requires-python = ">=3.8"
-dependencies = [
-    "aiohttp",
-    "click >=8",
-    "conda >=4.12.0",
-    "conda-build >=3.21.0",
-    "fsspec",
-    "networkx",
-    "pydantic",
-    "PyYAML >=6",
-    "requests",
-    "rich",
-    "rich-click",
-]
-
-[project.optional-dependencies]
-test = [
-    "conda-build >=3.21.0",
-    "coverage[toml]",
-    "pytest >=7",
-    "pytest-cov",
+license = { file="LICENSE" }
+requires-python = ">=3.7"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: System :: Systems Administration",
+    "Typing :: Typed",
 ]
 
 [project.scripts]
-conda-replicate = "conda_index.cli:cli"
+conda-replicate = "conda_replicate.cli:app"
+
+[project.urls]
+"Homepage" = "https://github.com/cswartzvi/conda-replicate"
+"Bug Tracker" = "https://github.com/cswartzvi/conda-replicate/issues"

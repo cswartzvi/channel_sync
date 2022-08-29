@@ -1,5 +1,5 @@
 __version__ = "0.1"
 
 
-class CondaLocalException(Exception):
+class CondaReplicateException(Exception):
     pass

@@ -1,5 +1,6 @@
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from dataclasses import field
 from pathlib import Path
 from typing import List, Set
 
@@ -7,12 +8,16 @@ import pytest
 import yaml
 
 from conda_replicate.adapters.channel import CondaChannel
-from conda_replicate.adapters.channel import LocalCondaChannel
+
+# from conda_replicate.adapters.channel import LocalCondaChannel
 from tests.utils import get_test_data_path
 
 
 @dataclass
 class TestData:
+
+    __test__ = False
+
     path: Path
     subdirs: List[str] = field(default_factory=list)
 

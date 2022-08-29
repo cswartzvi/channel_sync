@@ -126,7 +126,7 @@ def run_index(channel_url: str, quiet: bool = True) -> None:
         channel.update_index()
 
 
-def run_search(
+def run_query(
     channel_url: str,
     requirements: Iterable[str],
     exclusions: Iterable[str],

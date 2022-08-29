@@ -14,7 +14,7 @@ import fsspec
 from pydantic import BaseModel
 from pydantic import Field
 
-from conda_replicate import CondaLocalException
+from conda_replicate import CondaReplicateException
 from conda_replicate.adapters.package import CondaPackage
 from conda_replicate.adapters.subdir import get_known_subdirs
 
@@ -36,12 +36,6 @@ class CondaChannel:
         source = source.replace("\\", "/")
         self._internal = conda.exports.Channel(source)
         self._filesystem = CondaFilesystem(self._internal.base_url)
-
-    @classmethod
-    def from_string(cls, value: str) -> CondaChannel:
-        # value = value.replace("\\", "/")
-        # return cls(conda.exports.Channel(value))
-        pass
 
     @property
     def name(self) -> str:
@@ -347,7 +341,7 @@ class CondaFilesystem:
         return f"<{class_name}: url={self.url!r}>"
 
 
-class BadPackageDownload(CondaLocalException):
+class BadPackageDownload(CondaReplicateException):
     """Downloaded package does not match advertised specifications."""
 
     pass

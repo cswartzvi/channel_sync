@@ -1,9 +1,14 @@
 {
     "cSpell.enabled": true,
     "cSpell.words": [
+        "conda",
+        "cpython",
+        "hotfixes",
         "networkx",
+        "pypy",
         "removables",
         "repodata",
+        "setuptools",
         "typer",
         "urlpath"
     ],
@@ -13,7 +18,7 @@
     "python.autoComplete.extraPaths": [
         "${workspaceFolder}/src"
     ],
-    "python.envFile": "${workspaceFolder}/.vscode/develop.env",
+    "python.envFile": "${workspaceFolder}/.vscode/editor.env",
     "python.formatting.provider": "black",
     "python.linting.flake8Args": [
         "--max-line-length=88"
