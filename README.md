@@ -1,3 +1,7 @@
+![Conda](https://img.shields.io/conda/v/conda-forge/conda-replicate?label=conda-forge)
+![GitHub](https://img.shields.io/github/license/cswartzvi/conda-replicate)
+
+
 ![# conda-synthesize](./assets/logo.png)
 
 # What is this?
