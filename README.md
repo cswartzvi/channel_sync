@@ -1,5 +1,9 @@
-![Conda](https://img.shields.io/conda/v/conda-forge/conda-replicate?label=conda-forge)
-![GitHub](https://img.shields.io/github/license/cswartzvi/conda-replicate)
+<p align="left">
+    <a href="https://anaconda.org/conda-forge/conda-replicate" alt="conda-forge conda-replicate">
+        <img src="https://img.shields.io/conda/v/conda-forge/conda-replicate?label=conda-forge" /></a>
+    <a href="https://github.com/cswartzvi/conda-replicate/blob/main/LICENSE" alt="MIT License">
+        <img src="https://img.shields.io/github/license/cswartzvi/conda-replicate" /></a>
+</p>
 
 
 ![# conda-synthesize](./assets/logo.png)
