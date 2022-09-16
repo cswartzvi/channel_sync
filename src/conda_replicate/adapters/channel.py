@@ -35,7 +35,11 @@ class CondaChannel:
     def __init__(self, source: str) -> None:
         source = source.replace("\\", "/")
         self._internal = conda.exports.Channel(source)
-        self._filesystem = CondaFilesystem(self._internal.base_url)
+        if source.startswith("//"):
+            # Representation of UNC in fsspec and conda is inconsistent
+            self._filesystem = CondaFilesystem(source)
+        else:
+            self._filesystem = CondaFilesystem(self._internal.base_url)
 
     @property
     def name(self) -> str:
@@ -203,7 +207,7 @@ class LocalCondaChannel(CondaChannel):
         self._path = Path(source).resolve()
         if not self._path.exists():
             self._path = self._path.absolute()
-        super().__init__(self._path.as_uri())
+        super().__init__(str(self._path.resolve()))
 
     @property
     def path(self) -> Path:
