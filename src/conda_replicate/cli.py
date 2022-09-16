@@ -372,7 +372,6 @@ def query(state: AppState, output: str):
 @click.option(
     "-t",
     "--target",
-    required=True,
     type=click.types.STRING,
     callback=target_callback,
     is_eager=False,
@@ -409,6 +408,11 @@ def update(state: AppState):
     - Requirements specified on the command line *augment* those specified in a
     configuration file
     """  # noqa: E501
+    if not state.target:
+        raise click.UsageError(
+            "Target must be specified as '-t', '--target' or in a configuration file."
+        )
+
     try:
         run_update(
             channel_url=state.channel,
