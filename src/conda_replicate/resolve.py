@@ -174,16 +174,19 @@ class Parameters:
         disposables: Iterable[str],
         subdirs: Iterable[str],
     ) -> None:
-        self._flat_requirements = tuple(_make_specs(requirements))
-        self._requirements = groupby(self._flat_requirements, lambda spec: spec.name)
-        self._exclusions = groupby(_make_specs(exclusions), lambda spec: spec.name)
-        self._disposables = groupby(_make_specs(disposables), lambda spec: spec.name)
+        self._requirements = tuple(_make_specs(requirements))
+        self._exclusions = tuple(_make_specs(exclusions))
+        self._disposables = tuple(_make_specs(disposables))
         self._subdirs = tuple(subdirs)
+
+        self._requirement_groups = groupby(self._requirements, lambda spec: spec.name)
+        self._exclusion_groups = groupby(self._exclusions, lambda spec: spec.name)
+        self._disposables_groups = groupby(self._disposables, lambda spec: spec.name)
 
     @property
     def requirements(self) -> Tuple[CondaSpecification, ...]:
         """Returns anaconda match specifications for required packages."""
-        return self._flat_requirements
+        return self._requirements
 
     @property
     def subdirs(self) -> Tuple[str, ...]:
@@ -193,11 +196,11 @@ class Parameters:
     def is_constrained(self, package: CondaPackage) -> bool:
         """Returns True if a constrained (excluded from package resolution)."""
 
-        requirements = self._requirements.get(package.name, [])
+        requirements = self._requirement_groups.get(package.name, [])
         if not all(spec.match(package) for spec in requirements):
             return True
 
-        exclusions = self._exclusions.get(package.name, [])
+        exclusions = self._exclusion_groups.get(package.name, [])
         if any(spec.match(package) for spec in exclusions):
             return True
 
@@ -205,7 +208,7 @@ class Parameters:
 
     def is_disposable(self, package: CondaPackage) -> bool:
         """Returns True if a disposable (removable after package resolution)."""
-        disposables = self._disposables.get(package.name, [])
+        disposables = self._disposables_groups.get(package.name, [])
         return any(disposable.match(package) for disposable in disposables)
 
 
