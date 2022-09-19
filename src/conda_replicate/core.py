@@ -22,6 +22,7 @@ def find_packages(
     disposables: Iterable[str],
     subdirs: Iterable[str],
     target: Optional[CondaChannel] = None,
+    strict: bool = False,
 ) -> Tuple[Set[CondaPackage], Set[CondaPackage]]:
     """Performs package resolution on an anaconda channel based on specified parameters.
 
@@ -49,7 +50,7 @@ def find_packages(
     """
 
     parameters = Parameters(requirements, exclusions, disposables, subdirs)
-    resolver = Resolver(channel)
+    resolver = Resolver(channel, strict=strict)
     packages = set(resolver.resolve(parameters))
 
     to_add, to_remove = set(), set()
@@ -72,6 +73,7 @@ def run_patch(
     name: str = "",
     parent: str = "",
     target_url: str = "",
+    strict: bool = False,
     quiet: bool = True,
 ) -> None:
     channel = CondaChannel(channel_url)
@@ -92,6 +94,8 @@ def run_patch(
     table.add_row("Target", target.url if target else "N/A")
     table.add_row("Subdirs", ", ".join(subdirs))
     table.add_row("Patch", str(destination.path.resolve()))
+    if strict:
+        table.add_row("Strict", "True")
     console.print(table)
     console.print("")
 
@@ -103,6 +107,7 @@ def run_patch(
             exclusions=exclusions,
             disposables=disposables,
             target=target,
+            strict=strict,
         )
 
     if to_add:
@@ -133,6 +138,7 @@ def run_query(
     disposables: Iterable[str],
     subdirs: Iterable[str],
     target_url: str = "",
+    strict: bool = False,
     quiet: bool = True,
     output: str = "summary",
 ) -> None:
@@ -149,6 +155,8 @@ def run_query(
     table.add_row("Channel", channel.url)
     table.add_row("Target", target.url if target else "N/A")
     table.add_row("Subdirs", ", ".join(subdirs))
+    if strict:
+        table.add_row("Strict", "True")
     console.print(table)
     console.print("")
 
@@ -163,6 +171,7 @@ def run_query(
             exclusions=exclusions,
             disposables=disposables,
             target=target,
+            strict=strict,
         )
 
     # Output should be displayed regardless of quiet=True
@@ -176,6 +185,7 @@ def run_update(
     disposables: Iterable[str],
     subdirs: Iterable[str],
     target_url: str,
+    strict: bool = False,
     quiet: bool = True,
 ) -> None:
 
@@ -189,6 +199,8 @@ def run_update(
     table.add_row("Channel", channel.url)
     table.add_row("Target", str(target.path.resolve()))
     table.add_row("Subdirs", ", ".join(subdirs))
+    if strict:
+        table.add_row("Strict", "True")
     console.print(table)
     console.print("")
 
@@ -201,6 +213,7 @@ def run_update(
             requirements=requirements,
             exclusions=exclusions,
             disposables=disposables,
+            strict=strict,
         )
 
     if to_add:

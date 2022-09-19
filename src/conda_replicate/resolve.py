@@ -19,8 +19,9 @@ class Resolver:
 
     _root_attribute = "root"
 
-    def __init__(self, source: CondaChannel) -> None:
+    def __init__(self, source: CondaChannel, strict: bool = False) -> None:
         self.source = source
+        self.strict = strict
 
     def resolve(self, parameters: Parameters) -> Tuple[CondaPackage, ...]:
         """Execute the resolution algorithm using specified parameters."""
@@ -30,14 +31,16 @@ class Resolver:
         log.debug("Initial graph G(V%d, E=%d)", len(graph.nodes), len(graph.edges))
 
         self._prune_unsatisfied_nodes(graph)
-
         self._verify_roots(graph, roots)  # Must verify before pruning disconnected
-
         self._prune_disconnected_nodes(graph, roots)
 
         log.debug("Pruned graph G(V=%d, E=%d)", len(graph.nodes), len(graph.edges))
 
         packages = self._extract_packages(graph, parameters)
+
+        if self.strict:
+            self._verify_specified_packages(packages, parameters)
+
         return packages
 
     def _construct_graph(self, parameters: Parameters) -> Tuple[nx.DiGraph, Set[str]]:
@@ -145,6 +148,21 @@ class Resolver:
         if missing:
             raise UnsatisfiedRequirementsError(missing)
 
+    def _verify_specified_packages(
+        self, packages: Iterable[CondaPackage], parameters: Parameters
+    ) -> None:
+        """Verifies that all packages are specified as requirements."""
+        names = set(package.name for package in packages)
+        specified = set(req.name for req in parameters.requirements)
+        unspecified = set()
+
+        for name in names:
+            if name not in specified:
+                unspecified.add(name)
+
+        if unspecified:
+            raise UnspecifiedPackagesError(unspecified)
+
     def _extract_packages(
         self, graph: nx.DiGraph, parameters: Parameters
     ) -> Tuple[CondaPackage, ...]:
@@ -218,6 +236,15 @@ class UnsatisfiedRequirementsError(CondaReplicateException):
     def __init__(self, missing: Iterable[str]) -> None:
         self.missing = sorted(missing)
         message = f"Missing required packages: {missing!r}"
+        super().__init__(message)
+
+
+class UnspecifiedPackagesError(CondaReplicateException):
+    """Exception raised in strict mode when packages are not specified explicitly."""
+
+    def __init__(self, unspecified: Iterable[str]) -> None:
+        self.unspecified = sorted(unspecified)
+        message = f"Unspecified packages: {unspecified!r}"
         super().__init__(message)
 
 

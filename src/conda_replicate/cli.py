@@ -44,6 +44,7 @@ class AppState(BaseSettings):
 
     channel: str = "conda-forge"
     target: str = ""
+    strict: bool = False
     debug: bool = False
     quiet: bool = False
     requirements: Set[str] = Field(default_factory=set)
@@ -64,6 +65,7 @@ class Configuration(BaseSettings):
     exclusions: Set[str] = Field(default_factory=set)
     disposables: Set[str] = Field(default_factory=set)
     subdirs: Set[str] = Field(default_factory=set)
+    strict: bool = False
     quiet: bool = False
 
 
@@ -236,7 +238,10 @@ def requirements_argument(function: Callable):
         if value:
             state.requirements.update(value)
         if not state.requirements:
-            raise click.BadParameter("Missing option")
+            raise click.UsageError(
+                "Requirements must be specified as arguments or in a "
+                "configuration file."
+            )
         return state.requirements
 
     return click.argument(
@@ -246,6 +251,26 @@ def requirements_argument(function: Callable):
         callback=callback,
         is_eager=False,  # Must be False
         expose_value=False,  # Must be False
+    )(function)
+
+
+def strict_option(function: Callable):
+    """Decorator for the `strict` option. Not exposed to the underlying command."""
+
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value:
+            state.strict = value
+        return state.strict
+
+    return click.option(
+        "--strict",
+        is_flag=True,
+        default=False,  # Must be None
+        callback=callback,
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help="Strict mode. All packages must be defined as a requirement.",
     )(function)
 
 
@@ -328,6 +353,7 @@ def app():
     ),
 )
 @configuration_option
+@strict_option
 @quiet_option
 @debug_option
 @pass_state
@@ -361,6 +387,7 @@ def query(state: AppState, output: str):
             target_url=state.target,
             output=output,
             quiet=state.quiet,
+            strict=state.strict,
         )
     except CondaReplicateException as exception:
         _process_application_exception(exception)
@@ -387,6 +414,7 @@ def query(state: AppState, output: str):
 @disposables_option
 @subdirs_option
 @configuration_option
+@strict_option
 @quiet_option
 @debug_option
 @pass_state
@@ -422,6 +450,7 @@ def update(state: AppState):
             subdirs=sorted(state.subdirs),
             target_url=state.target,
             quiet=state.quiet,
+            strict=state.strict,
         )
     except CondaReplicateException as exception:
         _process_application_exception(exception)
@@ -461,6 +490,7 @@ def update(state: AppState):
 @disposables_option
 @subdirs_option
 @configuration_option
+@strict_option
 @quiet_option
 @debug_option
 @pass_state
@@ -495,6 +525,7 @@ def patch(state: AppState, name: str, parent: str):
             parent=parent,
             target_url=state.target,
             quiet=state.quiet,
+            strict=state.strict,
         )
     except CondaReplicateException as exception:
         _process_application_exception(exception)
