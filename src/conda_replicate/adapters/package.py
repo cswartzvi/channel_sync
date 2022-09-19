@@ -7,10 +7,11 @@ import conda.exports
 
 class CondaPackage:
 
-    __slots__ = {"_internal", "_key", "_hash"}
+    __slots__ = {"_internal", "_key", "_hash", "_order"}
 
     def __init__(self, source: conda.exports.PackageRecord) -> None:
         self._internal = source
+        self._order = conda.exports.VersionOrder(self.version)
 
         # Equality / hash key should NOT include channel
         self._key = (
@@ -64,6 +65,10 @@ class CondaPackage:
         return self._internal.subdir
 
     @property
+    def timestamp(self) -> int:
+        return self._internal.timestamp
+
+    @property
     def url(self) -> str:
         return self._internal.url
 
@@ -94,6 +99,9 @@ class CondaPackage:
             + ">"
         )
         return text
+
+    def __lt__(self, other: CondaPackage):
+        return (self._order, self.timestamp) < (other._order, other.timestamp)
 
     def __str__(self):
         return self.fn

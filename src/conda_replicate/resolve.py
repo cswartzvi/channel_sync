@@ -19,8 +19,9 @@ class Resolver:
 
     _root_attribute = "root"
 
-    def __init__(self, source: CondaChannel) -> None:
+    def __init__(self, source: CondaChannel, latest: bool = False) -> None:
         self.source = source
+        self.latest = latest
 
     def resolve(self, parameters: Parameters) -> Tuple[CondaPackage, ...]:
         """Execute the resolution algorithm using specified parameters."""
@@ -68,6 +69,11 @@ class Resolver:
             log.debug("Processing spec %s", spec)
 
             for package in self._query_channel(spec, parameters):
+
+                if self.latest and spec not in roots:
+                    # Only keep the latest packages
+                    pass
+
                 if parameters.is_constrained(package):
                     log.debug("Ignoring constrained package: %s", package)
                     continue

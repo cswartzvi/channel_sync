@@ -22,6 +22,7 @@ def find_packages(
     disposables: Iterable[str],
     subdirs: Iterable[str],
     target: Optional[CondaChannel] = None,
+    latest: bool = False
 ) -> Tuple[Set[CondaPackage], Set[CondaPackage]]:
     """Performs package resolution on an anaconda channel based on specified parameters.
 
@@ -49,7 +50,7 @@ def find_packages(
     """
 
     parameters = Parameters(requirements, exclusions, disposables, subdirs)
-    resolver = Resolver(channel)
+    resolver = Resolver(channel, latest=latest)
     packages = set(resolver.resolve(parameters))
 
     to_add, to_remove = set(), set()
@@ -72,6 +73,7 @@ def run_patch(
     name: str = "",
     parent: str = "",
     target_url: str = "",
+    latest: bool = False,
     quiet: bool = True,
 ) -> None:
     channel = CondaChannel(channel_url)
@@ -103,6 +105,7 @@ def run_patch(
             exclusions=exclusions,
             disposables=disposables,
             target=target,
+            latest=latest,
         )
 
     if to_add:
@@ -133,6 +136,7 @@ def run_query(
     disposables: Iterable[str],
     subdirs: Iterable[str],
     target_url: str = "",
+    latest: bool = False,
     quiet: bool = True,
     output: str = "summary",
 ) -> None:
@@ -163,6 +167,7 @@ def run_query(
             exclusions=exclusions,
             disposables=disposables,
             target=target,
+            latest=latest,
         )
 
     # Output should be displayed regardless of quiet=True
@@ -176,6 +181,7 @@ def run_update(
     disposables: Iterable[str],
     subdirs: Iterable[str],
     target_url: str,
+    latest: bool = False,
     quiet: bool = True,
 ) -> None:
 
@@ -201,6 +207,7 @@ def run_update(
             requirements=requirements,
             exclusions=exclusions,
             disposables=disposables,
+            latest=latest,
         )
 
     if to_add:
