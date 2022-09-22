@@ -234,6 +234,54 @@ def latest_option(function: Callable):
     )(function)
 
 
+def latest_version_option(function: Callable):
+    """Decorator for the `latest` option. Not exposed to the underlying command."""
+
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value is not None:
+            state.latest = value
+        return state.latest
+
+    return click.option(
+        "--latest-build",
+        is_flag=True,
+        default=None,  # Must be None
+        callback=callback,
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help=(
+            "Force latest packages. Only returns the packages of the latest version "
+            "for each of the requirements. Note that there may be multiple builds for "
+            "each version of a package."
+        )
+    )(function)
+
+
+def latest_build_option(function: Callable):
+    """Decorator for the `latest` option. Not exposed to the underlying command."""
+
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value is not None:
+            state.latest = value
+        return state.latest
+
+    return click.option(
+        "--latest-version",
+        is_flag=True,
+        default=None,  # Must be None
+        callback=callback,
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help=(
+            "Force latest packages. Only returns the packages of the latest version "
+            "for each of the requirements. Note that there may be multiple builds for "
+            "each version of a package."
+        )
+    )(function)
+
+
 def quiet_option(function: Callable):
     """Decorator for the `quiet` option. Not exposed to the underlying command."""
 
@@ -354,6 +402,8 @@ def app():
     ),
 )
 @latest_option
+@latest_version_option
+@latest_build_option
 @configuration_option
 @quiet_option
 @debug_option
