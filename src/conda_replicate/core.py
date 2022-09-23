@@ -11,8 +11,7 @@ from conda_replicate.adapters.package import CondaPackage
 from conda_replicate.adapters.subdir import get_default_subdirs
 from conda_replicate.display import Display
 from conda_replicate.output import print_output
-from conda_replicate.resolve import Parameters
-from conda_replicate.resolve import Resolver
+from conda_replicate.resolver import find_packages as _find_packages
 
 
 def find_packages(
@@ -22,7 +21,7 @@ def find_packages(
     disposables: Iterable[str],
     subdirs: Iterable[str],
     target: Optional[CondaChannel] = None,
-    latest: bool = False
+    latest: bool = False,
 ) -> Tuple[Set[CondaPackage], Set[CondaPackage]]:
     """Performs package resolution on an anaconda channel based on specified parameters.
 
@@ -49,9 +48,16 @@ def find_packages(
         A tuple of packages to add and packages to remove.
     """
 
-    parameters = Parameters(requirements, exclusions, disposables, subdirs)
-    resolver = Resolver(channel, latest=latest)
-    packages = set(resolver.resolve(parameters))
+    packages = set(
+        _find_packages(
+            channel=channel,
+            requirements=requirements,
+            exclusions=exclusions,
+            disposables=disposables,
+            subdirs=subdirs,
+            latest_versions=latest,
+        )
+    )
 
     to_add, to_remove = set(), set()
     if target is None or not target.is_queryable:

@@ -1,11 +1,11 @@
-from typing import List
+from typing import Tuple
 
 from conda.base.context import context
 
 
-def get_default_subdirs() -> List[str]:
-    return list(context.subdirs)
+def get_default_subdirs() -> Tuple[str, ...]:
+    return tuple(context.subdirs)
 
 
-def get_known_subdirs() -> List[str]:
-    return list(context.known_subdirs)
+def get_known_subdirs() -> Tuple[str, ...]:
+    return tuple(context.known_subdirs)

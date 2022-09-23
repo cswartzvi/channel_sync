@@ -44,7 +44,9 @@ class AppState(BaseSettings):
 
     channel: str = "conda-forge"
     target: str = ""
-    latest: bool = False
+    latest_versions: bool = False
+    latest_builds: bool = False
+    latest_roots: bool = False
     debug: bool = False
     quiet: bool = False
     requirements: Set[str] = Field(default_factory=set)
@@ -65,7 +67,9 @@ class Configuration(BaseSettings):
     exclusions: Set[str] = Field(default_factory=set)
     disposables: Set[str] = Field(default_factory=set)
     subdirs: Set[str] = Field(default_factory=set)
-    latest: bool = False
+    latest_versions: bool = False
+    latest_builds: bool = False
+    latest_roots: bool = False
     quiet: bool = False
 
 
@@ -210,17 +214,17 @@ def disposables_option(function: Callable):
     )(function)
 
 
-def latest_option(function: Callable):
-    """Decorator for the `latest` option. Not exposed to the underlying command."""
+def latest_builds_option(function: Callable):
+    """Decorator for the `latest-version` option. Not exposed to the underlying command."""
 
     def callback(context: click.Context, parameter: click.Parameter, value: Any):
         state = context.ensure_object(AppState)
         if value is not None:
-            state.latest = value
-        return state.latest
+            state.latest_builds = value
+        return state.latest_builds
 
     return click.option(
-        "--latest",
+        "--latest-builds",
         is_flag=True,
         default=None,  # Must be None
         callback=callback,
@@ -230,42 +234,18 @@ def latest_option(function: Callable):
             "Force latest packages. Only returns the packages of the latest version "
             "for each of the requirements. Note that there may be multiple builds for "
             "each version of a package."
-        )
+        ),
     )(function)
 
 
-def latest_version_option(function: Callable):
+def latest_versions_option(function: Callable):
     """Decorator for the `latest` option. Not exposed to the underlying command."""
 
     def callback(context: click.Context, parameter: click.Parameter, value: Any):
         state = context.ensure_object(AppState)
         if value is not None:
-            state.latest = value
-        return state.latest
-
-    return click.option(
-        "--latest-build",
-        is_flag=True,
-        default=None,  # Must be None
-        callback=callback,
-        expose_value=False,  # Must be False
-        is_eager=False,  # Must be False
-        help=(
-            "Force latest packages. Only returns the packages of the latest version "
-            "for each of the requirements. Note that there may be multiple builds for "
-            "each version of a package."
-        )
-    )(function)
-
-
-def latest_build_option(function: Callable):
-    """Decorator for the `latest` option. Not exposed to the underlying command."""
-
-    def callback(context: click.Context, parameter: click.Parameter, value: Any):
-        state = context.ensure_object(AppState)
-        if value is not None:
-            state.latest = value
-        return state.latest
+            state.latest_versions = value
+        return state.latest_versions
 
     return click.option(
         "--latest-version",
@@ -278,7 +258,7 @@ def latest_build_option(function: Callable):
             "Force latest packages. Only returns the packages of the latest version "
             "for each of the requirements. Note that there may be multiple builds for "
             "each version of a package."
-        )
+        ),
     )(function)
 
 
@@ -401,9 +381,8 @@ def app():
         "{table, list, json}."
     ),
 )
-@latest_option
-@latest_version_option
-@latest_build_option
+@latest_versions_option
+@latest_builds_option
 @configuration_option
 @quiet_option
 @debug_option
@@ -438,7 +417,7 @@ def query(state: AppState, output: str):
             target_url=state.target,
             output=output,
             quiet=state.quiet,
-            latest=state.latest,
+            latest=state.latest_versions,
         )
     except CondaReplicateException as exception:
         _process_application_exception(exception)
@@ -464,7 +443,8 @@ def query(state: AppState, output: str):
 @exclusions_option
 @disposables_option
 @subdirs_option
-@latest_option
+@latest_versions_option
+@latest_builds_option
 @configuration_option
 @quiet_option
 @debug_option
@@ -501,7 +481,7 @@ def update(state: AppState):
             subdirs=sorted(state.subdirs),
             target_url=state.target,
             quiet=state.quiet,
-            latest=state.latest
+            latest=state.latest_versions,
         )
     except CondaReplicateException as exception:
         _process_application_exception(exception)
@@ -540,7 +520,8 @@ def update(state: AppState):
 @exclusions_option
 @disposables_option
 @subdirs_option
-@latest_option
+@latest_versions_option
+@latest_builds_option
 @configuration_option
 @quiet_option
 @debug_option
@@ -576,7 +557,7 @@ def patch(state: AppState, name: str, parent: str):
             parent=parent,
             target_url=state.target,
             quiet=state.quiet,
-            latest=state.latest,
+            latest=state.latest_versions,
         )
     except CondaReplicateException as exception:
         _process_application_exception(exception)
