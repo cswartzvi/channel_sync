@@ -7,25 +7,14 @@ from conda_replicate.adapters.channel import CondaChannel
 from conda_replicate.adapters.package import CondaPackage
 from conda_replicate.adapters.specification import CondaSpecification
 from conda_replicate.group import groupby
+from conda_replicate._typing import Spec, Specs, Subdirs
 
 logger = logging.getLogger(__name__)
 
 
-class PackageQuery:
-    def __init__(
-        self, channel: CondaChannel, subdirs: Iterable[str], *filters: PackageFilter
-    ) -> None:
-        self.channel = channel
-        self.subdirs = tuple(subdirs)
-        self.filters = filters
-
-    def __call__(self, spec: str) -> Iterator[CondaPackage]:
-        packages = self.channel.query_packages(spec, self.subdirs)
-        for filter_ in self.filters:
-            packages = filter_(packages)
-        for package in packages:
-            logger.debug("")
-            yield package
+class PackageQuery(Protocol):
+    def __call__(self, spec: Spec) -> Iterator[CondaPackage]:
+        ...
 
 
 class PackageFilter(Protocol):
@@ -33,8 +22,22 @@ class PackageFilter(Protocol):
         ...
 
 
+def crate_package_query(
+    channel: CondaChannel, subdirs: Subdirs, *filters: PackageFilter
+) -> PackageQuery:
+    def query(spec: str) -> Iterator[CondaPackage]:
+        packages = channel.query_packages(spec, subdirs)
+        for filter_ in filters:
+            packages = filter_(packages)
+        for package in packages:
+            logger.debug("")
+            yield package
+
+    return query
+
+
 class InclusionFilter:
-    def __init__(self, specs: Iterable[str]) -> None:
+    def __init__(self, specs: Specs) -> None:
         self.groups = groupby(_make_spec_objects(specs), lambda obj: obj.name)
 
     def __call__(self, packages: Iterable[CondaPackage]) -> Iterator[CondaPackage]:
@@ -48,7 +51,7 @@ class InclusionFilter:
 
 
 class ExclusionFilter:
-    def __init__(self, specs: Iterable[str]) -> None:
+    def __init__(self, specs: Specs) -> None:
         self.groups = groupby(_make_spec_objects(specs), lambda obj: obj.name)
 
     def __call__(self, packages: Iterable[CondaPackage]) -> Iterator[CondaPackage]:
@@ -62,7 +65,7 @@ class ExclusionFilter:
 
 
 class LatestVersionFilter:
-    def __init__(self, keep_specs: Optional[Iterable[str]] = None) -> None:
+    def __init__(self, keep_specs: Optional[Specs] = None) -> None:
         keep_specs = [] if keep_specs is None else keep_specs
         self.groups = groupby(_make_spec_objects(keep_specs), lambda obj: obj.name)
 
@@ -82,5 +85,5 @@ class LatestBuildFilter:
         pass
 
 
-def _make_spec_objects(specs: Iterable[str]) -> Iterator[CondaSpecification]:
+def _make_spec_objects(specs: Specs) -> Iterator[CondaSpecification]:
     yield from (CondaSpecification(spec) for spec in specs)

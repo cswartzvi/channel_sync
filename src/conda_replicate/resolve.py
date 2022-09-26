@@ -3,14 +3,32 @@ from typing import Any, Iterable, Iterator, Set
 
 import networkx as nx
 
+from conda_replicate._typing import Specs
 from conda_replicate import CondaReplicateException
 from conda_replicate.adapters.package import CondaPackage
-from conda_replicate.resolver.query import PackageQuery
+from conda_replicate.query import PackageQuery
 
 logger = logging.getLogger(__name__)
 
 
-def create_dependency_graph(specs: Iterable[str], query: PackageQuery) -> nx.DiGraph:
+def resolve_packages(specs: Specs, query: PackageQuery) -> Iterator[CondaPackage]:
+
+    graph = _create_graph(specs, query)
+
+    logger.info("Initial graph G(V%d, E=%d)", len(graph.nodes), len(graph.edges))
+
+    _prune_unsatisfied_nodes(graph)
+    _prune_disconnected_nodes(graph, specs)
+    _verify_graph_requirements(graph, specs)
+
+    logger.info("Final graph G(V=%d, E=%d)", len(graph.nodes), len(graph.edges))
+
+    packages = _extract_packages_from_graph(graph)
+
+    yield from packages
+
+
+def _create_graph(specs: Specs, query: PackageQuery) -> nx.DiGraph:
     """Returns the main resolution graph and root nodes from given parameters.
 
     The resolution graph is a directed graph made of alternating levels of match
@@ -19,27 +37,7 @@ def create_dependency_graph(specs: Iterable[str], query: PackageQuery) -> nx.DiG
     from the roots, packages and their dependencies are recursively added to the
     graph unless a package is determined to be constrained via the parameters.
     """
-
     graph = nx.DiGraph()
-    _populate_graph(graph, specs, query)
-    logger.info("Initial graph G(V%d, E=%d)", len(graph.nodes), len(graph.edges))
-    _prune_unsatisfied_nodes(graph)
-    _prune_disconnected_nodes(graph, specs)
-    _verify_graph_requirements(graph, specs)
-    logger.info("Final graph G(V=%d, E=%d)", len(graph.nodes), len(graph.edges))
-    return graph
-
-
-def extract_dependency_graph_packages(graph: nx.DiGraph) -> Iterator[CondaPackage]:
-    for node in graph.nodes:
-        if isinstance(node, CondaPackage):
-            yield node
-
-
-def _populate_graph(
-    graph: nx.DiGraph, specs: Iterable[str], query: PackageQuery
-) -> None:
-    """Populate the dependency graph"""
     specs_to_process: Set[str] = set()
     specs_processed: Set[str] = set()
 
@@ -108,7 +106,7 @@ def _prune_unsatisfied_nodes(graph: nx.DiGraph) -> None:
         prune_unsatisfied(node)
 
 
-def _prune_disconnected_nodes(graph: nx.DiGraph, specs: Iterable[str]) -> None:
+def _prune_disconnected_nodes(graph: nx.DiGraph, specs: Specs) -> None:
     """Prune disconnected nodes - nodes without a path to at least one root node."""
 
     connected = set()
@@ -123,10 +121,16 @@ def _prune_disconnected_nodes(graph: nx.DiGraph, specs: Iterable[str]) -> None:
         graph.remove_node(node)
 
 
-def _verify_graph_requirements(graph: nx.DiGraph, specs: Iterable[str]) -> None:
+def _verify_graph_requirements(graph: nx.DiGraph, specs: Specs) -> None:
     missing = set(spec for spec in specs if spec not in graph)
     if missing:
         raise UnsatisfiedRequirementsError(missing)
+
+
+def _extract_packages_from_graph(graph: nx.DiGraph) -> Iterator[CondaPackage]:
+    for node in graph.nodes:
+        if isinstance(node, CondaPackage):
+            yield node
 
 
 class UnsatisfiedRequirementsError(CondaReplicateException):

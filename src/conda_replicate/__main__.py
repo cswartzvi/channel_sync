@@ -1,3 +1,3 @@
-from conda_replicate.cli import app
+from conda_replicate.cli.cmds import app
 
 app()
