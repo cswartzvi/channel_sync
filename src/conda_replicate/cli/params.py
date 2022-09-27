@@ -1,6 +1,6 @@
 import logging
 import sys
-from typing import TYPE_CHECKING, Any, Callable
+from typing import Any, Callable
 
 import click
 import yaml
@@ -11,8 +11,7 @@ from conda_replicate.cli.state import AppState
 from conda_replicate.cli.state import ConfigurationState
 
 _DEFAULT_SUBDIRS = get_default_subdirs()
-_KNOWN_SUBDIRS = get_known_subdirs()
-_ALLOWED_SUBDIRS = [subdir for subdir in sorted(_KNOWN_SUBDIRS)]
+_ALLOWED_SUBDIRS = [subdir for subdir in sorted(get_known_subdirs())]
 
 
 def channel_option(function: Callable):
@@ -262,7 +261,7 @@ def subdirs_option(function: Callable):
         "--subdir",
         "subdirs",
         multiple=True,
-        type=click.types.Choice(_KNOWN_SUBDIRS),
+        type=click.types.Choice(_ALLOWED_SUBDIRS),
         callback=callback,
         default=_DEFAULT_SUBDIRS,
         metavar="SUBDIR",

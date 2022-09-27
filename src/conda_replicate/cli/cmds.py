@@ -1,6 +1,9 @@
+from dis import Instruction
+from operator import sub
 from typing import TYPE_CHECKING
 
 import pydantic
+from rich.console import Console
 
 from conda_replicate import CondaReplicateException
 from conda_replicate import __version__
@@ -17,12 +20,15 @@ from conda_replicate.cli.params import quiet_option
 from conda_replicate.cli.params import debug_option
 from conda_replicate.cli.state import AppState
 from conda_replicate.cli.state import pass_state
-from conda_replicate.core import find_packages
-from conda_replicate.core import run_index
-from conda_replicate.core import run_merge
-from conda_replicate.core import run_patch
-from conda_replicate.core import run_query
-from conda_replicate.core import run_update
+from conda_replicate.api import calculate_channel_difference, find_packages
+from conda_replicate.api import get_channel
+from conda_replicate.api import get_local_channel
+from conda_replicate.api import get_instructions
+from conda_replicate.api import create_patch
+from conda_replicate.api import index_channel
+from conda_replicate.api import merge_patch
+from conda_replicate.api import update_channel
+from conda_replicate.output import print_output
 
 # mypy has issues with the dynamic nature of rich-click
 if TYPE_CHECKING:  # pragma: no cover
@@ -119,11 +125,16 @@ def query(state: AppState, output: str):
             disposables=sorted(state.disposables),
             subdirs=sorted(state.subdirs),
             latest_versions=state.latest_versions,
+            console=console,
         )
         if state.target:
-            packages_to_add, packages_to_remove =
+            target = get_local_channel(state.target, setup=False)
+            packages_to_add, packages_to_remove = calculate_channel_difference(
+                target, state.subdirs, packages, console
+            )
+            print_output(output, packages_to_add, packages_to_remove)
         else:
-            pass
+            print_output(output, packages_to_add, {})
     except CondaReplicateException as exception:
         _process_application_exception(exception)
 
@@ -177,8 +188,13 @@ def update(state: AppState):
             "Target must be specified as '-t', '--target' or in a configuration file."
         )
 
+    console = Console(quiet=state.quiet)
+
     try:
         channel = get_channel(state.channel)
+        instructions = get_instructions(channel, subdirs=state.subdirs)
+        target = get_local_channel(state.target, setup=False)
+
         packages = find_packages(
             channel=channel,
             requirements=sorted(state.requirements),
@@ -186,20 +202,21 @@ def update(state: AppState):
             disposables=sorted(state.disposables),
             subdirs=sorted(state.subdirs),
             latest_versions=state.latest_versions,
+            console=console,
         )
-        if state.target:
-            packages_to_add, packages_to_remove =
 
-        run_update(
-            channel_url=state.channel,
-            requirements=sorted(state.requirements),
-            exclusions=sorted(state.exclusions),
-            disposables=sorted(state.disposables),
-            subdirs=sorted(state.subdirs),
-            target_url=state.target,
-            quiet=state.quiet,
-            latest=state.latest_versions,
+        packages_to_add, packages_to_remove = calculate_channel_difference(
+            target, state.subdirs, packages, console
         )
+
+        update_channel(
+            target=target,
+            packages_to_add=packages_to_add,
+            packages_to_remove=packages_to_remove,
+            instructions=instructions,
+            console=console
+        )
+
     except CondaReplicateException as exception:
         _process_application_exception(exception)
 
@@ -263,6 +280,13 @@ def patch(state: AppState, name: str, parent: str):
     - Requirements specified on the command line *augment* those specified in a
     configuration file
     """  # noqa: E501
+
+    if not name:
+        now = datetime.datetime.now()
+        name = f"patch_{now.strftime('%Y%m%d_%H%M%S')}"
+    path = os.path.join(parent, name)
+    target = get_local_channel(path, setup=False)
+
     try:
         run_patch(
             channel_url=state.channel,

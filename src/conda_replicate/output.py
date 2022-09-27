@@ -14,11 +14,15 @@ def print_output(
 ) -> None:
 
     if output == "table":
-        _print_output_table(to_add, "Packages to add   ")
-        _print_output_table(to_remove, "Packages to remove")
+        if to_add:
+            _print_output_table(to_add, "Packages to add   ")
+        if to_remove:
+            _print_output_table(to_remove, "Packages to remove")
     elif output == "list":
-        _print_output_list(to_add, "Packages to add")
-        _print_output_list(to_remove, "Packages to remove")
+        if to_add:
+            _print_output_list(to_add, "Packages to add")
+        if to_remove:
+            _print_output_list(to_remove, "Packages to remove")
     elif output == "json":
         _print_output_json(to_add, to_remove)
 
