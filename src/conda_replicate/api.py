@@ -1,62 +1,74 @@
-import datetime
-import os
+from dataclasses import dataclass, field
 import pathlib
-from typing import Dict, Iterable, List, Optional, Set, Tuple
+from typing import List, Optional, Set
 
 from rich.console import Console
 
 from conda_replicate import CondaReplicateException
-from conda_replicate._typing import Specs, Subdir, Subdirs, StringOrPath
 from conda_replicate.adapters.channel import CondaChannel
 from conda_replicate.adapters.channel import LocalCondaChannel
-from conda_replicate.adapters.channel import PatchInstructions
 from conda_replicate.adapters.package import CondaPackage
 from conda_replicate.adapters.subdir import get_default_subdirs
 from conda_replicate.display import Display
-from conda_replicate.query import ExclusionFilter
+from conda_replicate.query import ExclusionFilter, LatestBuildFilter
 from conda_replicate.query import InclusionFilter
 from conda_replicate.query import LatestVersionFilter
 from conda_replicate.query import PackageFilter
 from conda_replicate.query import crate_package_query
 from conda_replicate.resolve import resolve_packages
+from conda_replicate._typing import (
+    ChannelSource,
+    Latest,
+    LocalChannelSource,
+    Specs,
+    Subdirs,
+)
+
+LATEST = ["all", "version", "build"]
 
 
-def get_channel(url: str) -> CondaChannel:
-    channel = CondaChannel(url)
-    if not channel.is_queryable:
+@dataclass
+class QueryResults:
+    added: Set[CondaPackage] = field(default_factory=set)
+    removed: Set[CondaPackage] = field(default_factory=set)
+
+
+def get_channel(source: ChannelSource) -> CondaChannel:
+    if not isinstance(source, CondaChannel):
+        if isinstance(source, pathlib.Path):
+            source = str(source.resolve())
+        source = CondaChannel(source)
+    if not source.is_queryable:
         raise CondaReplicateException("Invalid channel")
-    return channel
+    return source
 
 
-def get_local_channel(path: StringOrPath, setup: bool = False) -> LocalCondaChannel:
-    path = pathlib.Path(path)
-    if setup:
+def get_local_channel(source: LocalChannelSource) -> LocalCondaChannel:
+    if not isinstance(source, LocalCondaChannel):
+        path = pathlib.Path(source)
         path.mkdir(parents=True, exist_ok=True)
-    channel = LocalCondaChannel(path)
-    if not channel.is_queryable:
+        source = LocalCondaChannel(source)
+    source.setup()
+    if not source.is_queryable:
         raise CondaReplicateException("Invalid channel")
-    return channel
+    return source
 
 
-def get_instructions(
-    channel: CondaChannel, subdirs: Subdirs
-) -> Dict[Subdir, PatchInstructions]:
-    return {subdir: channel.read_instructions(subdir) for subdir in subdirs}
-
-
-def find_packages(
-    channel: CondaChannel,
+def query(
+    channel: ChannelSource,
     requirements: Specs,
+    *,
+    target: Optional[ChannelSource] = None,
+    subdirs: Optional[Subdirs] = None,
     exclusions: Optional[Specs] = None,
     disposables: Optional[Specs] = None,
-    subdirs: Optional[Subdirs] = None,
-    latest_versions: bool = False,
-    latest_builds: bool = False,
+    latest: Optional[Latest] = None,
     latest_roots: bool = False,
     console: Optional[Console] = None,
-) -> Set[CondaPackage]:
-    subdirs = subdirs if subdirs else get_default_subdirs()
+) -> QueryResults:
 
+    channel = get_channel(channel)
+    subdirs = subdirs if subdirs else get_default_subdirs()
     console = console if console else Console(quiet=True)
     display = Display(console)
 
@@ -67,73 +79,83 @@ def find_packages(
     if exclusions:
         filters.append(ExclusionFilter(exclusions))
 
-    if latest_versions:
+    if latest in ["all", "version"]:
         if latest_roots:
-            filters.append(LatestVersionFilter())
-        else:
             filters.append(LatestVersionFilter(requirements))
+        else:
+            filters.append(LatestVersionFilter())
 
-    if latest_builds:
+    if latest in ["all", "build"]:
         if latest_roots:
-            filters.append(LatestVersionFilter())
+            filters.append(LatestBuildFilter(requirements))
         else:
-            filters.append(LatestVersionFilter(requirements))
+            filters.append(LatestBuildFilter())
 
     query = crate_package_query(channel, subdirs, *filters)
-    packages = resolve_packages(requirements, query)
+    resolver = resolve_packages(requirements, query)
 
     if disposables:
         filter_ = ExclusionFilter(disposables)
-        packages = filter_(packages)
+        resolver = filter_(resolver)
 
     with display.status("Search for packages"):
-        results = set(packages)
+        packages = set(resolver)
+
+    if target is not None:
+        target = get_channel(target)
+        target_packages = set(target.iter_packages(subdirs))
+        packages = set(packages)
+        results = QueryResults(
+            added=packages.difference(target_packages),
+            removed=target_packages.difference(packages),
+        )
+    else:
+        results = QueryResults(added=packages)
 
     return results
 
 
-def calculate_channel_difference(
-    channel: CondaChannel,
-    subdirs: Subdirs,
-    packages: Iterable[CondaPackage],
-    console: Optional[Console] = None,
-) -> Tuple[Set[CondaPackage], Set[CondaPackage]]:
-
-    console = console if console else Console(quiet=True)
-    display = Display(console)
-
-    with display.status("Calculating channel differences"):
-        channel_packages = set(channel.iter_packages(subdirs))
-        packages = set(packages)
-        packages_to_add = packages - channel_packages
-        packages_to_remove = channel_packages - packages
-
-    return packages_to_add, packages_to_remove
-
-
-def update_channel(
-    target: LocalCondaChannel,
-    packages_to_add: Iterable[CondaPackage],
-    packages_to_remove: Iterable[CondaPackage],
-    instructions: Optional[Dict[Subdir, PatchInstructions]] = None,
+def update(
+    channel: ChannelSource,
+    requirements: Specs,
+    target: LocalChannelSource,
+    *,
+    subdirs: Optional[Subdirs] = None,
+    exclusions: Optional[Specs] = None,
+    disposables: Optional[Specs] = None,
+    latest: Optional[Latest] = None,
+    latest_roots: bool = False,
     console: Optional[Console] = None,
 ) -> None:
 
+    target = get_local_channel(target)
+    channel = get_channel(channel)
+    subdirs = subdirs if subdirs else get_default_subdirs()
+
     console = console if console else Console(quiet=True)
     display = Display(console)
 
-    target.setup()
+    results = query(
+        channel,
+        requirements,
+        exclusions=exclusions,
+        disposables=disposables,
+        target=target,
+        subdirs=subdirs,
+        latest=latest,
+        latest_roots=latest_roots,
+        console=console,
+    )
 
-    for package in display.progress(packages_to_add, "Downloading packages"):
+    for package in display.progress(results.added, "Downloading packages"):
         target.add_package(package)
 
-    for package in display.progress(packages_to_remove, "Removing packages"):
+    for package in display.progress(results.removed, "Removing packages"):
         target.remove_package(package)
 
-    if instructions:
-        subdirs = instructions.keys()
-        for subdir in display.progress(subdirs, "Updating patch instructions"):
-            target.write_instructions(subdir, instructions[subdir])
+    for subdir in display.progress(subdirs, "Updating patch instructions"):
+        instructions = channel.read_instructions(subdir)
+        target.write_instructions(subdir, instructions)
 
     with display.status("Creating patch generator"):
         target.write_patch_generator()
@@ -143,45 +165,70 @@ def update_channel(
 
 
 def create_patch(
-    target: LocalCondaChannel,
-    packages_to_add: Iterable[CondaPackage],
-    packages_to_remove: Iterable[CondaPackage],
-    instructions: Optional[Dict[Subdir, PatchInstructions]] = None,
+    destination: LocalChannelSource,
+    channel: ChannelSource,
+    requirements: Specs,
+    *,
+    target: Optional[ChannelSource] = None,
+    subdirs: Optional[Subdirs] = None,
+    exclusions: Optional[Specs] = None,
+    disposables: Optional[Specs] = None,
+    latest: Optional[Latest] = None,
+    latest_roots: bool = False,
     console: Optional[Console] = None,
 ) -> None:
+
+    destination = get_local_channel(destination)
+    channel = get_channel(channel)
+    subdirs = subdirs if subdirs else get_default_subdirs()
 
     console = console if console else Console(quiet=True)
     display = Display(console)
 
-    for package in display.progress(packages_to_add, "Downloading packages"):
-        target.add_package(package)
+    results = query(
+        channel,
+        requirements,
+        exclusions=exclusions,
+        disposables=disposables,
+        target=target,
+        subdirs=subdirs,
+        latest=latest,
+        latest_roots=latest_roots,
+        console=console,
+    )
 
-    if instructions:
-        subdirs = instructions.keys()
-        for subdir in display.progress(subdirs, "Updating patch instructions"):
-            instructions[subdir].remove.extend(pkg.fn for pkg in packages_to_remove)
-            target.write_instructions(subdir, instructions[subdir])
+    for package in display.progress(results.added, "Downloading packages"):
+        destination.add_package(package)
+
+    for subdir in display.progress(subdirs, "Updating patch instructions"):
+        instructions = channel.read_instructions(subdir)
+        instructions.remove.extend(pkg.fn for pkg in results.removed)
+        destination.write_instructions(subdir, instructions)
 
     with display.status("Creating patch generator"):
-        target.write_patch_generator()
+        destination.write_patch_generator()
 
 
 def merge_patch(
-    patch: LocalCondaChannel,
-    target: LocalCondaChannel,
+    source: LocalChannelSource,
+    destination: LocalChannelSource,
+    *,
     console: Optional[Console] = None,
 ) -> None:
+    source = get_local_channel(source)
+    destination = get_local_channel(destination)
     console = console if console else Console(quiet=True)
     display = Display(console)
 
-    target.merge(patch)
+    destination.merge(source)
 
     with display.status_monkeypatch_conda_index("Updating channel index"):
-        target.update_index()
+        destination.update_index()
 
 
-def index_channel(target: LocalCondaChannel, console: Optional[Console] = None) -> None:
+def index(channel: LocalChannelSource, *, console: Optional[Console] = None) -> None:
+    channel = get_local_channel(channel)
     console = console if console else Console(quiet=True)
     display = Display(console)
     with display.status_monkeypatch_conda_index("Updating channel index"):
-        target.update_index()
+        channel.update_index()

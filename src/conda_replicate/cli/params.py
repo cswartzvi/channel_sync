@@ -7,6 +7,7 @@ import yaml
 
 from conda_replicate.adapters.subdir import get_default_subdirs
 from conda_replicate.adapters.subdir import get_known_subdirs
+from conda_replicate.api import LATEST
 from conda_replicate.cli.state import AppState
 from conda_replicate.cli.state import ConfigurationState
 
@@ -155,50 +156,51 @@ def disposables_option(function: Callable):
     )(function)
 
 
-def latest_builds_option(function: Callable):
-    """Decorator for the `latest-version` option. Not exposed to the underlying command."""
-
-    def callback(context: click.Context, parameter: click.Parameter, value: Any):
-        state = context.ensure_object(AppState)
-        if value is not None:
-            state.latest_builds = value
-        return state.latest_builds
-
-    return click.option(
-        "--latest-builds",
-        is_flag=True,
-        default=None,  # Must be None
-        callback=callback,
-        expose_value=False,  # Must be False
-        is_eager=False,  # Must be False
-        help=(
-            "Force latest packages. Only returns the packages of the latest version "
-            "for each of the requirements. Note that there may be multiple builds for "
-            "each version of a package."
-        ),
-    )(function)
-
-
-def latest_versions_option(function: Callable):
+def latest_option(function: Callable):
     """Decorator for the `latest` option. Not exposed to the underlying command."""
 
     def callback(context: click.Context, parameter: click.Parameter, value: Any):
         state = context.ensure_object(AppState)
         if value is not None:
-            state.latest_versions = value
-        return state.latest_versions
+            state.latest = value
+        return state.latest
 
     return click.option(
-        "--latest-version",
+        "--latest",
+        type=click.types.Choice(LATEST),
+        default=None,
+        callback=callback,
+        metavar="CRIT",
+        expose_value=False,  # Must be False
+        is_eager=False,  # Must be False
+        help=(
+            f"Only query the latest packages using the specified criteria. By default "
+            "this only applies to dependencies (see --latest-root). "
+            f"Allowed values: {{{', '.join(LATEST)}}}."
+        ),
+    )(function)
+
+
+def latest_roots_option(function: Callable):
+    """Decorator for the `latest-roots` option. Not exposed to the underlying
+    command."""
+
+    def callback(context: click.Context, parameter: click.Parameter, value: Any):
+        state = context.ensure_object(AppState)
+        if value is not None:
+            state.latest_roots = value
+        return state.latest_roots
+
+    return click.option(
+        "--latest-roots",
         is_flag=True,
-        default=None,  # Must be None
+        default=False,  # Must be None
         callback=callback,
         expose_value=False,  # Must be False
         is_eager=False,  # Must be False
         help=(
-            "Force latest packages. Only returns the packages of the latest version "
-            "for each of the requirements. Note that there may be multiple builds for "
-            "each version of a package."
+            "Applies latest criteria to root packages. Ignored if --latest is not "
+            "specified."
         ),
     )(function)
 

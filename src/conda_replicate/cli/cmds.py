@@ -1,33 +1,26 @@
-from dis import Instruction
-from operator import sub
+import datetime
+import os
 from typing import TYPE_CHECKING
 
 import pydantic
 from rich.console import Console
 
+import conda_replicate.api as api
 from conda_replicate import CondaReplicateException
 from conda_replicate import __version__
 from conda_replicate.cli.params import channel_option
-from conda_replicate.cli.params import requirements_argument
-from conda_replicate.cli.params import target_callback
-from conda_replicate.cli.params import exclusions_option
-from conda_replicate.cli.params import disposables_option
-from conda_replicate.cli.params import subdirs_option
 from conda_replicate.cli.params import configuration_option
-from conda_replicate.cli.params import latest_versions_option
-from conda_replicate.cli.params import latest_builds_option
-from conda_replicate.cli.params import quiet_option
 from conda_replicate.cli.params import debug_option
+from conda_replicate.cli.params import disposables_option
+from conda_replicate.cli.params import exclusions_option
+from conda_replicate.cli.params import latest_option
+from conda_replicate.cli.params import latest_roots_option
+from conda_replicate.cli.params import quiet_option
+from conda_replicate.cli.params import requirements_argument
+from conda_replicate.cli.params import subdirs_option
+from conda_replicate.cli.params import target_callback
 from conda_replicate.cli.state import AppState
 from conda_replicate.cli.state import pass_state
-from conda_replicate.api import calculate_channel_difference, find_packages
-from conda_replicate.api import get_channel
-from conda_replicate.api import get_local_channel
-from conda_replicate.api import get_instructions
-from conda_replicate.api import create_patch
-from conda_replicate.api import index_channel
-from conda_replicate.api import merge_patch
-from conda_replicate.api import update_channel
 from conda_replicate.output import print_output
 
 # mypy has issues with the dynamic nature of rich-click
@@ -87,8 +80,8 @@ def app():
         "{table, list, json}."
     ),
 )
-@latest_versions_option
-@latest_builds_option
+@latest_option
+@latest_roots_option
 @configuration_option
 @quiet_option
 @debug_option
@@ -117,24 +110,18 @@ def query(state: AppState, output: str):
     console = Console(quiet=state.quiet)
 
     try:
-        channel = get_channel(state.channel)
-        packages = find_packages(
-            channel=channel,
-            requirements=sorted(state.requirements),
-            exclusions=sorted(state.exclusions),
-            disposables=sorted(state.disposables),
-            subdirs=sorted(state.subdirs),
-            latest_versions=state.latest_versions,
+        results = api.query(
+            state.channel,
+            state.requirements,
+            target=state.target,
+            subdirs=state.subdirs,
+            exclusions=state.exclusions,
+            disposables=state.disposables,
+            latest=state.latest,
+            latest_roots=state.latest_roots,
             console=console,
         )
-        if state.target:
-            target = get_local_channel(state.target, setup=False)
-            packages_to_add, packages_to_remove = calculate_channel_difference(
-                target, state.subdirs, packages, console
-            )
-            print_output(output, packages_to_add, packages_to_remove)
-        else:
-            print_output(output, packages_to_add, {})
+        print_output(output, results)
     except CondaReplicateException as exception:
         _process_application_exception(exception)
 
@@ -159,8 +146,8 @@ def query(state: AppState, output: str):
 @exclusions_option
 @disposables_option
 @subdirs_option
-@latest_versions_option
-@latest_builds_option
+@latest_option
+@latest_roots_option
 @configuration_option
 @quiet_option
 @debug_option
@@ -191,32 +178,17 @@ def update(state: AppState):
     console = Console(quiet=state.quiet)
 
     try:
-        channel = get_channel(state.channel)
-        instructions = get_instructions(channel, subdirs=state.subdirs)
-        target = get_local_channel(state.target, setup=False)
-
-        packages = find_packages(
-            channel=channel,
-            requirements=sorted(state.requirements),
-            exclusions=sorted(state.exclusions),
-            disposables=sorted(state.disposables),
-            subdirs=sorted(state.subdirs),
-            latest_versions=state.latest_versions,
+        api.update(
+            state.channel,
+            state.requirements,
+            state.target,
+            subdirs=state.subdirs,
+            exclusions=state.exclusions,
+            disposables=state.disposables,
+            latest=state.latest,
+            latest_roots=state.latest_roots,
             console=console,
         )
-
-        packages_to_add, packages_to_remove = calculate_channel_difference(
-            target, state.subdirs, packages, console
-        )
-
-        update_channel(
-            target=target,
-            packages_to_add=packages_to_add,
-            packages_to_remove=packages_to_remove,
-            instructions=instructions,
-            console=console
-        )
-
     except CondaReplicateException as exception:
         _process_application_exception(exception)
 
@@ -254,8 +226,8 @@ def update(state: AppState):
 @exclusions_option
 @disposables_option
 @subdirs_option
-@latest_versions_option
-@latest_builds_option
+@latest_option
+@latest_roots_option
 @configuration_option
 @quiet_option
 @debug_option
@@ -281,24 +253,25 @@ def patch(state: AppState, name: str, parent: str):
     configuration file
     """  # noqa: E501
 
+    console = Console(quiet=state.quiet)
+
     if not name:
         now = datetime.datetime.now()
         name = f"patch_{now.strftime('%Y%m%d_%H%M%S')}"
-    path = os.path.join(parent, name)
-    target = get_local_channel(path, setup=False)
+    destination = os.path.join(parent, name)
 
     try:
-        run_patch(
-            channel_url=state.channel,
-            requirements=sorted(state.requirements),
-            exclusions=sorted(state.exclusions),
-            disposables=sorted(state.disposables),
-            subdirs=sorted(state.subdirs),
-            name=name,
-            parent=parent,
-            target_url=state.target,
-            quiet=state.quiet,
-            latest=state.latest_versions,
+        api.create_patch(
+            destination,
+            state.channel,
+            state.requirements,
+            target=state.target,
+            subdirs=state.subdirs,
+            exclusions=state.exclusions,
+            disposables=state.disposables,
+            latest=state.latest,
+            latest_roots=state.latest_roots,
+            console=console,
         )
     except CondaReplicateException as exception:
         _process_application_exception(exception)
@@ -322,8 +295,9 @@ def patch(state: AppState, name: str, parent: str):
 @pydantic.validate_arguments
 def merge(state: AppState, patch: str, channel: str):
     """Merge a PATCH into a local CHANNEL and update the local package index."""
+    console = Console(quiet=state.quiet)
     try:
-        run_merge(patch, channel, quiet=state.quiet)
+        api.merge_patch(patch, channel, console=console)
     except CondaReplicateException as exception:
         _process_application_exception(exception)
 
@@ -341,8 +315,9 @@ def merge(state: AppState, patch: str, channel: str):
 @pydantic.validate_arguments
 def index(state: AppState, channel: str):
     """Update the package index of a local CHANNEL."""
+    console = Console(quiet=state.quiet)
     try:
-        run_index(channel_url=channel, quiet=state.quiet)
+        api.index(channel, console=console)
     except CondaReplicateException as exception:
         _process_application_exception(exception)
 

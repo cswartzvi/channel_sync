@@ -5,26 +5,25 @@ from rich import box
 from rich.console import Console
 from rich.table import Table
 
+from conda_replicate.api import QueryResults
 from conda_replicate.adapters.package import CondaPackage
 from conda_replicate.group import groupby
 
 
-def print_output(
-    output: str, to_add: Iterable[CondaPackage], to_remove: Iterable[CondaPackage]
-) -> None:
+def print_output(output: str, results: QueryResults) -> None:
 
     if output == "table":
-        if to_add:
-            _print_output_table(to_add, "Packages to add   ")
-        if to_remove:
-            _print_output_table(to_remove, "Packages to remove")
+        if results.added:
+            _print_output_table(results.added, "Packages to add   ")
+        if results.removed:
+            _print_output_table(results.removed, "Packages to remove")
     elif output == "list":
-        if to_add:
-            _print_output_list(to_add, "Packages to add")
-        if to_remove:
-            _print_output_list(to_remove, "Packages to remove")
+        if results.added:
+            _print_output_list(results.added, "Packages to add")
+        if results.removed:
+            _print_output_list(results.removed, "Packages to remove")
     elif output == "json":
-        _print_output_json(to_add, to_remove)
+        _print_output_json(results.added, results.removed)
 
 
 def _print_output_table(records: Iterable[CondaPackage], label: str) -> None:
