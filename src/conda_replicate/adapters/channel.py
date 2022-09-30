@@ -33,13 +33,13 @@ class CondaChannel:
     """
 
     def __init__(self, source: str) -> None:
-        source = source.replace("\\", "/")
+        print(source)
         self._internal = conda.exports.Channel(source)
-        if source.startswith("//"):
-            # Representation of UNC in fsspec and conda is inconsistent
-            self._filesystem = CondaFilesystem(source)
-        else:
+
+        if self._internal.canonical_name == source:
             self._filesystem = CondaFilesystem(self._internal.base_url)
+        else:
+            self._filesystem = CondaFilesystem(source)
 
     @property
     def name(self) -> str:
@@ -49,7 +49,7 @@ class CondaChannel:
     @property
     def url(self) -> str:
         """Returns the complete URL of the anaconda channel."""
-        return self._filesystem.url
+        return self._filesystem.root
 
     @property
     def is_queryable(self) -> bool:
@@ -204,10 +204,12 @@ class LocalCondaChannel(CondaChannel):
     # re-implemented to use fsspec.
 
     def __init__(self, source: Union[str, Path]) -> None:
-        self._path = Path(source).resolve()
-        if not self._path.exists():
-            self._path = self._path.absolute()
-        super().__init__(str(self._path.resolve()))
+        super().__init__(str(source))
+
+        if not self._filesystem.is_local:
+            raise ValueError("Filesystem is not local")
+
+        self._path = Path(self._filesystem.root).resolve()
 
     @property
     def path(self) -> Path:
@@ -262,13 +264,20 @@ class CondaFilesystem:
     """
 
     def __init__(self, url: str) -> None:
-        self._url = url
         self._mapper = fsspec.get_mapper(url)
 
     @property
-    def url(self) -> str:
-        """Returns the URL of the filesystem."""
-        return self._url
+    def is_local(self) -> bool:
+        """Returns True if the filesystem is local, False otherwise."""
+        try:
+            return self._mapper.fs.local_file
+        except AttributeError:
+            return False
+
+    @property
+    def root(self) -> str:
+        """Returns the root of the filesystem."""
+        return self._mapper.root
 
     def read_file(
         self, subdir: str, filename: str, default: Optional[bytes] = None
@@ -334,7 +343,7 @@ class CondaFilesystem:
         Returns:
             True if the directory exists, False otherwise.
         """
-        return self._mapper.fs.exists(self.urlpath(self.url, directory))
+        return self._mapper.fs.exists(self.urlpath(self.root, directory))
 
     def urlpath(self, *parts: str) -> str:
         """Returns a URL of an object within the filesystem relative the root."""
@@ -342,7 +351,7 @@ class CondaFilesystem:
 
     def __repr__(self):
         class_name = self.__class__.__name__
-        return f"<{class_name}: url={self.url!r}>"
+        return f"<{class_name}: url={self.root!r}>"
 
 
 class BadPackageDownload(CondaReplicateException):
